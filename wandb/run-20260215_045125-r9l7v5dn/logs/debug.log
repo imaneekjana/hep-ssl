@@ -1,0 +1,26 @@
+2026-02-15 04:51:25,386 INFO    MainThread:1029227 [wandb_setup.py:_flush():81] Current SDK version is 0.22.3
+2026-02-15 04:51:25,388 INFO    MainThread:1029227 [wandb_setup.py:_flush():81] Configure stats pid to 1029227
+2026-02-15 04:51:25,388 INFO    MainThread:1029227 [wandb_setup.py:_flush():81] Loading settings from /global/homes/a/aneekj02/.config/wandb/settings
+2026-02-15 04:51:25,388 INFO    MainThread:1029227 [wandb_setup.py:_flush():81] Loading settings from /global/cfs/cdirs/m4474/aneek/particlemind_aneek/wandb/settings
+2026-02-15 04:51:25,389 INFO    MainThread:1029227 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-02-15 04:51:25,389 INFO    MainThread:1029227 [wandb_init.py:setup_run_log_directory():706] Logging user logs to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/wandb/run-20260215_045125-r9l7v5dn/logs/debug.log
+2026-02-15 04:51:25,390 INFO    MainThread:1029227 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/wandb/run-20260215_045125-r9l7v5dn/logs/debug-internal.log
+2026-02-15 04:51:25,390 INFO    MainThread:1029227 [wandb_init.py:init():833] calling init triggers
+2026-02-15 04:51:25,390 INFO    MainThread:1029227 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'workers': 12, 'epochs': 50, 'batch_size': 32, 'lr': 0.0003, 'weight_decay': 0.0001, 'seed': None, 'disable_cuda': False, 'fp16_precision': False, 'out_dim': 16, 'feat_dim': 32, 'log_every_n_steps': 100, 'temperature': 0.07, 'n_views': 2, 'gpu_index': 0, 'device': device(type='cuda'), '_wandb': {}}
+2026-02-15 04:51:25,391 INFO    MainThread:1029227 [wandb_init.py:init():881] starting backend
+2026-02-15 04:51:25,677 INFO    MainThread:1029227 [wandb_init.py:init():884] sending inform_init request
+2026-02-15 04:51:25,706 INFO    MainThread:1029227 [wandb_init.py:init():892] backend started and connected
+2026-02-15 04:51:25,711 INFO    MainThread:1029227 [wandb_init.py:init():962] updated telemetry
+2026-02-15 04:51:25,720 INFO    MainThread:1029227 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2026-02-15 04:51:26,388 INFO    MainThread:1029227 [wandb_init.py:init():1033] starting run threads in backend
+2026-02-15 04:51:27,429 INFO    MainThread:1029227 [wandb_run.py:_console_start():2506] atexit reg
+2026-02-15 04:51:27,430 INFO    MainThread:1029227 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2026-02-15 04:51:27,430 INFO    MainThread:1029227 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2026-02-15 04:51:27,430 INFO    MainThread:1029227 [wandb_run.py:_redirect():2446] Redirects installed.
+2026-02-15 04:51:27,459 INFO    MainThread:1029227 [wandb_init.py:init():1073] run started, returning control to user process
+2026-02-15 08:13:18,733 INFO    MainThread:1029227 [wandb_run.py:_finish():2272] finishing run aneekjana-university-of-wisconsin-madison/Test-run-CaloHitsGNN/r9l7v5dn
+2026-02-15 08:13:18,734 INFO    MainThread:1029227 [wandb_run.py:_atexit_cleanup():2471] got exitcode: 0
+2026-02-15 08:13:18,735 INFO    MainThread:1029227 [wandb_run.py:_restore():2453] restore
+2026-02-15 08:13:18,736 INFO    MainThread:1029227 [wandb_run.py:_restore():2459] restore done
+2026-02-15 08:13:19,649 INFO    MainThread:1029227 [wandb_run.py:_footer_sync_info():3835] logging synced files

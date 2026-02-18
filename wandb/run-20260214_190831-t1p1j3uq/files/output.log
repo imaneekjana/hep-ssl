@@ -1,0 +1,7 @@
+epoch:   0%|                                                                                                     | 0/50 [00:00<?, ?it/s]/global/homes/a/aneekj02/.local/perlmutter/python-3.11/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(
+loss_train
+	loss_train       	 (min:    0.095, max:    0.095, cur:    0.095)
+loss_val
+	loss_val         	 (min:    0.329, max:    0.329, cur:    0.329)
+epoch:   2%|█▊                                                                                        | 1/50 [04:09<3:23:52, 249.65s/it]

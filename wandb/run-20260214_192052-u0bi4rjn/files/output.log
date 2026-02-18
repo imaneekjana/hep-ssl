@@ -1,0 +1,212 @@
+epoch:   0%|                                                                                                     | 0/50 [00:00<?, ?it/s]/global/homes/a/aneekj02/.local/perlmutter/python-3.11/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(
+loss_train
+	loss_train       	 (min:    0.097, max:    0.097, cur:    0.097)
+loss_val
+	loss_val         	 (min:    0.327, max:    0.327, cur:    0.327)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models/model_epoch_1.pth
+epoch:  16%|██████████████▍                                                                           | 8/50 [33:32<2:53:44, 248.21s/it]
+loss_train
+	loss_train       	 (min:    0.079, max:    0.097, cur:    0.079)
+loss_val
+	loss_val         	 (min:    0.311, max:    0.327, cur:    0.311)
+loss_train
+	loss_train       	 (min:    0.076, max:    0.097, cur:    0.076)
+loss_val
+	loss_val         	 (min:    0.306, max:    0.327, cur:    0.306)
+loss_train
+	loss_train       	 (min:    0.075, max:    0.097, cur:    0.075)
+loss_val
+	loss_val         	 (min:    0.302, max:    0.327, cur:    0.302)
+loss_train
+	loss_train       	 (min:    0.074, max:    0.097, cur:    0.074)
+loss_val
+	loss_val         	 (min:    0.299, max:    0.327, cur:    0.299)
+loss_train
+	loss_train       	 (min:    0.073, max:    0.097, cur:    0.073)
+loss_val
+	loss_val         	 (min:    0.296, max:    0.327, cur:    0.296)
+loss_train
+	loss_train       	 (min:    0.073, max:    0.097, cur:    0.073)
+loss_val
+	loss_val         	 (min:    0.293, max:    0.327, cur:    0.293)
+loss_train
+	loss_train       	 (min:    0.072, max:    0.097, cur:    0.072)
+loss_val
+	loss_val         	 (min:    0.291, max:    0.327, cur:    0.291)
+loss_train
+	loss_train       	 (min:    0.072, max:    0.097, cur:    0.072)
+loss_val
+	loss_val         	 (min:    0.289, max:    0.327, cur:    0.289)
+loss_train
+	loss_train       	 (min:    0.071, max:    0.097, cur:    0.071)
+loss_val
+	loss_val         	 (min:    0.287, max:    0.327, cur:    0.287)
+loss_train
+	loss_train       	 (min:    0.071, max:    0.097, cur:    0.071)
+loss_val
+	loss_val         	 (min:    0.286, max:    0.327, cur:    0.286)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models/model_epoch_11.pth
+loss_train
+	loss_train       	 (min:    0.070, max:    0.097, cur:    0.070)
+loss_val
+	loss_val         	 (min:    0.285, max:    0.327, cur:    0.285)
+loss_train
+	loss_train       	 (min:    0.070, max:    0.097, cur:    0.070)
+loss_val
+	loss_val         	 (min:    0.283, max:    0.327, cur:    0.283)
+loss_train
+	loss_train       	 (min:    0.070, max:    0.097, cur:    0.070)
+loss_val
+	loss_val         	 (min:    0.281, max:    0.327, cur:    0.281)
+loss_train
+	loss_train       	 (min:    0.067, max:    0.097, cur:    0.067)
+loss_val
+	loss_val         	 (min:    0.273, max:    0.327, cur:    0.273)
+loss_train
+	loss_train       	 (min:    0.065, max:    0.097, cur:    0.065)
+loss_val
+	loss_val         	 (min:    0.265, max:    0.327, cur:    0.265)
+loss_train
+	loss_train       	 (min:    0.064, max:    0.097, cur:    0.064)
+loss_val
+	loss_val         	 (min:    0.264, max:    0.327, cur:    0.264)
+loss_train
+	loss_train       	 (min:    0.063, max:    0.097, cur:    0.063)
+loss_val
+	loss_val         	 (min:    0.260, max:    0.327, cur:    0.260)
+loss_train
+	loss_train       	 (min:    0.063, max:    0.097, cur:    0.063)
+loss_val
+	loss_val         	 (min:    0.259, max:    0.327, cur:    0.259)
+loss_train
+	loss_train       	 (min:    0.062, max:    0.097, cur:    0.062)
+loss_val
+	loss_val         	 (min:    0.257, max:    0.327, cur:    0.257)
+  fig, axes = plt.subplots(max_rows, self.max_cols)
+loss_train
+	loss_train       	 (min:    0.062, max:    0.097, cur:    0.062)
+loss_val
+	loss_val         	 (min:    0.257, max:    0.327, cur:    0.258)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models/model_epoch_21.pth
+epoch:  56%|████████████████████████████████████████████████▋                                      | 28/50 [1:56:17<1:32:11, 251.44s/it]
+loss_train
+	loss_train       	 (min:    0.062, max:    0.097, cur:    0.062)
+loss_val
+	loss_val         	 (min:    0.256, max:    0.327, cur:    0.256)
+loss_train
+	loss_train       	 (min:    0.062, max:    0.097, cur:    0.062)
+loss_val
+	loss_val         	 (min:    0.256, max:    0.327, cur:    0.256)
+loss_train
+	loss_train       	 (min:    0.062, max:    0.097, cur:    0.062)
+loss_val
+	loss_val         	 (min:    0.256, max:    0.327, cur:    0.256)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.256, max:    0.327, cur:    0.256)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.256, max:    0.327, cur:    0.256)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.254, max:    0.327, cur:    0.254)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.254, max:    0.327, cur:    0.254)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.253, max:    0.327, cur:    0.253)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.253, max:    0.327, cur:    0.253)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.253, max:    0.327, cur:    0.253)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models/model_epoch_31.pth
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.253, max:    0.327, cur:    0.253)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.252, max:    0.327, cur:    0.252)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.252, max:    0.327, cur:    0.252)
+loss_train
+	loss_train       	 (min:    0.061, max:    0.097, cur:    0.061)
+loss_val
+	loss_val         	 (min:    0.252, max:    0.327, cur:    0.252)
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.252, max:    0.327, cur:    0.254)
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.251, max:    0.327, cur:    0.251)
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.251, max:    0.327, cur:    0.251)
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.251, max:    0.327, cur:    0.251)
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.250, max:    0.327, cur:    0.250)
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.250, max:    0.327, cur:    0.250)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models/model_epoch_41.pth
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.250, max:    0.327, cur:    0.250)
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.250, max:    0.327, cur:    0.250)
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.250, max:    0.327, cur:    0.250)
+loss_train
+	loss_train       	 (min:    0.060, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.250, max:    0.327, cur:    0.250)
+loss_train
+	loss_train       	 (min:    0.059, max:    0.097, cur:    0.059)
+loss_val
+	loss_val         	 (min:    0.250, max:    0.327, cur:    0.250)
+loss_train
+	loss_train       	 (min:    0.059, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.249, max:    0.327, cur:    0.249)
+loss_train
+	loss_train       	 (min:    0.059, max:    0.097, cur:    0.059)
+loss_val
+	loss_val         	 (min:    0.248, max:    0.327, cur:    0.248)
+loss_train
+	loss_train       	 (min:    0.059, max:    0.097, cur:    0.060)
+loss_val
+	loss_val         	 (min:    0.248, max:    0.327, cur:    0.248)
+loss_train
+	loss_train       	 (min:    0.059, max:    0.097, cur:    0.059)
+loss_val
+	loss_val         	 (min:    0.248, max:    0.327, cur:    0.248)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models/model_final.pth
+[34m[1mwandb[0m: [33mWARNING[0m Saving files without folders. If you want to preserve subdirectories pass base_path to wandb.save, i.e. wandb.save("/mnt/folder/file.h5", base_path="/mnt")

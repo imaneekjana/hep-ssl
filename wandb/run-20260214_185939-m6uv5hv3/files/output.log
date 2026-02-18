@@ -1,0 +1,35 @@
+epoch:   0%|                                                                                         | 0/50 [00:00<?, ?it/s]/global/homes/a/aneekj02/.local/perlmutter/python-3.11/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(
+loss_train
+	loss_train       	 (min:    0.099, max:    0.099, cur:    0.099)
+loss_val
+	loss_val         	 (min:    0.364, max:    0.364, cur:    0.364)
+epoch:  16%|████████████▉                                                                    | 8/50 [04:59<26:30, 37.86s/it]
+loss_train
+	loss_train       	 (min:    0.090, max:    0.099, cur:    0.090)
+loss_val
+	loss_val         	 (min:    0.358, max:    0.364, cur:    0.358)
+loss_train
+	loss_train       	 (min:    0.088, max:    0.099, cur:    0.088)
+loss_val
+	loss_val         	 (min:    0.354, max:    0.364, cur:    0.354)
+loss_train
+	loss_train       	 (min:    0.087, max:    0.099, cur:    0.087)
+loss_val
+	loss_val         	 (min:    0.353, max:    0.364, cur:    0.353)
+loss_train
+	loss_train       	 (min:    0.087, max:    0.099, cur:    0.087)
+loss_val
+	loss_val         	 (min:    0.351, max:    0.364, cur:    0.351)
+loss_train
+	loss_train       	 (min:    0.087, max:    0.099, cur:    0.087)
+loss_val
+	loss_val         	 (min:    0.351, max:    0.364, cur:    0.351)
+loss_train
+	loss_train       	 (min:    0.086, max:    0.099, cur:    0.086)
+loss_val
+	loss_val         	 (min:    0.351, max:    0.364, cur:    0.351)
+loss_train
+	loss_train       	 (min:    0.086, max:    0.099, cur:    0.086)
+loss_val
+	loss_val         	 (min:    0.350, max:    0.364, cur:    0.350)

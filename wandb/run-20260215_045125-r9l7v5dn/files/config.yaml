@@ -1,0 +1,141 @@
+_wandb:
+    value:
+        cli_version: 0.22.3
+        e:
+            i0fvclpx7yvtukqou4gi7ctbhnbawt2w:
+                cpu_count: 64
+                cpu_count_logical: 128
+                cudaVersion: "12.4"
+                disk:
+                    /:
+                        total: "134863532032"
+                        used: "2542202880"
+                email: jana3@wisc.edu
+                executable: /global/common/software/nersc/pe/conda-envs/24.1.0/python-3.11/nersc-python/bin/python
+                gpu: NVIDIA A100-SXM4-40GB
+                gpu_count: 4
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "42949672960"
+                      name: NVIDIA A100-SXM4-40GB
+                      uuid: GPU-d3af4c65-d22d-e009-f940-0c50d85b855b
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "42949672960"
+                      name: NVIDIA A100-SXM4-40GB
+                      uuid: GPU-c97c0c3c-c862-e015-a0d8-585abc106768
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "42949672960"
+                      name: NVIDIA A100-SXM4-40GB
+                      uuid: GPU-b8f3173b-2649-8a6e-26fb-e7855ab52671
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "42949672960"
+                      name: NVIDIA A100-SXM4-40GB
+                      uuid: GPU-bf9821ce-a52a-3c88-88b9-396a1b1637a1
+                host: nid001032
+                memory:
+                    total: "269727064064"
+                os: Linux-5.14.21-150500.55.97_13.0.78-cray_shasta_c-x86_64-with-glibc2.31
+                program: -m src.train_gnn
+                python: CPython 3.11.7
+                root: /global/cfs/cdirs/m4474/aneek/particlemind_aneek
+                slurm:
+                    cluster_name: perlmutter
+                    cpus_on_node: "128"
+                    cpus_per_task: "128"
+                    gpus_on_node: "4"
+                    gtids: "0"
+                    job_account: m4474_g
+                    job_cpus_per_node: "128"
+                    job_end_time: "1771180508"
+                    job_gid: "111790"
+                    job_gpus: 0,1,2,3
+                    job_id: "48946861"
+                    job_licenses: cfs:1
+                    job_name: jupyter
+                    job_nodelist: nid001032
+                    job_num_nodes: "1"
+                    job_partition: urgent_gpu_ss11
+                    job_qos: gpu_jupyter
+                    job_start_time: "1771158908"
+                    job_uid: "111790"
+                    job_user: aneekj02
+                    jobid: "48946861"
+                    localid: "0"
+                    nnodes: "1"
+                    nodeid: "0"
+                    nodelist: nid001032
+                    nprocs: "1"
+                    ntasks: "1"
+                    ntasks_per_node: "1"
+                    oom_kill_step: "0"
+                    prio_process: "0"
+                    procid: "0"
+                    script_context: prolog_task
+                    stepmgr: nid001032
+                    submit_dir: /global/cfs/cdirs/m4474/aneek
+                    submit_host: login19
+                    task_pid: "1026076"
+                    tasks_per_node: "1"
+                    topology_addr: global.group5.nid001032
+                    topology_addr_pattern: switch.switch.node
+                    tres_bind: gres/gpu:per_task:4
+                    tres_per_task: cpu=128,gres/gpu=4
+                startedAt: "2026-02-15T12:51:25.178871Z"
+                writerId: i0fvclpx7yvtukqou4gi7ctbhnbawt2w
+        m: []
+        python_version: 3.11.7
+        t:
+            "1":
+                - 1
+                - 5
+                - 41
+                - 53
+                - 77
+            "2":
+                - 1
+                - 5
+                - 41
+                - 53
+                - 77
+            "3":
+                - 2
+                - 3
+                - 16
+            "4": 3.11.7
+            "5": 0.22.3
+            "12": 0.22.3
+            "13": linux-x86_64
+batch_size:
+    value: 32
+device:
+    value: cuda
+disable_cuda:
+    value: false
+epochs:
+    value: 50
+feat_dim:
+    value: 32
+fp16_precision:
+    value: false
+gpu_index:
+    value: 0
+log_every_n_steps:
+    value: 100
+lr:
+    value: 0.0003
+n_views:
+    value: 2
+out_dim:
+    value: 16
+seed:
+    value: null
+temperature:
+    value: 0.07
+weight_decay:
+    value: 0.0001
+workers:
+    value: 12
