@@ -1,0 +1,6 @@
+{"time":"2026-03-01T04:47:43.066276054-08:00","level":"INFO","msg":"stream: starting","core version":"0.25.0"}
+{"time":"2026-03-01T04:47:43.363882836-08:00","level":"INFO","msg":"stream: created new stream","id":"wchkmhvl"}
+{"time":"2026-03-01T04:47:43.364412698-08:00","level":"INFO","msg":"handler: started","stream_id":"wchkmhvl"}
+{"time":"2026-03-01T04:47:43.376285385-08:00","level":"INFO","msg":"stream: started","id":"wchkmhvl"}
+{"time":"2026-03-01T04:47:43.376328528-08:00","level":"INFO","msg":"writer: started","stream_id":"wchkmhvl"}
+{"time":"2026-03-01T04:47:43.376346052-08:00","level":"INFO","msg":"sender: started","stream_id":"wchkmhvl"}

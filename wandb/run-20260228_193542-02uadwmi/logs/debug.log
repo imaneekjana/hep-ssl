@@ -1,0 +1,21 @@
+2026-02-28 19:35:43,067 INFO    MainThread:209270 [wandb_setup.py:_flush():81] Current SDK version is 0.25.0
+2026-02-28 19:35:43,069 INFO    MainThread:209270 [wandb_setup.py:_flush():81] Configure stats pid to 209270
+2026-02-28 19:35:43,070 INFO    MainThread:209270 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-02-28 19:35:43,071 INFO    MainThread:209270 [wandb_init.py:setup_run_log_directory():717] Logging user logs to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/wandb/run-20260228_193542-02uadwmi/logs/debug.log
+2026-02-28 19:35:43,072 INFO    MainThread:209270 [wandb_init.py:setup_run_log_directory():718] Logging internal logs to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/wandb/run-20260228_193542-02uadwmi/logs/debug-internal.log
+2026-02-28 19:35:43,073 INFO    MainThread:209270 [wandb_init.py:init():844] calling init triggers
+2026-02-28 19:35:43,073 INFO    MainThread:209270 [wandb_init.py:init():849] wandb.init called with sweep_config: {}
+config: {'workers': 12, 'epochs': 5, 'batch_size': 32, 'lr': 0.0003, 'weight_decay': 0.0001, 'seed': None, 'disable_cuda': False, 'fp16_precision': False, 'out_dim': 16, 'feat_dim': 32, 'log_every_n_steps': 100, 'temperature': 0.07, 'n_views': 2, 'gpu_index': 0, 'device': device(type='cuda'), '_wandb': {}}
+2026-02-28 19:35:43,074 INFO    MainThread:209270 [wandb_init.py:init():892] starting backend
+2026-02-28 19:35:43,473 INFO    MainThread:209270 [wandb_init.py:init():895] sending inform_init request
+2026-02-28 19:35:43,492 INFO    MainThread:209270 [wandb_init.py:init():903] backend started and connected
+2026-02-28 19:35:43,497 INFO    MainThread:209270 [wandb_init.py:init():973] updated telemetry
+2026-02-28 19:35:43,562 INFO    MainThread:209270 [wandb_init.py:init():997] communicating run to backend with 90.0 second timeout
+2026-02-28 19:35:54,087 INFO    MainThread:209270 [wandb_init.py:init():1042] starting run threads in backend
+2026-02-28 19:35:55,050 INFO    MainThread:209270 [wandb_run.py:_console_start():2524] atexit reg
+2026-02-28 19:35:55,050 INFO    MainThread:209270 [wandb_run.py:_redirect():2373] redirect: wrap_raw
+2026-02-28 19:35:55,050 INFO    MainThread:209270 [wandb_run.py:_redirect():2442] Wrapping output streams.
+2026-02-28 19:35:55,051 INFO    MainThread:209270 [wandb_run.py:_redirect():2465] Redirects installed.
+2026-02-28 19:35:55,065 INFO    MainThread:209270 [wandb_init.py:init():1082] run started, returning control to user process
+2026-02-28 19:45:20,756 INFO    wandb-AsyncioManager-main:209270 [service_client.py:_forward_responses():134] Reached EOF.
+2026-02-28 19:45:20,757 INFO    wandb-AsyncioManager-main:209270 [mailbox.py:close():155] Closing mailbox, abandoning 1 handles.

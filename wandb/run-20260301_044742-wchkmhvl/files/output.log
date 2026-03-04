@@ -1,0 +1,4 @@
+epoch:   0%|                                                                         | 0/5 [00:00<?, ?it/s]/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(                                                                    | 0/40 [00:00<?, ?it/s]
+
+loader:  52%|████████████████████████████████▌                             | 21/40 [17:50<27:13, 85.99s/it]

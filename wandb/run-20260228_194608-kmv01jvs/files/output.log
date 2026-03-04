@@ -1,0 +1,16 @@
+epoch:   0%|                                                                    | 0/5 [00:00<?, ?it/s]/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(                                                               | 0/80 [00:00<?, ?it/s]
+loader:   0%|                                                                  | 0/80 [00:21<?, ?it/s]
+epoch:   0%|                                                                    | 0/5 [00:21<?, ?it/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/train_gnn_colliderml.py", line 341, in <module>
+    simclr.train(train_loader, val_loader, save_model=False, folder = '/global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/', wandb_=True, key='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', name='Test-run-CaloHitsGNN-ColliderML-mixed-ttbar-dihiggs')
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py", line 151, in train
+    logits, labels = self.info_nce_loss(features)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py", line 60, in info_nce_loss
+    similarity_matrix = similarity_matrix[~mask].view(similarity_matrix.shape[0], -1)
+                        ~~~~~~~~~~~~~~~~~^^^^^^^
+IndexError: The shape of the mask [64, 64] at index 0 does not match the shape of the indexed tensor [256, 256] at index 0

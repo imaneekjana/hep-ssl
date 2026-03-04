@@ -47,11 +47,11 @@ class GNNEncoder(nn.Module):
             )
 
         self.conv1 = EdgeConv(mlp(2*4, hidden_dim))
-        self.conv2 = EdgeConv(mlp(2*hidden_dim, 2*hidden_dim))
-        self.conv3 = EdgeConv(mlp(4*hidden_dim, 4*hidden_dim))
+        self.conv2 = EdgeConv(mlp(2*hidden_dim, hidden_dim))
+        self.conv3 = EdgeConv(mlp(2*hidden_dim, hidden_dim))
 
         self.project = nn.Sequential(
-            nn.Linear(4*hidden_dim, 2*hidden_dim),
+            nn.Linear(hidden_dim, 2*hidden_dim),
             nn.ReLU(),
             nn.Linear(2*hidden_dim, latent_dim)
         )
@@ -86,5 +86,5 @@ class GNNEncoder(nn.Module):
 
         zp = self.projection_head(z)
 
-        return z
+        return zp
 

@@ -1,0 +1,61 @@
+epoch:   0%|                                                                    | 0/5 [00:00<?, ?it/s]/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(                                                               | 0/80 [00:00<?, ?it/s]
+loader:  60%|██████████████████████████████████▏                      | 48/80 [16:00<10:40, 20.02s/it]
+epoch:   0%|                                                                    | 0/5 [16:00<?, ?it/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/train_gnn_colliderml.py", line 341, in <module>
+    print("Lesss gooo")
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py", line 147, in train
+    feat2 = self.forward(view2)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py", line 77, in forward
+    latent_vec = self.model(view)
+                 ^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/gnn.py", line 80, in forward
+    x = self.conv3(x, edge_index)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/nn/conv/edge_conv.py", line 62, in forward
+    return self.propagate(edge_index, x=x)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/torch_geometric.nn.conv.edge_conv_EdgeConv_propagate_klzd6ips.py", line 187, in propagate
+    out = self.message(
+          ^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/nn/conv/edge_conv.py", line 65, in message
+    return self.nn(torch.cat([x_i, x_j - x_i], dim=-1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/container.py", line 253, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/functional.py", line 1721, in relu
+    result = torch.relu(input)
+             ^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.99 GiB. GPU 0 has a total capacity of 39.49 GiB of which 685.25 MiB is free. Including non-PyTorch memory, this process has 38.40 GiB memory in use. Process 220379 has 418.00 MiB memory in use. Of the allocated memory 36.63 GiB is allocated by PyTorch, and 1.27 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

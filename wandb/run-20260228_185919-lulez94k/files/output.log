@@ -1,0 +1,65 @@
+epoch:   0%|                                                                    | 0/5 [00:00<?, ?it/s]/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(
+[34m[1mwandb[0m: [33mWARNING[0m Fatal error while uploading data. Some run data will not be synced, but it will still be written to disk. Use `wandb sync` at the end of the run to try uploading.
+loss_train
+	loss_train       	 (min:    2.278, max:    2.278, cur:    2.278)
+loss_val
+	loss_val         	 (min:    2.154, max:    2.154, cur:    2.154)
+epoch:  20%|███████████▏                                            | 1/5 [35:44<2:22:56, 2144.15s/it]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/train_gnn_colliderml.py", line 341, in <module>
+    simclr.train(train_loader, val_loader, save_model=False, folder = '/global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/', wandb_=True, key='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', name='Test-run-CaloHitsGNN-ColliderML-mixed-ttbar-dihiggs')
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py", line 146, in train
+    feat1 = self.forward(view1)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py", line 77, in forward
+    latent_vec = self.model(view)
+                 ^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/gnn.py", line 80, in forward
+    x = self.conv3(x, edge_index)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/nn/conv/edge_conv.py", line 62, in forward
+    return self.propagate(edge_index, x=x)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/torch_geometric.nn.conv.edge_conv_EdgeConv_propagate_cmubu9si.py", line 187, in propagate
+    out = self.message(
+          ^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/nn/conv/edge_conv.py", line 65, in message
+    return self.nn(torch.cat([x_i, x_j - x_i], dim=-1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/container.py", line 253, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/modules/activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/nn/functional.py", line 1721, in relu
+    result = torch.relu(input)
+             ^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 6.25 GiB. GPU 0 has a total capacity of 39.49 GiB of which 2.70 GiB is free. Including non-PyTorch memory, this process has 32.86 GiB memory in use. Process 209270 has 3.92 GiB memory in use. Of the allocated memory 32.24 GiB is allocated by PyTorch, and 128.08 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

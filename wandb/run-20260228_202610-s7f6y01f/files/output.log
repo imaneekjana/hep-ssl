@@ -1,0 +1,37 @@
+epoch:   0%|                                                                    | 0/5 [00:00<?, ?it/s]/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(                                                               | 0/80 [00:00<?, ?it/s]
+loader: 100%|█████████████████████████████████████████████████████████| 80/80 [24:27<00:00, 18.34s/it]
+loader: 100%|█████████████████████████████████████████████████████████| 80/80 [23:16<00:00, 17.45s/it]
+loss_train
+	loss_train       	 (min:    4.427, max:    4.427, cur:    4.427)
+loss_val
+	loss_val         	 (min:    3.720, max:    3.720, cur:    3.720)
+loader: 100%|█████████████████████████████████████████████████████████| 80/80 [22:42<00:00, 17.03s/it]
+loss_train
+	loss_train       	 (min:    3.445, max:    4.427, cur:    3.445)
+loss_val
+	loss_val         	 (min:    3.098, max:    3.720, cur:    3.098)
+loader: 100%|█████████████████████████████████████████████████████████| 80/80 [22:42<00:00, 17.03s/it]
+loss_train
+	loss_train       	 (min:    2.973, max:    4.427, cur:    2.973)
+loss_val
+	loss_val         	 (min:    2.873, max:    3.720, cur:    2.873)
+loader: 100%|█████████████████████████████████████████████████████████| 80/80 [22:29<00:00, 16.87s/it]
+loss_train
+	loss_train       	 (min:    2.827, max:    4.427, cur:    2.827)
+loss_val
+	loss_val         	 (min:    2.745, max:    3.720, cur:    2.745)
+epoch: 100%|████████████████████████████████████████████████████████| 5/5 [2:24:17<00:00, 1731.56s/it]
+loss_train
+	loss_train       	 (min:    2.690, max:    4.427, cur:    2.690)
+loss_val
+	loss_val         	 (min:    2.608, max:    3.720, cur:    2.608)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/train_gnn_colliderml.py", line 343, in <module>
+    simclr.train(train_loader, val_loader, save_model=False, folder = '/global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/', wandb_=True, key='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', name='Test-run-CaloHitsGNN-ColliderML-mixed-ttbar-dihiggs')
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py", line 197, in train
+    wandb.save(save_path)
+               ^^^^^^^^^
+UnboundLocalError: cannot access local variable 'save_path' where it is not associated with a value

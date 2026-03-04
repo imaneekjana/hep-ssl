@@ -1,0 +1,19 @@
+2026-03-01 05:01:13,100 INFO    MainThread:909109 [wandb_setup.py:_flush():81] Current SDK version is 0.25.0
+2026-03-01 05:01:13,102 INFO    MainThread:909109 [wandb_setup.py:_flush():81] Configure stats pid to 909109
+2026-03-01 05:01:13,103 INFO    MainThread:909109 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-03-01 05:01:13,105 INFO    MainThread:909109 [wandb_init.py:setup_run_log_directory():717] Logging user logs to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/wandb/run-20260301_050112-zib9bucf/logs/debug.log
+2026-03-01 05:01:13,108 INFO    MainThread:909109 [wandb_init.py:setup_run_log_directory():718] Logging internal logs to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/wandb/run-20260301_050112-zib9bucf/logs/debug-internal.log
+2026-03-01 05:01:13,109 INFO    MainThread:909109 [wandb_init.py:init():844] calling init triggers
+2026-03-01 05:01:13,111 INFO    MainThread:909109 [wandb_init.py:init():849] wandb.init called with sweep_config: {}
+config: {'workers': 12, 'epochs': 5, 'batch_size': 128, 'lr': 0.0003, 'weight_decay': 0.0001, 'seed': None, 'disable_cuda': False, 'fp16_precision': False, 'out_dim': 16, 'feat_dim': 32, 'log_every_n_steps': 100, 'temperature': 0.07, 'n_views': 2, 'gpu_index': 0, 'device': device(type='cuda'), '_wandb': {}}
+2026-03-01 05:01:13,113 INFO    MainThread:909109 [wandb_init.py:init():892] starting backend
+2026-03-01 05:01:14,004 INFO    MainThread:909109 [wandb_init.py:init():895] sending inform_init request
+2026-03-01 05:01:14,028 INFO    MainThread:909109 [wandb_init.py:init():903] backend started and connected
+2026-03-01 05:01:14,033 INFO    MainThread:909109 [wandb_init.py:init():973] updated telemetry
+2026-03-01 05:01:14,169 INFO    MainThread:909109 [wandb_init.py:init():997] communicating run to backend with 90.0 second timeout
+2026-03-01 05:01:14,729 INFO    MainThread:909109 [wandb_init.py:init():1042] starting run threads in backend
+2026-03-01 05:01:16,119 INFO    MainThread:909109 [wandb_run.py:_console_start():2524] atexit reg
+2026-03-01 05:01:16,125 INFO    MainThread:909109 [wandb_run.py:_redirect():2373] redirect: wrap_raw
+2026-03-01 05:01:16,128 INFO    MainThread:909109 [wandb_run.py:_redirect():2442] Wrapping output streams.
+2026-03-01 05:01:16,130 INFO    MainThread:909109 [wandb_run.py:_redirect():2465] Redirects installed.
+2026-03-01 05:01:16,172 INFO    MainThread:909109 [wandb_init.py:init():1082] run started, returning control to user process

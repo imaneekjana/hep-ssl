@@ -138,7 +138,7 @@ class Contrastive_Learning(object):
         for epoch_counter in tqdm(range(self.args.epochs),desc='epoch'):
             loss_train = 0
             
-            for view1, view2 in train_loader:
+            for view1, view2 in tqdm(train_loader, desc='loader'):
                 
                 view1 = view1.to(self.args.device)
                 view2 = view2.to(self.args.device)

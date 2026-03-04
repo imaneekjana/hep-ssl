@@ -1,0 +1,19 @@
+epoch:   0%|                                                                    | 0/5 [00:00<?, ?it/s]/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(                                                              | 0/320 [00:00<?, ?it/s]
+loader:  28%|███████████████▍                                        | 88/320 [09:25<24:51,  6.43s/it]
+epoch:   0%|                                                                    | 0/5 [09:25<?, ?it/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/train_gnn_colliderml.py", line 341, in <module>
+    simclr.train(train_loader, val_loader, save_model=False, folder = '/global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/', wandb_=True, key='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', name='Test-run-CaloHitsGNN-ColliderML-mixed-ttbar-dihiggs')
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py", line 157, in train
+    Scaler.scale(loss).backward()
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/_tensor.py", line 630, in backward
+    torch.autograd.backward(
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/autograd/__init__.py", line 364, in backward
+    _engine_run_backward(
+  File "/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch/autograd/graph.py", line 865, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.76 GiB. GPU 0 has a total capacity of 39.49 GiB of which 1.78 GiB is free. Including non-PyTorch memory, this process has 37.71 GiB memory in use. Of the allocated memory 36.73 GiB is allocated by PyTorch, and 489.63 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
