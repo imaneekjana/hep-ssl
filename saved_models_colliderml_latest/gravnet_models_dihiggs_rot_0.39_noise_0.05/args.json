@@ -1,0 +1,22 @@
+{
+    "trainevents": 750,
+    "split": "dihiggs",
+    "rotation": 0.39269908169872414,
+    "energy_noise": 0.05,
+    "off": 10,
+    "workers": 12,
+    "epochs": 18,
+    "batch_size": 32,
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "disable_cuda": false,
+    "fp16_precision": false,
+    "out_dim": 32,
+    "feat_dim": 4,
+    "log_every_n_steps": 100,
+    "temperature": 0.07,
+    "n_views": 2,
+    "gpu_index": 0,
+    "device": "cuda"
+}

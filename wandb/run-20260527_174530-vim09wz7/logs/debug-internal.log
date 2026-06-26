@@ -1,0 +1,11 @@
+{"time":"2026-05-27T17:45:31.982053325-07:00","level":"INFO","msg":"stream: starting","core version":"0.25.0"}
+{"time":"2026-05-27T17:45:32.29295835-07:00","level":"INFO","msg":"stream: created new stream","id":"vim09wz7"}
+{"time":"2026-05-27T17:45:32.293441687-07:00","level":"INFO","msg":"handler: started","stream_id":"vim09wz7"}
+{"time":"2026-05-27T17:45:32.313615596-07:00","level":"INFO","msg":"stream: started","id":"vim09wz7"}
+{"time":"2026-05-27T17:45:32.313650674-07:00","level":"INFO","msg":"writer: started","stream_id":"vim09wz7"}
+{"time":"2026-05-27T17:45:32.313672296-07:00","level":"INFO","msg":"sender: started","stream_id":"vim09wz7"}
+{"time":"2026-05-27T17:45:33.802242141-07:00","level":"INFO","msg":"stream: closing","id":"vim09wz7"}
+{"time":"2026-05-27T17:45:34.609549418-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-05-27T17:45:34.783351836-07:00","level":"INFO","msg":"handler: closed","stream_id":"vim09wz7"}
+{"time":"2026-05-27T17:45:34.825454637-07:00","level":"INFO","msg":"sender: closed","stream_id":"vim09wz7"}
+{"time":"2026-05-27T17:45:34.825834262-07:00","level":"INFO","msg":"stream: closed","id":"vim09wz7"}

@@ -1,0 +1,62 @@
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [25:40<00:00, 85.57s/it]
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:30<00:00, 81.70s/it]
+loss_train
+	loss_train       	 (min:    0.858, max:    0.858, cur:    0.858)
+loss_val
+	loss_val         	 (min:    2.404, max:    2.404, cur:    2.404)
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:48<00:00, 82.67s/it]
+loss_train
+	loss_train       	 (min:    0.693, max:    0.858, cur:    0.693)
+loss_val
+	loss_val         	 (min:    2.285, max:    2.404, cur:    2.285)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_scale_5.0_gaussian_rot_0.39_noise_0.05/model_epoch_12.pth
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:25<00:00, 81.42s/it]
+loss_train
+	loss_train       	 (min:    0.625, max:    0.858, cur:    0.625)
+loss_val
+	loss_val         	 (min:    2.285, max:    2.404, cur:    2.368)
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:25<00:00, 81.42s/it]
+loss_train
+	loss_train       	 (min:    0.494, max:    0.858, cur:    0.494)
+loss_val
+	loss_val         	 (min:    2.205, max:    2.404, cur:    2.205)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_scale_5.0_gaussian_rot_0.39_noise_0.05/model_epoch_14.pth
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:24<00:00, 81.36s/it]
+loss_train
+	loss_train       	 (min:    0.492, max:    0.858, cur:    0.492)
+loss_val
+	loss_val         	 (min:    2.170, max:    2.404, cur:    2.170)
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:39<00:00, 82.17s/it]
+loss_train
+	loss_train       	 (min:    0.411, max:    0.858, cur:    0.411)
+loss_val
+	loss_val         	 (min:    2.170, max:    2.404, cur:    2.269)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_scale_5.0_gaussian_rot_0.39_noise_0.05/model_epoch_16.pth
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:41<00:00, 82.29s/it]
+loss_train
+	loss_train       	 (min:    0.411, max:    0.858, cur:    0.425)
+loss_val
+	loss_val         	 (min:    2.170, max:    2.404, cur:    2.318)
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:40<00:00, 82.27s/it]
+loss_train
+	loss_train       	 (min:    0.376, max:    0.858, cur:    0.376)
+loss_val
+	loss_val         	 (min:    2.170, max:    2.404, cur:    2.293)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_scale_5.0_gaussian_rot_0.39_noise_0.05/model_epoch_18.pth
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:39<00:00, 82.19s/it]
+loss_train
+	loss_train       	 (min:    0.365, max:    0.858, cur:    0.365)
+loss_val
+	loss_val         	 (min:    2.170, max:    2.404, cur:    2.319)
+loader: 100%|█████████████████████████████████████████████████████████████████████████| 18/18 [24:44<00:00, 82.49s/it]
+loss_train
+	loss_train       	 (min:    0.337, max:    0.858, cur:    0.337)
+loss_val
+	loss_val         	 (min:    2.170, max:    2.404, cur:    2.271)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_scale_5.0_gaussian_rot_0.39_noise_0.05/model_epoch_20.pth
+epoch:  61%|█████████████████████████████████████████▌                          | 11/18 [5:33:33<3:32:34, 1822.02s/it]
+loss_train
+	loss_train       	 (min:    0.274, max:    0.858, cur:    0.274)
+loss_val
+	loss_val         	 (min:    2.170, max:    2.413, cur:    2.413)
+loader:  83%|████████████████████████████████████████████████████████████▊            | 15/18 [19:35<03:56, 78.75s/it]

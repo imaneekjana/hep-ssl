@@ -1,0 +1,4 @@
+slurmstepd: error: Detected 1 oom_kill event in StepId=50112288.0. Some of the step tasks have been OOM Killed.
+srun: error: nid003045: task 3: Out Of Memory
+srun: Terminating StepId=50112288.0
+slurmstepd: error: *** STEP 50112288.0 ON nid003045 CANCELLED AT 2026-03-16T09:59:22 ***

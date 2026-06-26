@@ -1,0 +1,102 @@
+{
+  "os":  "Linux-6.4.0-150600.23.73_15.0.14-cray_shasta_c-x86_64-with-glibc2.38",
+  "python":  "CPython 3.11.14",
+  "startedAt":  "2026-05-04T15:27:12.848826Z",
+  "program":  "-m src.train_gnn_colliderml",
+  "git":  {
+    "remote":  "git@github.com:imaneekjana/hep-ssl.git",
+    "commit":  "5b03fe3ec59f564257ce06d3bb0543852571513b"
+  },
+  "email":  "jana3@wisc.edu",
+  "root":  "/global/cfs/cdirs/m4474/aneek/particlemind_aneek",
+  "host":  "nid001176",
+  "executable":  "/global/homes/a/aneekj02/.conda/envs/colliderml-env/bin/python",
+  "cpu_count":  64,
+  "cpu_count_logical":  128,
+  "gpu":  "NVIDIA A100-SXM4-40GB",
+  "gpu_count":  4,
+  "disk":  {
+    "/":  {
+      "total":  "134865858560",
+      "used":  "980615168"
+    }
+  },
+  "memory":  {
+    "total":  "269731717120"
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA A100-SXM4-40GB",
+      "memoryTotal":  "42949672960",
+      "cudaCores":  6912,
+      "architecture":  "Ampere",
+      "uuid":  "GPU-51914ca4-01d4-179c-0f8f-58a17c41fb1d"
+    },
+    {
+      "name":  "NVIDIA A100-SXM4-40GB",
+      "memoryTotal":  "42949672960",
+      "cudaCores":  6912,
+      "architecture":  "Ampere",
+      "uuid":  "GPU-0e2e8a83-abc5-9cc6-9536-c08b50bfcdf7"
+    },
+    {
+      "name":  "NVIDIA A100-SXM4-40GB",
+      "memoryTotal":  "42949672960",
+      "cudaCores":  6912,
+      "architecture":  "Ampere",
+      "uuid":  "GPU-0d687f43-c96f-a92c-10ce-ba8297d7d3ad"
+    },
+    {
+      "name":  "NVIDIA A100-SXM4-40GB",
+      "memoryTotal":  "42949672960",
+      "cudaCores":  6912,
+      "architecture":  "Ampere",
+      "uuid":  "GPU-8ce5825c-df5a-3764-fd16-13e6cfc96d6a"
+    }
+  ],
+  "cudaVersion":  "13.0",
+  "slurm":  {
+    "cluster_name":  "perlmutter",
+    "cpus_on_node":  "128",
+    "cpus_per_task":  "128",
+    "gpus_on_node":  "4",
+    "gtids":  "0",
+    "job_account":  "m4474_g",
+    "job_cpus_per_node":  "128",
+    "job_end_time":  "1777929786",
+    "job_gid":  "111790",
+    "job_gpus":  "0,1,2,3",
+    "job_id":  "52429973",
+    "job_licenses":  "cfs:1",
+    "job_name":  "jupyter",
+    "job_nodelist":  "nid001176",
+    "job_num_nodes":  "1",
+    "job_partition":  "urgent_gpu_ss11",
+    "job_qos":  "gpu_jupyter",
+    "job_start_time":  "1777908186",
+    "job_uid":  "111790",
+    "job_user":  "aneekj02",
+    "jobid":  "52429973",
+    "localid":  "0",
+    "nnodes":  "1",
+    "nodeid":  "0",
+    "nodelist":  "nid001176",
+    "nprocs":  "1",
+    "ntasks":  "1",
+    "ntasks_per_node":  "1",
+    "oom_kill_step":  "0",
+    "prio_process":  "0",
+    "procid":  "0",
+    "script_context":  "prolog_task",
+    "stepmgr":  "nid001176",
+    "submit_dir":  "/global/cfs/cdirs/m4474/aneek",
+    "submit_host":  "login14",
+    "task_pid":  "1480373",
+    "tasks_per_node":  "1",
+    "topology_addr":  "global.group6.nid001176",
+    "topology_addr_pattern":  "switch.switch.node",
+    "tres_bind":  "gres/gpu:per_task:4",
+    "tres_per_task":  "cpu=128,gres/gpu=4"
+  },
+  "writerId":  "7htnzn60fdk5cyztjd9dr8etab8kofa2"
+}

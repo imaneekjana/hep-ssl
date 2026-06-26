@@ -1,0 +1,7 @@
+{"time":"2026-05-06T06:33:10.095328343-07:00","level":"INFO","msg":"stream: starting","core version":"0.25.0"}
+{"time":"2026-05-06T06:33:10.408867859-07:00","level":"INFO","msg":"stream: created new stream","id":"d85pypiw"}
+{"time":"2026-05-06T06:33:10.409180715-07:00","level":"INFO","msg":"handler: started","stream_id":"d85pypiw"}
+{"time":"2026-05-06T06:33:10.421639038-07:00","level":"INFO","msg":"stream: started","id":"d85pypiw"}
+{"time":"2026-05-06T06:33:10.421667333-07:00","level":"INFO","msg":"writer: started","stream_id":"d85pypiw"}
+{"time":"2026-05-06T06:33:10.421688664-07:00","level":"INFO","msg":"sender: started","stream_id":"d85pypiw"}
+{"time":"2026-05-06T06:53:08.314382579-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/aneekjana-university-of-wisconsin-madison/gravnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges-MAY6/d85pypiw/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}

@@ -1,3 +1,9 @@
+"""
+Imports
+
+"""
+
+import random
 import uproot
 import awkward as ak
 import argparse
@@ -27,6 +33,11 @@ from livelossplot import PlotLosses
 from torch.utils.data import Dataset, DataLoader, random_split
 
 from torch_geometric.loader import DataLoader
+import torch_cluster
+
+import sys
+
+sys.path.append('/global/cfs/cdirs/m4474/aneek/particlemind_aneek')
 
 from src.data.augmentation import *
 from src.data.dataset import *
@@ -34,7 +45,6 @@ from src.models.gnn import *
 from src.models.contrastive_learning import *
 
 
-import sys
 
 #sys.path.append('/global/cfs/cdirs/m4474/aneek/particlemind/src/datasets')
 
@@ -42,6 +52,17 @@ import sys
 #os.chdir('/global/cfs/cdirs/m4474/aneek/particlemind')
 
 #from CLDHits import CLDHits
+
+"""
+SEEDS
+"""
+
+SEED = 42  # or any fixed integer
+
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+torch.cuda.manual_seed_all(SEED)
 
 """
 Loading ColliderML data
@@ -59,7 +80,7 @@ cfg1 = {
     "objects": ["calo_hits"],
     "split": "train",
     "lazy": False,
-    "max_events": 3200,
+    "max_events": 560,
     "data_dir":"/pscratch/sd/a/aneekj02/colliderml-data"
 }
 tables1 = load_tables(cfg1)
@@ -76,7 +97,7 @@ cfg2 = {
     "objects": ["calo_hits"],
     "split": "train",
     "lazy": False,
-    "max_events": 3200,
+    "max_events": 560,
     "data_dir":"/pscratch/sd/a/aneekj02/colliderml-data"
 }
 tables2 = load_tables(cfg2)
@@ -84,10 +105,29 @@ frames2 = collect_tables(tables2)
 
 calo_hits2 = frames2["calo_hits"]
 
+## ggf data
+cfg3 = {
+    "dataset_id": "CERN/ColliderML-Release-1",
+    "channels": "ggf",
+    "pileup": "pu0",
+    "objects": ["calo_hits"],
+    "split": "train",
+    "lazy": False,
+    "max_events": 560,
+    "data_dir":"/pscratch/sd/a/aneekj02/colliderml-data"
+}
+tables3 = load_tables(cfg3)
+frames3 = collect_tables(tables3)
+
+calo_hits3 = frames3["calo_hits"]
+
 import polars as pl
 
 # Concatenate
-combined = pl.concat([calo_hits1, calo_hits2])
+combined = pl.concat([calo_hits1, calo_hits2, calo_hits3])
+#combined = pl.concat([calo_hits1, calo_hits3])
+#combined = pl.concat([calo_hits2, calo_hits3])
+#combined = calo_hits1
 
 # Shuffle rows
 combined = combined.sample(fraction=1.0, with_replacement=False, seed=42)
@@ -96,6 +136,33 @@ combined = combined.sample(fraction=1.0, with_replacement=False, seed=42)
 #print(combined.head())
 
 calo_hits = combined
+
+
+"""
+Standardization Metrics
+"""
+
+N_STAT_EVENTS = 50
+
+all_x, all_y, all_z, all_e = [], [], [], []
+
+for event_i in range(N_STAT_EVENTS):
+    row = calo_hits[event_i]
+    all_x.append(row['x'].to_numpy()[0])
+    all_y.append(row['y'].to_numpy()[0])
+    all_z.append(row['z'].to_numpy()[0])
+    all_e.append(row['total_energy'].to_numpy()[0])
+
+all_x = np.concatenate(all_x)
+all_y = np.concatenate(all_y)
+all_z = np.concatenate(all_z)
+all_e_log = np.log(np.concatenate(all_e) + 1e-6)
+
+MEANS = np.array([all_x.mean(), all_y.mean(), all_z.mean(), all_e_log.mean()], dtype=np.float32)
+STDS  = np.array([all_x.std(),  all_y.std(),  all_z.std(),  all_e_log.std()],  dtype=np.float32)
+
+print("MEANS:", MEANS)
+print("STDS: ", STDS)
 
 
 
@@ -120,6 +187,7 @@ class ColliderMLHits(IterableDataset):
         
         self.calo_hits = calo_hits
         self.shuffle_files = shuffle_files
+        
         
 
         self.split = split
@@ -158,21 +226,23 @@ class ColliderMLHits(IterableDataset):
 
             data_i = data[event_i]
 
-            calo_hit_features = np.column_stack(
-                (
-                    data_i['x'].to_numpy()[0],
-                    data_i['y'].to_numpy()[0],
-                    data_i['z'].to_numpy()[0],
-                    data_i['total_energy'].to_numpy()[0]
+            x   = data_i['x'].to_numpy()[0]
+            y   = data_i['y'].to_numpy()[0]
+            z   = data_i['z'].to_numpy()[0]
+            e   = data_i['total_energy'].to_numpy()[0]
 
-                )
-            )
+            # Log-transform energy
+            e_log = np.log(e + 1e-6)
 
-            f_i = len(data_i['x'].to_numpy()[0]) if len(data_i['x'].to_numpy()[0])<8000 else 8000
+            calo_hit_features = np.column_stack((x, y, z, e_log)).astype(np.float32)
+
+           
+
+            #f_i = len(data_i['x'].to_numpy()[0]) if len(data_i['x'].to_numpy()[0])<8000 else 8000
 
             yield {
 
-                "calo_hit_features": calo_hit_features[0:f_i]
+                "calo_hit_features": calo_hit_features
 
             }
          
@@ -184,21 +254,40 @@ Preparing dataset
 
 """
 
+
+
+augment = Compose([
+    RandomRotateXY((0, 2*np.pi))
+    ,
+    RandomShift((100.0, 100.0, 100.0)),
+    RandomSpatialCrop(0.2),
+    EnergyWhiteNoise(0.05)
+])
+
+'''
 augment = Compose([
     RandomRotateXY((0, 2*np.pi))
     ,
     RandomShift((20.0, 20.0, 0.0)),
-    RandomSpatialCrop(0.7),
     EnergyWhiteNoise(0.2)
 ])
-
+'''
+'''
+augment = Compose([
+    RandomRotateXY((0, 2*np.pi))
+    ,
+    RandomShift((20.0, 20.0, 0.0))
+])
+'''
 
 
 dataset_train = ColliderMLHits(calo_hits, "train")
 dataset_val = ColliderMLHits(calo_hits, "val")
 
-dataset_train = ContrastiveLearningGraphDataset(ContrastiveLearningDataset(dataset_train, augment))
-dataset_val = ContrastiveLearningGraphDataset(ContrastiveLearningDataset(dataset_val, augment))
+r = 0/STDS[2]
+
+dataset_train = ContrastiveLearningGraphDataset(ContrastiveLearningDataset(dataset_train, MEANS, STDS,  augment), builder=EventGraphBuilder(radius=r))
+dataset_val = ContrastiveLearningGraphDataset(ContrastiveLearningDataset(dataset_val, MEANS, STDS, augment), builder=EventGraphBuilder(radius=r))
 
 
 
@@ -208,12 +297,9 @@ val_loader   = DataLoader(dataset_val,   batch_size=32, drop_last=True)
 
 
 
-model = GNNEncoder()
+#model = GNNEncoder()
 
-def count_trainable_parameters(mymodel):
-    return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
-print("Trainable parameters:", count_trainable_parameters(model))
 
 '''
 for x1, x2 in train_loader:
@@ -230,7 +316,7 @@ for x1, x2 in train_loader:
     
     break
 '''
-print("Vamos!!")
+
 
 
 
@@ -266,7 +352,7 @@ parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet18',
 parser.add_argument('-j', '--workers', default=12, type=int, metavar='N',
                     help='number of data loading workers (default: 32)')
 
-parser.add_argument('--epochs', default=5, type=int, metavar='N',
+parser.add_argument('--epochs', default=12, type=int, metavar='N',
                     help='number of total epochs to run')
 
 
@@ -284,7 +370,7 @@ parser.add_argument('--wd', '--weight-decay', default=1e-4, type=float,
                     metavar='W', help='weight decay (default: 1e-4)',
                     dest='weight_decay')
 
-parser.add_argument('--seed', default=None, type=int,
+parser.add_argument('--seed', default=42, type=int,
                     help='seed for initializing training. ')
 
 parser.add_argument('--disable-cuda', action='store_true',
@@ -313,6 +399,8 @@ parser.add_argument('--gpu-index', default=0, type=int, help='Gpu index.')
 
 args, unknown = parser.parse_known_args()
 
+## save the args??
+
 assert args.n_views == 2, "Only two view training is supported. Please use --n-views 2."
     # check if gpu training is available
 if not args.disable_cuda and torch.cuda.is_available():
@@ -324,12 +412,41 @@ else:
     args.gpu_index = -1
 
 
-model = GNNEncoder()
+    
+# Fixing seed after parsing args
+if args.seed is not None:
+    SEED = args.seed
+    
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+torch.cuda.manual_seed_all(SEED)
+
+
+
+## Specify the model here.
+#model = PointNetEncoder()
+model = GravNetEncoder()
+
+def count_trainable_parameters(mymodel):
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+print("Trainable parameters:", count_trainable_parameters(model))
+
+# Load previous weights if needed
+
+
+prev_weights = torch.load('/global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges/model_epoch_12.pth', map_location='cpu')   # add this)
+
+model.load_state_dict(prev_weights)
+
 
 
 # Move to GPU if available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
+
+print(device)
 
 optimizer = torch.optim.Adam(model.parameters(), args.lr, weight_decay=args.weight_decay)
 
@@ -343,10 +460,14 @@ with torch.cuda.device(args.gpu_index):
     
     simclr = Contrastive_Learning(model=model, optimizer=optimizer, scheduler=scheduler, args=args)
 
-    print("Lesss gooo")
+    folder = '/global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges/'
     
-    simclr.train(train_loader, val_loader, save_model=True, folder = '/global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/', wandb_=True, key='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', name='Test-run-CaloHitsGNN-ColliderML-mixed-ttbar-dihiggs')
+    os.makedirs(folder, exist_ok=True)
+    
+    np.save(folder+'stats.npy',{'means': MEANS, 'stds': STDS, 'events': 544})
+      
+    simclr.train(train_loader, val_loader, off=12, skip=2, save_model=True, folder = folder, wandb_=True, key='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', name='gravnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges-MAY6')
 
-
+             
 
 

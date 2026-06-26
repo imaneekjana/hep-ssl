@@ -1,0 +1,35 @@
+loader: 100%|███████████████████████████████████████████████████████████████████████████████████| 42/42 [49:49<00:00, 71.19s/it]
+loader: 100%|███████████████████████████████████████████████████████████████████████████████████| 42/42 [47:26<00:00, 67.77s/it]
+loss_train
+	loss_train       	 (min:    1.330, max:    1.330, cur:    1.330)
+loss_val
+	loss_val         	 (min:    1.291, max:    1.291, cur:    1.291)
+loader: 100%|███████████████████████████████████████████████████████████████████████████████████| 42/42 [47:39<00:00, 68.07s/it]
+loss_train
+	loss_train       	 (min:    1.159, max:    1.330, cur:    1.159)
+loss_val
+	loss_val         	 (min:    1.169, max:    1.291, cur:    1.169)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges/model_epoch_8.pth
+loader: 100%|███████████████████████████████████████████████████████████████████████████████████| 42/42 [47:17<00:00, 67.55s/it]
+loss_train
+	loss_train       	 (min:    1.098, max:    1.330, cur:    1.098)
+loss_val
+	loss_val         	 (min:    1.169, max:    1.291, cur:    1.229)
+loader: 100%|███████████████████████████████████████████████████████████████████████████████████| 42/42 [47:52<00:00, 68.39s/it]
+loss_train
+	loss_train       	 (min:    0.996, max:    1.330, cur:    0.996)
+loss_val
+	loss_val         	 (min:    0.953, max:    1.291, cur:    0.953)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges/model_epoch_10.pth
+loader: 100%|███████████████████████████████████████████████████████████████████████████████████| 42/42 [47:20<00:00, 67.63s/it]
+loss_train
+	loss_train       	 (min:    0.882, max:    1.330, cur:    0.882)
+loss_val
+	loss_val         	 (min:    0.952, max:    1.291, cur:    0.952)
+epoch:  50%|███████████████████████████████████████▌                                       | 6/12 [5:28:33<5:26:59, 3269.86s/it]
+loss_train
+	loss_train       	 (min:    0.786, max:    1.330, cur:    0.786)
+loss_val
+	loss_val         	 (min:    0.790, max:    1.291, cur:    0.790)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges/model_epoch_12.pth
+loader:  50%|█████████████████████████████████████████▌                                         | 21/42 [24:16<28:56, 82.71s/it]

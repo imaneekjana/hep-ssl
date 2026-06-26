@@ -43,7 +43,8 @@ class EventGraphBuilder:
             hits = torch.tensor(hits, dtype=torch.float)
 
         pos = hits[:, :3]      # spatial coordinates
-        features = hits        # (x, y, z, E)
+        features = hits        # (x, y, z, log_E)
+        
 
         #edge_index = knn_graph(pos, k=self.k, loop=False)
 
@@ -67,6 +68,33 @@ class EventGraphBuilder:
 ###-------------------------------xxxxxxxxx-------------------------------######
 
 
+import numpy as np
+
+def to_cylindrical(hits):
+    """
+    hits: ndarray of shape (N,4)
+          columns = [x, y, z, logE]
+
+    returns:
+          [r, phi, eta, logE]
+    """
+
+    x = hits[:, 0]
+    y = hits[:, 1]
+    z = hits[:, 2]
+    logE = hits[:, 3]
+
+    r = np.sqrt(x**2 + y**2)
+
+    phi = np.arctan2(y, x)
+
+    theta = np.arctan2(r, z)
+
+    eta = -np.log(np.tan(theta / 2))
+
+    hits_c = np.stack([r, phi, eta, logE], axis=1)
+
+    return hits_c
 
 
 class ContrastiveLearningDataset(IterableDataset):
@@ -77,7 +105,7 @@ class ContrastiveLearningDataset(IterableDataset):
         original, view1, view2
     """
 
-    def __init__(self, base_dataset, transform=None):
+    def __init__(self, base_dataset, mean, std, transform=None, cylindrical=False):
 
         """
         base_dataset is an iterable dataset with each item being a dictionary with the key "calo_hit_features".
@@ -88,6 +116,9 @@ class ContrastiveLearningDataset(IterableDataset):
         super().__init__()
         self.base_dataset = base_dataset
         self.transform = transform
+        self.mean = mean
+        self.std = std
+        self.cylindrical = cylindrical
 
     def __len__(self):
 
@@ -108,13 +139,32 @@ class ContrastiveLearningDataset(IterableDataset):
                 view1 = self.transform(event)
                 view2 = self.transform(event)
 
-            
-                
-            event_dict["calo_hit_features_1"] = view1.hits
-            event_dict["calo_hit_features_2"] = view2.hits
-            event_dict["calo_hit_features"] = event.hits
+            out_dict = {}
 
-            yield event_dict
+
+            if self.cylindrical == False:
+
+                out_dict["calo_hit_features_1"] = (view1.hits-self.mean)/(self.std + 1e-8)
+                out_dict["calo_hit_features_2"] = (view2.hits-self.mean)/(self.std + 1e-8)
+                out_dict["calo_hit_features"] = (event.hits-self.mean)/(self.std + 1e-8)
+
+            else:
+
+                out_dict["calo_hit_features_1"] = (to_cylindrical(view1.hits)-self.mean)/(self.std + 1e-8)
+                out_dict["calo_hit_features_2"] = (to_cylindrical(view2.hits)-self.mean)/(self.std + 1e-8)
+                out_dict["calo_hit_features"] = (to_cylindrical(event.hits)-self.mean)/(self.std + 1e-8)
+
+                
+
+            
+
+            '''
+            out_dict["calo_hit_features_1"] = view1.hits
+            out_dict["calo_hit_features_2"] = view2.hits
+            out_dict["calo_hit_features"] = event.hits
+            '''
+
+            yield out_dict
             
 
 
@@ -126,7 +176,7 @@ class ContrastiveLearningGraphDataset(IterableDataset):
          view1_graph, view2_graph
     """
 
-    def __init__(self, base_dataset, builder=EventGraphBuilder):
+    def __init__(self, base_dataset, builder=EventGraphBuilder()):
 
         """
         base_dataset must be an iterable with dictionaries having the keys, "calo_hit_features_1" and "calo_hit_features_2".
@@ -148,9 +198,84 @@ class ContrastiveLearningGraphDataset(IterableDataset):
             view1 = event_dict["calo_hit_features_1"]
             view2 = event_dict["calo_hit_features_2"]
 
-            view1_graph = self.builder()(view1)
-            view2_graph = self.builder()(view2)
+            view1_graph = self.builder(view1)
+            view2_graph = self.builder(view2)
 
             yield view1_graph, view2_graph
             
 
+
+
+
+class ColliderMLHits(IterableDataset):
+    def __init__(
+        self, calo_hits, split, shuffle_files=False, train_fraction=0.8):
+        """
+        Initialize the dataset.
+
+        Args:
+            calo_hits : calo_hit data for events.
+            shuffle_files (bool): Whether to shuffle the order of parquet files.
+        """
+        
+        self.calo_hits = calo_hits
+        self.shuffle_files = shuffle_files
+        
+        
+
+        self.split = split
+        if self.split is not None:
+            split_index = int(len(self.calo_hits) * train_fraction)
+            if self.split == "train":
+                self.calo_hits = self.calo_hits[:split_index]
+            elif self.split == "val":
+                self.calo_hits = self.calo_hits[split_index:]
+
+        if self.shuffle_files:
+            self.shuffle_shards()
+
+    def __len__(self):
+        """
+        Return the number of events in the dataset.
+        """
+        return len(self.calo_hits) 
+
+    def shuffle_shards(self):
+        """
+        Shuffle the events in calo_hits
+        """
+        random.shuffle(self.calo_hits)
+
+    def __iter__(self):
+        logger = logging.getLogger(__name__)
+        self.sample_counter = 0  # Reset sample counter for each iteration or each epoch
+        #worker_info = torch.utils.data.get_worker_info()
+        
+
+        
+        data = self.calo_hits
+        
+        for event_i in range(len(self.calo_hits)):
+
+            data_i = data[event_i]
+
+            x   = data_i['x'].to_numpy()[0]
+            y   = data_i['y'].to_numpy()[0]
+            z   = data_i['z'].to_numpy()[0]
+            e   = data_i['total_energy'].to_numpy()[0]
+
+            # Log-transform energy
+            e_log = np.log(e + 1e-6)
+
+            calo_hit_features = np.column_stack((x, y, z, e_log)).astype(np.float32)
+
+           
+
+            #f_i = len(data_i['x'].to_numpy()[0]) if len(data_i['x'].to_numpy()[0])<8000 else 8000
+
+            yield {
+
+                "calo_hit_features": calo_hit_features
+
+            }
+         

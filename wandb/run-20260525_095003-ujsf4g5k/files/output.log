@@ -1,0 +1,62 @@
+loader: 100%|███████████████████████████████████████████████████████████| 18/18 [25:30<00:00, 85.03s/it]
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [24:37<00:00, 82.08s/it]
+loss_train
+	loss_train       	 (min:    0.558, max:    0.558, cur:    0.558)
+loss_val
+	loss_val         	 (min:    0.425, max:    0.425, cur:    0.425)
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [24:24<00:00, 81.38s/it]
+loss_train
+	loss_train       	 (min:    0.352, max:    0.558, cur:    0.352)
+loss_val
+	loss_val         	 (min:    0.425, max:    0.440, cur:    0.440)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_rot_0.39_noise_0.05/model_epoch_12.pth
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [24:20<00:00, 81.12s/it]
+loss_train
+	loss_train       	 (min:    0.315, max:    0.558, cur:    0.315)
+loss_val
+	loss_val         	 (min:    0.345, max:    0.440, cur:    0.345)
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [24:17<00:00, 80.97s/it]
+loss_train
+	loss_train       	 (min:    0.304, max:    0.558, cur:    0.304)
+loss_val
+	loss_val         	 (min:    0.345, max:    0.440, cur:    0.345)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_rot_0.39_noise_0.05/model_epoch_14.pth
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [24:42<00:00, 82.38s/it]
+loss_train
+	loss_train       	 (min:    0.266, max:    0.558, cur:    0.266)
+loss_val
+	loss_val         	 (min:    0.325, max:    0.440, cur:    0.325)
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [23:53<00:00, 79.62s/it]
+loss_train
+	loss_train       	 (min:    0.266, max:    0.558, cur:    0.282)
+loss_val
+	loss_val         	 (min:    0.325, max:    0.440, cur:    0.339)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_rot_0.39_noise_0.05/model_epoch_16.pth
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [24:26<00:00, 81.46s/it]
+loss_train
+	loss_train       	 (min:    0.252, max:    0.558, cur:    0.252)
+loss_val
+	loss_val         	 (min:    0.310, max:    0.440, cur:    0.310)
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [24:39<00:00, 82.18s/it]
+loss_train
+	loss_train       	 (min:    0.223, max:    0.558, cur:    0.223)
+loss_val
+	loss_val         	 (min:    0.286, max:    0.440, cur:    0.286)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_rot_0.39_noise_0.05/model_epoch_18.pth
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [24:19<00:00, 81.10s/it]
+loss_train
+	loss_train       	 (min:    0.191, max:    0.558, cur:    0.191)
+loss_val
+	loss_val         	 (min:    0.286, max:    0.440, cur:    0.308)
+loader: 100%|██████████████████████████████████████████████████████████████████| 18/18 [24:12<00:00, 80.68s/it]
+loss_train
+	loss_train       	 (min:    0.191, max:    0.558, cur:    0.235)
+loss_val
+	loss_val         	 (min:    0.286, max:    0.440, cur:    0.304)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_dihiggs_rot_0.39_noise_0.05/model_epoch_20.pth
+epoch:  61%|█████████████████████████████████                     | 11/18 [5:30:33<3:29:17, 1793.86s/it]80s/it]
+loss_train
+	loss_train       	 (min:    0.191, max:    0.558, cur:    0.203)
+loss_val
+	loss_val         	 (min:    0.206, max:    0.440, cur:    0.206)
+loader:  94%|██████████████████████████████████████████████████████████████▎   | 17/18 [22:48<01:25, 85.16s/it]

@@ -1,0 +1,10 @@
+Loading conda
+Loaded conda
+Activating colliderml-env
+Activated colliderml-env
+Changed directory
+Trying to run the script
+[2026-04-03T14:42:06.541] error: Detected 1 oom_kill event in StepId=50941544.0. Some of the step tasks have been OOM Killed.
+srun: error: nid001408: task 2: Out Of Memory
+srun: Terminating StepId=50941544.0
+[2026-04-03T14:42:07.747] error: *** STEP 50941544.0 ON nid001408 CANCELLED AT 2026-04-03T14:42:07 DUE TO TASK FAILURE ***

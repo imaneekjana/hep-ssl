@@ -1,0 +1,41 @@
+2026-03-20 07:10:22,610 INFO    MainThread:709494 [wandb_setup.py:_flush():81] Current SDK version is 0.25.0
+2026-03-20 07:10:22,612 INFO    MainThread:709494 [wandb_setup.py:_flush():81] Configure stats pid to 709494
+2026-03-20 07:10:22,612 INFO    MainThread:709494 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-03-20 07:10:22,613 INFO    MainThread:709494 [wandb_init.py:setup_run_log_directory():717] Logging user logs to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/notebooks/wandb/run-20260320_071022-9dad0v89/logs/debug.log
+2026-03-20 07:10:22,613 INFO    MainThread:709494 [wandb_init.py:setup_run_log_directory():718] Logging internal logs to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/notebooks/wandb/run-20260320_071022-9dad0v89/logs/debug-internal.log
+2026-03-20 07:10:22,614 INFO    MainThread:709494 [wandb_init.py:monkeypatch_ipython():636] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x7f018bb0fd90>
+2026-03-20 07:10:22,614 INFO    MainThread:709494 [wandb_init.py:init():844] calling init triggers
+2026-03-20 07:10:22,614 INFO    MainThread:709494 [wandb_init.py:init():849] wandb.init called with sweep_config: {}
+config: {'workers': 12, 'epochs': 3, 'batch_size': 32, 'lr': 0.0003, 'weight_decay': 0.0001, 'seed': None, 'disable_cuda': False, 'fp16_precision': False, 'out_dim': 16, 'feat_dim': 32, 'log_every_n_steps': 100, 'temperature': 0.07, 'n_views': 2, 'gpu_index': 0, 'device': device(type='cuda'), '_wandb': {}}
+2026-03-20 07:10:22,615 INFO    MainThread:709494 [wandb_init.py:init():892] starting backend
+2026-03-20 07:10:23,369 INFO    MainThread:709494 [wandb_init.py:init():895] sending inform_init request
+2026-03-20 07:10:23,399 INFO    MainThread:709494 [wandb_init.py:init():903] backend started and connected
+2026-03-20 07:10:23,402 INFO    MainThread:709494 [wandb_run.py:_label_probe_notebook():1333] probe notebook
+2026-03-20 07:10:23,404 INFO    MainThread:709494 [wandb_run.py:_label_probe_notebook():1343] Unable to probe notebook: 'NoneType' object has no attribute 'get'
+2026-03-20 07:10:23,404 INFO    MainThread:709494 [wandb_init.py:init():973] updated telemetry
+2026-03-20 07:10:24,060 INFO    MainThread:709494 [wandb_init.py:init():997] communicating run to backend with 90.0 second timeout
+2026-03-20 07:10:24,911 INFO    MainThread:709494 [wandb_init.py:init():1042] starting run threads in backend
+2026-03-20 07:10:26,264 INFO    MainThread:709494 [wandb_run.py:_console_start():2524] atexit reg
+2026-03-20 07:10:26,264 INFO    MainThread:709494 [wandb_run.py:_redirect():2373] redirect: wrap_raw
+2026-03-20 07:10:26,265 INFO    MainThread:709494 [wandb_run.py:_redirect():2442] Wrapping output streams.
+2026-03-20 07:10:26,265 INFO    MainThread:709494 [wandb_run.py:_redirect():2465] Redirects installed.
+2026-03-20 07:10:26,295 INFO    MainThread:709494 [wandb_init.py:init():1082] run started, returning control to user process
+2026-03-20 07:11:49,040 INFO    MainThread:709494 [wandb_init.py:_post_run_cell_hook():606] [no run ID] resuming backend
+2026-03-20 07:12:11,165 INFO    MainThread:709494 [jupyter.py:save_ipynb():362] [no run ID] not saving jupyter notebook
+2026-03-20 07:12:11,166 INFO    MainThread:709494 [wandb_init.py:_pre_run_cell_hook():595] [no run ID] pausing backend
+2026-03-20 07:12:40,719 INFO    MainThread:709494 [wandb_init.py:_post_run_cell_hook():606] [no run ID] resuming backend
+2026-03-20 07:13:01,829 INFO    MainThread:709494 [jupyter.py:save_ipynb():362] [no run ID] not saving jupyter notebook
+2026-03-20 07:13:01,830 INFO    MainThread:709494 [wandb_init.py:_pre_run_cell_hook():595] [no run ID] pausing backend
+2026-03-20 07:13:02,360 INFO    MainThread:709494 [wandb_init.py:_post_run_cell_hook():606] [no run ID] resuming backend
+2026-03-20 07:13:10,873 INFO    MainThread:709494 [jupyter.py:save_ipynb():362] [no run ID] not saving jupyter notebook
+2026-03-20 07:13:10,874 INFO    MainThread:709494 [wandb_init.py:_pre_run_cell_hook():595] [no run ID] pausing backend
+2026-03-20 07:13:10,878 INFO    MainThread:709494 [wandb_init.py:_post_run_cell_hook():606] [no run ID] resuming backend
+2026-03-20 07:13:32,271 INFO    MainThread:709494 [jupyter.py:save_ipynb():362] [no run ID] not saving jupyter notebook
+2026-03-20 07:13:32,272 INFO    MainThread:709494 [wandb_init.py:_pre_run_cell_hook():595] [no run ID] pausing backend
+2026-03-20 07:13:32,846 INFO    MainThread:709494 [wandb_run.py:_finish():2291] finishing run aneekjana-university-of-wisconsin-madison/Test-run-CaloHitsGNN-ColliderML-mixed-ttbar-dihiggs/9dad0v89
+2026-03-20 07:13:32,852 INFO    MainThread:709494 [jupyter.py:save_ipynb():362] not saving jupyter notebook
+2026-03-20 07:13:32,852 INFO    MainThread:709494 [wandb_init.py:_jupyter_teardown():621] cleaning up jupyter logic
+2026-03-20 07:13:32,853 INFO    MainThread:709494 [wandb_run.py:_atexit_cleanup():2490] got exitcode: 0
+2026-03-20 07:13:32,854 INFO    MainThread:709494 [wandb_run.py:_restore():2472] restore
+2026-03-20 07:13:32,854 INFO    MainThread:709494 [wandb_run.py:_restore():2478] restore done
+2026-03-20 07:13:34,365 INFO    MainThread:709494 [wandb_run.py:_footer_sync_info():3868] logging synced files

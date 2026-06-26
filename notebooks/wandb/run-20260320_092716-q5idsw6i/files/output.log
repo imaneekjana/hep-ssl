@@ -1,0 +1,21 @@
+epoch:   0%|          | 0/4 [00:00<?, ?it/s]  /global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(       | 0/40 [00:00<?, ?it/s]
+loader: 100%|██████████| 40/40 [47:51<00:00, 71.80s/it]
+loader: 100%|██████████| 40/40 [45:18<00:00, 67.96s/it]]
+loss_train
+	loss_train       	 (min:    4.143, max:    4.143, cur:    4.143)
+loss_val
+	loss_val         	 (min:    4.143, max:    4.143, cur:    4.143)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/model_epoch_1.pth
+loader: 100%|██████████| 40/40 [45:50<00:00, 68.76s/it]it]
+loss_train
+	loss_train       	 (min:    4.143, max:    4.143, cur:    4.143)
+loss_val
+	loss_val         	 (min:    4.143, max:    4.143, cur:    4.143)
+epoch:  75%|███████▌  | 3/4 [2:55:15<58:13, 3493.51s/it]
+loss_train
+	loss_train       	 (min:    4.143, max:    4.143, cur:    4.143)
+loss_val
+	loss_val         	 (min:    4.143, max:    4.143, cur:    4.143)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/model_epoch_3.pth
+loader:  85%|████████▌ | 34/40 [39:02<07:47, 77.98s/it]

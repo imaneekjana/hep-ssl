@@ -1,0 +1,31 @@
+epoch:   0%|                                                                             | 0/32 [00:00<?, ?it/s]/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(                                                                         | 0/40 [00:00<?, ?it/s]
+loader: 100%|███████████████████████████████████████████████████████████████████| 40/40 [47:49<00:00, 71.74s/it]
+loader: 100%|███████████████████████████████████████████████████████████████████| 40/40 [43:43<00:00, 65.58s/it]
+loss_train
+	loss_train       	 (min:    4.143, max:    4.143, cur:    4.143)
+loss_val
+	loss_val         	 (min:    4.143, max:    4.143, cur:    4.143)
+loader: 100%|███████████████████████████████████████████████████████████████████| 40/40 [42:19<00:00, 63.50s/it]
+loss_train
+	loss_train       	 (min:    4.143, max:    4.143, cur:    4.143)
+loss_val
+	loss_val         	 (min:    4.143, max:    4.143, cur:    4.143)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/models_only_ttbar_1600_events_no_edges/model_epoch_2.pth
+loader: 100%|███████████████████████████████████████████████████████████████████| 40/40 [42:51<00:00, 64.28s/it]
+loss_train
+	loss_train       	 (min:    4.143, max:    4.143, cur:    4.143)
+loss_val
+	loss_val         	 (min:    4.143, max:    4.143, cur:    4.143)
+loader: 100%|███████████████████████████████████████████████████████████████████| 40/40 [43:47<00:00, 65.69s/it]
+loss_train
+	loss_train       	 (min:    4.143, max:    4.143, cur:    4.143)
+loss_val
+	loss_val         	 (min:    4.143, max:    4.143, cur:    4.143)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/models_only_ttbar_1600_events_no_edges/model_epoch_4.pth
+epoch:  16%|█████████▋                                                    | 5/32 [4:32:36<24:16:25, 3236.51s/it]
+loss_train
+	loss_train       	 (min:    4.143, max:    4.143, cur:    4.143)
+loss_val
+	loss_val         	 (min:    4.143, max:    4.143, cur:    4.143)
+loader:  25%|████████████████▊                                                  | 10/40 [11:03<32:44, 65.49s/it]

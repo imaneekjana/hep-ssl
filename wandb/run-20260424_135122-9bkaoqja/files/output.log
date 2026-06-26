@@ -1,0 +1,82 @@
+epoch:   0%|                                                                               | 0/32 [00:00<?, ?it/s]/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(                                                                          | 0/240 [00:00<?, ?it/s]
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [23:32<00:00,  5.89s/it]
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [20:42<00:00,  5.18s/it]
+loss_train
+	loss_train       	 (min:    0.614, max:    0.614, cur:    0.614)
+loss_val
+	loss_val         	 (min:    0.200, max:    0.200, cur:    0.200)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:24<00:00,  4.35s/it]
+loss_train
+	loss_train       	 (min:    0.146, max:    0.614, cur:    0.146)
+loss_val
+	loss_val         	 (min:    0.101, max:    0.200, cur:    0.101)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:06<00:00,  4.28s/it]
+loss_train
+	loss_train       	 (min:    0.086, max:    0.614, cur:    0.086)
+loss_val
+	loss_val         	 (min:    0.071, max:    0.200, cur:    0.071)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:31<00:00,  4.38s/it]
+loss_train
+	loss_train       	 (min:    0.068, max:    0.614, cur:    0.068)
+loss_val
+	loss_val         	 (min:    0.061, max:    0.200, cur:    0.061)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/models_4_only_ttbar_no_crop_no_noise/model_epoch_4.pth
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [16:55<00:00,  4.23s/it]
+loss_train
+	loss_train       	 (min:    0.051, max:    0.614, cur:    0.051)
+loss_val
+	loss_val         	 (min:    0.050, max:    0.200, cur:    0.050)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:14<00:00,  4.31s/it]
+loss_train
+	loss_train       	 (min:    0.042, max:    0.614, cur:    0.042)
+loss_val
+	loss_val         	 (min:    0.045, max:    0.200, cur:    0.045)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:25<00:00,  4.36s/it]
+loss_train
+	loss_train       	 (min:    0.038, max:    0.614, cur:    0.038)
+loss_val
+	loss_val         	 (min:    0.036, max:    0.200, cur:    0.036)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:15<00:00,  4.31s/it]
+loss_train
+	loss_train       	 (min:    0.033, max:    0.614, cur:    0.033)
+loss_val
+	loss_val         	 (min:    0.032, max:    0.200, cur:    0.032)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/models_4_only_ttbar_no_crop_no_noise/model_epoch_8.pth
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:27<00:00,  4.36s/it]
+loss_train
+	loss_train       	 (min:    0.032, max:    0.614, cur:    0.032)
+loss_val
+	loss_val         	 (min:    0.031, max:    0.200, cur:    0.031)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:16<00:00,  4.32s/it]
+loss_train
+	loss_train       	 (min:    0.026, max:    0.614, cur:    0.026)
+loss_val
+	loss_val         	 (min:    0.030, max:    0.200, cur:    0.030)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:19<00:00,  4.33s/it]
+loss_train
+	loss_train       	 (min:    0.022, max:    0.614, cur:    0.022)
+loss_val
+	loss_val         	 (min:    0.029, max:    0.200, cur:    0.029)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:34<00:00,  4.39s/it]
+loss_train
+	loss_train       	 (min:    0.022, max:    0.614, cur:    0.022)
+loss_val
+	loss_val         	 (min:    0.024, max:    0.200, cur:    0.024)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml/models_4_only_ttbar_no_crop_no_noise/model_epoch_12.pth
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:18<00:00,  4.33s/it]
+loss_train
+	loss_train       	 (min:    0.022, max:    0.614, cur:    0.022)
+loss_val
+	loss_val         	 (min:    0.024, max:    0.200, cur:    0.025)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:05<00:00,  4.27s/it]
+loss_train
+	loss_train       	 (min:    0.020, max:    0.614, cur:    0.020)
+loss_val
+	loss_val         	 (min:    0.024, max:    0.200, cur:    0.024)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:04<00:00,  4.27s/it]
+loss_train
+	loss_train       	 (min:    0.020, max:    0.614, cur:    0.032)
+loss_val
+	loss_val         	 (min:    0.024, max:    0.200, cur:    0.029)
+loader: 100%|███████████████████████████████████████████████████████████████████| 240/240 [17:04<00:00,  4.56s/it]

@@ -53,13 +53,23 @@ class Transform:
 
 
 class RandomRotateXY(Transform):
-    def __init__(self, angle_range=(0, 2*np.pi)):
+    def __init__(self, angle_range=(0, 2*np.pi), gaussian = False):
         self.angle_range = angle_range
+
+        self.gaussian = gaussian
 
     def __call__(self, event: CaloEvent):
         event_c = event.copy()
+
+        if self.gaussian == False:
+
+            theta = np.random.uniform(*self.angle_range)
+
+        else:
+
+            theta = np.random.normal(loc=0.0, scale=self.angle_range[1])
         
-        theta = np.random.uniform(*self.angle_range)
+        
 
         #theta = np.pi/2
 
@@ -149,31 +159,61 @@ class EnergyWhiteNoise(Transform):
     def __call__(self, event: CaloEvent):
         event_c = event.copy()
 
-        noise = np.abs(np.random.normal(
+        event_c.hits = event.hits.copy()
+
+        noise = self.sigma*np.random.normal(
             loc=0.0,
-            scale=self.sigma,
-            size=len(event.hits)
-        ))
+            scale=1.0,
+            size=event_c.hits.shape[0])
+        
 
-        event_c.hits[:, 3] += noise
+        log_en = event_c.hits[:, 3]
 
-        if self.clip_min is not None:
-            event_c.hits[:, 3] = np.clip(
-                event_c.hits[:, 3],
-                self.clip_min,
-                None
-            )
+        event_c.hits[:, 3] = log_en + noise
+
 
         return event_c
+
+class NoiseXYZ(Transform):
+
+    def __init__(self, sigma=5.0, clip_min=0.0):
+        self.sigma = sigma
+        self.clip_min = clip_min
+
+    def __call__(self, event: CaloEvent):
+        
+        event_c = event.copy()
+
+        event_c.hits = event.hits.copy()
+
+        for i in range(3):
+
+            noise = self.sigma*np.random.normal(
+            loc=0.0,
+            scale=1.0,
+            size=event_c.hits.shape[0])
+        
+
+            x_i = event_c.hits[:, i]
+
+            event_c.hits[:, i] = x_i + noise
+        
+
+        return event_c
+
+    
+
+
 
 class Compose(Transform):
     def __init__(self, transforms):
         self.transforms = transforms
 
     def __call__(self, event):
+        event_c = event.copy()
         for t in self.transforms:
-            event = t(event)
-        return event
+            event_c = t(event_c)
+        return event_c
 
 
 

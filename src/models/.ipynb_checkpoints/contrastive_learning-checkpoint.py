@@ -82,7 +82,7 @@ class Contrastive_Learning(object):
         
         modelh = self.model
         
-        modelh.eval()
+        #modelh.eval()
         
         loss_ = 0
         
@@ -110,7 +110,7 @@ class Contrastive_Learning(object):
     
     
 
-    def train(self, train_loader, val_loader, save_model = False, folder = '', wandb_ = False, **key_name):
+    def train(self, train_loader, val_loader, off=0, skip=5, save_model = False, folder = '', wandb_ = False, **key_name):
 
         #Scaler = GradScaler(enabled=self.args.fp16_precision)
 
@@ -133,7 +133,8 @@ class Contrastive_Learning(object):
 
         
         n_iter = 0
-    
+        
+        self.model.train()
 
         for epoch_counter in tqdm(range(self.args.epochs),desc='epoch'):
             loss_train = 0
@@ -177,9 +178,11 @@ class Contrastive_Learning(object):
             
 
             if save_model ==True:
+
+                os.makedirs(folder, exist_ok=True)
                 
-                if epoch_counter%10==0:
-                    save_path = folder + f"model_epoch_{epoch_counter+1}.pth"
+                if epoch_counter%skip==skip-1:
+                    save_path = folder + f"model_epoch_{off+epoch_counter+1}.pth"
                     torch.save(self.model.state_dict(), save_path)
                     print(f"Model saved to {save_path}")
                     #wandb.save(save_path)

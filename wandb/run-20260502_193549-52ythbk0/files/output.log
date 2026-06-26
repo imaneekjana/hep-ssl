@@ -1,0 +1,35 @@
+loader: 100%|███████████████████████████████████████████████████████████████████| 42/42 [49:12<00:00, 70.29s/it]
+loader: 100%|███████████████████████████████████████████████████████████████████| 42/42 [46:04<00:00, 65.82s/it]
+loss_train
+	loss_train       	 (min:    3.229, max:    3.229, cur:    3.229)
+loss_val
+	loss_val         	 (min:    2.811, max:    2.811, cur:    2.811)
+loader: 100%|███████████████████████████████████████████████████████████████████| 42/42 [46:05<00:00, 65.85s/it]
+loss_train
+	loss_train       	 (min:    2.658, max:    3.229, cur:    2.658)
+loss_val
+	loss_val         	 (min:    2.308, max:    2.811, cur:    2.308)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/pointnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges/model_epoch_2.pth
+loader: 100%|███████████████████████████████████████████████████████████████████| 42/42 [46:36<00:00, 66.58s/it]
+loss_train
+	loss_train       	 (min:    2.345, max:    3.229, cur:    2.345)
+loss_val
+	loss_val         	 (min:    2.136, max:    2.811, cur:    2.136)
+loader: 100%|███████████████████████████████████████████████████████████████████| 42/42 [45:44<00:00, 65.35s/it]
+loss_train
+	loss_train       	 (min:    2.036, max:    3.229, cur:    2.036)
+loss_val
+	loss_val         	 (min:    2.032, max:    2.811, cur:    2.032)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/pointnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges/model_epoch_4.pth
+loader: 100%|███████████████████████████████████████████████████████████████████| 42/42 [46:16<00:00, 66.11s/it]
+loss_train
+	loss_train       	 (min:    1.903, max:    3.229, cur:    1.903)
+loss_val
+	loss_val         	 (min:    1.737, max:    2.811, cur:    1.737)
+epoch:  19%|███████████▋                                                  | 6/32 [5:19:25<22:54:50, 3172.69s/it]
+loss_train
+	loss_train       	 (min:    1.728, max:    3.229, cur:    1.728)
+loss_val
+	loss_val         	 (min:    1.714, max:    2.811, cur:    1.714)
+Model saved to /global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/pointnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges/model_epoch_6.pth
+loader:  50%|█████████████████████████████████▌                                 | 21/42 [23:23<27:24, 78.32s/it]

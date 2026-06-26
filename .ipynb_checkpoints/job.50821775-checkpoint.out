@@ -1,0 +1,4 @@
+[2026-04-01T16:25:35.269] error: Detected 1 oom_kill event in StepId=50821775.0. Some of the step tasks have been OOM Killed.
+srun: error: nid001465: task 0: Out Of Memory
+srun: Terminating StepId=50821775.0
+[2026-04-01T16:25:35.507] error: *** STEP 50821775.0 ON nid001465 CANCELLED AT 2026-04-01T16:25:35 DUE TO TASK FAILURE ***

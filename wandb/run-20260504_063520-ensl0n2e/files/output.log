@@ -1,0 +1,15 @@
+loader: 100%|██████████████████████████████████████████████████████████████████████████| 42/42 [46:13<00:00, 66.04s/it]
+epoch: 100%|███████████████████████████████████████████████████████████████████████████| 1/1 [52:49<00:00, 3169.76s/it]
+loss_train
+	loss_train       	 (min:    1.397, max:    1.397, cur:    1.397)
+loss_val
+	loss_val         	 (min:    1.315, max:    1.315, cur:    1.315)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/train_gnn_colliderml.py", line 466, in <module>
+    simclr.train(train_loader, val_loader, off=12, skip=2, save_model=False, folder = folder, wandb_=True, key='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', name='pointnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges-MAY2')
+  File "/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py", line 200, in train
+    wandb.save(save_path)
+               ^^^^^^^^^
+UnboundLocalError: cannot access local variable 'save_path' where it is not associated with a value
