@@ -234,7 +234,7 @@ class GraphConvEncoder(nn.Module):
     def forward(self, data):
         x, batch, edge_index = data.x, data.batch, data.edge_index
 
-        log_e = data.x[:, 3]                          # raw energy per hit [N]
+        log_e = data.x[:, -1]                          # raw energy per hit [N]
         w = softmax(log_e, batch)                     # normalize within each graph [N]
         
 
@@ -352,7 +352,7 @@ class GravNetEncoder(nn.Module):
         x, batch = data.x, data.batch
         # note: no edge_index needed — GravNet builds its own graph
 
-        log_e = data.x[:, 3]                          # raw energy per hit [N]
+        log_e = data.x[:, -1]                          # raw energy per hit [N]
         w = softmax(log_e, batch)  
 
         # 1. embed hits

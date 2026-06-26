@@ -36,19 +36,19 @@ class EventGraphBuilder:
 
     def __call__(self, hits):
         """
-        hits: numpy array or tensor [N, 4]
+        hits: numpy array or tensor [N, d+1], d spatial coordinates + 1 energy
         """
 
         if not torch.is_tensor(hits):
             hits = torch.tensor(hits, dtype=torch.float)
 
-        pos = hits[:, :3]      # spatial coordinates
+        pos = hits[:, :-1]      # spatial coordinates
         features = hits        # (x, y, z, log_E)
         
 
         #edge_index = knn_graph(pos, k=self.k, loop=False)
 
-        pos = hits[:, :3]
+        pos = hits[:, :-1]
         N = pos.shape[0]
 
         # Compute pairwise squared distances

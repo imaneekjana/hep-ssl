@@ -299,7 +299,8 @@ Specify the model
 """
 
 #model = PointNetEncoder()
-model = GravNetEncoder()
+
+model = GravNetEncoder(in_features=3, hidden_dim=16, latent_dim=64, proj_dim=32, k=8, space_dim=4, propagate_dim=16) # adjust the in_features properly, 2+1=3 for planar projections of hits
 
 
 
