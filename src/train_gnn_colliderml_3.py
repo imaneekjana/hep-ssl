@@ -361,8 +361,8 @@ augment = Compose([
 '''
 
 
-dataset_train = ColliderMLHits(calo_hits, "train")
-dataset_val = ColliderMLHits(calo_hits, "val")
+dataset_train = ColliderMLHits(calo_hits, split="train", shuffle_files=False, train_fraction=0.8, log=True)
+dataset_val = ColliderMLHits(calo_hits, split="val", shuffle_files=False, train_fraction=0.8, log=True)
 
 r = 0/STDS[2]
 

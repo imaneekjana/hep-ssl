@@ -489,7 +489,7 @@ class ContrastiveLearningGraphDatasetPlanar(IterableDataset):
 
 class ColliderMLHits(IterableDataset):
     def __init__(
-        self, calo_hits, split, shuffle_files=False, train_fraction=0.8):
+        self, calo_hits, split, shuffle_files=False, train_fraction=0.8, log=False):
         """
         Initialize the dataset.
 
@@ -547,7 +547,13 @@ class ColliderMLHits(IterableDataset):
             # Log-transform energy
             e_log = np.log(e + 1e-6)
 
-            calo_hit_features = np.column_stack((x, y, z, e)).astype(np.float32)
+            if log==True:
+                calo_hit_features = np.column_stack((x, y, z, e_log)).astype(np.float32)
+            else:
+                calo_hit_features = np.column_stack((x, y, z, e)).astype(np.float32)
+                
+
+            
 
            
 
