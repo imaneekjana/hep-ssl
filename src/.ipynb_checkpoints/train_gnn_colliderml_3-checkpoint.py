@@ -395,12 +395,23 @@ Specify the model
 #model = PointNetEncoder()
 model = GravNetEncoder()
 
+for graph1, _ in train_loader:
+
+    x = model(graph1)
+
+    break
+
+print("model working fine")
+
+
 def count_trainable_parameters(mymodel):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 print("Trainable parameters:", count_trainable_parameters(model))
 
 
+
+'''
 """
 Specify the folder
 """
@@ -457,8 +468,8 @@ with torch.cuda.device(args.gpu_index):
     simclr = Contrastive_Learning(model=model, optimizer=optimizer, scheduler=scheduler, args=args)
 
       
-    simclr.train(train_loader, val_loader, off=args.off, skip=2, save_model=True, folder = folder, wandb_=True, key='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', name='gravnet_models_{}_rot_{:.2f}_noise_{:.2f}'.format(args.split, args.rotation, args.energy_noise))
+    simclr.train(train_loader, val_loader, off=args.off, skip=1, save_model=True, folder = folder, wandb_=True, key='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', name='gravnet_models_{}_rot_{:.2f}_noise_{:.2f}'.format(args.split, args.rotation, args.energy_noise))
 
-             
+'''         
 
 

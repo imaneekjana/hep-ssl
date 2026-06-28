@@ -52,7 +52,7 @@ class EventGraphBuilder:
         N = pos.shape[0]
 
         # Compute pairwise squared distances
-        diff = pos.unsqueeze(1) - pos.unsqueeze(0)  # [N, N, 3]
+        diff = pos.unsqueeze(1) - pos.unsqueeze(0)  
         dist2 = (diff ** 2).sum(-1)
 
         # Select edges within radius (exclude self)
@@ -157,14 +157,24 @@ def bin_points_to_grid(x, y, v, x_min, x_max, y_min, y_max, nx, ny, cutoff=0.0, 
     cell_centers_y = np.asarray(Y_centers[mask], dtype=float).ravel()
     cell_values    = np.asarray(grid[mask], dtype=float).ravel()
 
+    assert len(x_centers) == nx
+    assert len(y_centers) == ny
+
 
     if typ == 'image':
 
-        return [grid, xe, ye]
+        image = np.empty((3, ny, nx), dtype=np.float32)
+
+        image[2] = grid
+        image[0] = x_centers[None, :]
+        image[1] = y_centers[:, None]
+
+        return image
+
 
     elif typ == 'hits':
 
-        return [np.column_stack((cell_centers_x, cell_centers_y, cell_values)).astype(np.float64)]
+        return np.column_stack((cell_centers_x, cell_centers_y, np.log(cell_values+ 1e-6))).astype(np.float64)
 
 
 
@@ -195,13 +205,13 @@ def projected_hits(hits, grid_size=32, typ='image'):
 
     type_dict = {}
 
-    type_dict['eta-phi'] = bin_points_to_grid(eta, phi, logE, min(eta), max(eta), min(phi), max(phi), grid_size, grid_size, cutoff=0.0, typ)
+    type_dict['eta-phi'] = bin_points_to_grid(eta, phi, logE, min(eta), max(eta), min(phi), max(phi), grid_size, grid_size, 0.0, typ)
 
-    type_dict['x-y'] = bin_points_to_grid(x, y, logE, min(x), max(x), min(y), max(y), grid_size, grid_size, cutoff=0.0, typ)
+    type_dict['x-y'] = bin_points_to_grid(x, y, logE, min(x), max(x), min(y), max(y), grid_size, grid_size, 0.0, typ)
 
-    type_dict['z-rho'] = bin_points_to_grid(z, rho, logE, min(z), max(z), min(rho), max(rho), grid_size, grid_size, cutoff=0.0, typ)
+    type_dict['z-rho'] = bin_points_to_grid(z, rho, logE, min(z), max(z), min(rho), max(rho), grid_size, grid_size, 0.0, typ)
 
-    type_dict['z-phi'] = bin_points_to_grid(z, phi, logE, min(z), max(z), min(phi), max(phi), grid_size, grid_size, cutoff=0.0, typ)
+    type_dict['z-phi'] = bin_points_to_grid(z, phi, logE, min(z), max(z), min(phi), max(phi), grid_size, grid_size, 0.0, typ)
 
 
     return type_dict
@@ -347,7 +357,7 @@ class ContrastiveLearningDatasetPlanar(IterableDataset):
 
             out_dict = {}
 
-            if mean==None and std==None:
+            if self.mean==None and self.std==None:
 
                 projected_hits1= projected_hits(view1.hits, self.grid_size, self.typ)
                 projected_hits2= projected_hits(view2.hits, self.grid_size, self.typ)
@@ -369,11 +379,11 @@ class ContrastiveLearningDatasetPlanar(IterableDataset):
                 projected_hits2= projected_hits(view2.hits, self.grid_size, self.typ)
                 projected_hits0= projected_hits(event.hits, self.grid_size, self.typ)
 
-                out_dict["calo_hit_features_1"] = [(projected_hits1[self.projs[i]][0]-self.mean[i])/self.std[i] for i in len(self.projs)]
+                out_dict["calo_hit_features_1"] = [(projected_hits1[self.projs[i]]-self.mean[i])/self.std[i] for i in len(self.projs)]
 
-                out_dict["calo_hit_features_2"] = [(projected_hits2[self.projs[i]][0]-self.mean[i])/self.std[i] for i in len(self.projs)]
+                out_dict["calo_hit_features_2"] = [(projected_hits2[self.projs[i]]-self.mean[i])/self.std[i] for i in len(self.projs)]
 
-                out_dict["calo_hit_features_0"] = [(projected_hits1[self.projs[i]][0]-self.mean[i])/self.std[i] for i in len(self.projs)]
+                out_dict["calo_hit_features_0"] = [(projected_hits1[self.projs[i]]-self.mean[i])/self.std[i] for i in len(self.projs)]
 
                 
 
@@ -425,6 +435,7 @@ class ContrastiveLearningGraphDataset(IterableDataset):
 
             yield view1_graph, view2_graph
             
+
 
 
 class ContrastiveLearningGraphDatasetPlanar(IterableDataset):
@@ -536,7 +547,7 @@ class ColliderMLHits(IterableDataset):
             # Log-transform energy
             e_log = np.log(e + 1e-6)
 
-            calo_hit_features = np.column_stack((x, y, z, e_log)).astype(np.float32)
+            calo_hit_features = np.column_stack((x, y, z, e)).astype(np.float32)
 
            
 

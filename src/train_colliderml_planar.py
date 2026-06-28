@@ -256,7 +256,7 @@ augment = Compose([
 dataset_train = ColliderMLHits(calo_hits, "train")
 dataset_val = ColliderMLHits(calo_hits, "val")
 
-r = 0/STDS[2] # r does not matter for GravNetEncoder, but for GraphConvEncoder
+r = 0 # r does not matter for GravNetEncoder, but for GraphConvEncoder
 
 
 
@@ -271,6 +271,8 @@ projs: subset of ['eta-phi', 'x-y', 'z-rho', 'z-phi']
 typ: can either be 'image' or 'hits'
 """
 
+
+
 dataset_train = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_train, MEANS, STDS,  augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
 
 dataset_val = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_val, MEANS, STDS, augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
@@ -279,6 +281,13 @@ dataset_val = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPl
 
 train_loader = DataLoader(dataset_train, batch_size=args.batch_size, drop_last=True)
 val_loader   = DataLoader(dataset_val,   batch_size=args.batch_size, drop_last=True)
+
+
+
+print("Data preprocessing working fine.")
+
+
+
 
 
 
@@ -301,6 +310,7 @@ Specify the model
 #model = PointNetEncoder()
 
 model = GravNetEncoder(in_features=3, hidden_dim=16, latent_dim=64, proj_dim=32, k=8, space_dim=4, propagate_dim=16) # adjust the in_features properly, 2+1=3 for planar projections of hits
+
 
 
 
