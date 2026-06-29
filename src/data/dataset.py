@@ -500,6 +500,7 @@ class ColliderMLHits(IterableDataset):
         
         self.calo_hits = calo_hits
         self.shuffle_files = shuffle_files
+        self.log = log
         
         
 
@@ -547,7 +548,7 @@ class ColliderMLHits(IterableDataset):
             # Log-transform energy
             e_log = np.log(e + 1e-6)
 
-            if log==True:
+            if self.log==True:
                 calo_hit_features = np.column_stack((x, y, z, e_log)).astype(np.float32)
             else:
                 calo_hit_features = np.column_stack((x, y, z, e)).astype(np.float32)
