@@ -1,8 +1,0 @@
-{"time":"2026-05-03T16:04:37.886442833-07:00","level":"INFO","msg":"stream: starting","core version":"0.25.0"}
-{"time":"2026-05-03T16:04:38.298406355-07:00","level":"INFO","msg":"stream: created new stream","id":"jw8qzjur"}
-{"time":"2026-05-03T16:04:38.298895109-07:00","level":"INFO","msg":"handler: started","stream_id":"jw8qzjur"}
-{"time":"2026-05-03T16:04:38.313372699-07:00","level":"INFO","msg":"stream: started","id":"jw8qzjur"}
-{"time":"2026-05-03T16:04:38.313406224-07:00","level":"INFO","msg":"writer: started","stream_id":"jw8qzjur"}
-{"time":"2026-05-03T16:04:38.313444037-07:00","level":"INFO","msg":"sender: started","stream_id":"jw8qzjur"}
-{"time":"2026-05-03T16:59:54.875694345-07:00","level":"ERROR","msg":"api: HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/aneekjana-university-of-wisconsin-madison/pointnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges-MAY2/jw8qzjur/file_stream"}
-{"time":"2026-05-03T16:59:54.877174726-07:00","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found url=https://api.wandb.ai/files/aneekjana-university-of-wisconsin-madison/pointnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges-MAY2/jw8qzjur/file_stream: {\"error\":\"run pointnet_models_ttbar_dihiggs_ggf_mixed_events_no_edges-MAY2/jw8qzjur not found while streaming file\"}"}

@@ -1,64 +1,0 @@
-Loading conda
-Loaded conda
-Activating colliderml-env
-Activated colliderml-env
-Changed directory
-Trying to run the script
-/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py:117: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
-  Scaler = GradScaler()
-wandb: [wandb.login()] Using explicit session credentials for https://api.wandb.ai.
-wandb: Appending key for api.wandb.ai to your netrc file: /global/homes/a/aneekj02/.netrc
-wandb: Currently logged in as: aneekjana (aneekjana-university-of-wisconsin-madison) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: setting up run zqqyydiw
-wandb: Tracking run with wandb version 0.25.0
-wandb: Run data is saved locally in /global/cfs/cdirs/m4474/aneek/particlemind_aneek/wandb/run-20260617_234320-zqqyydiw
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run dulcet-wood-1
-wandb: ⭐️ View project at https://wandb.ai/aneekjana-university-of-wisconsin-madison/gravnet_models_dihiggs_scale_5.0_events_1500_rot_0.39_noise_0.05
-wandb: 🚀 View run at https://wandb.ai/aneekjana-university-of-wisconsin-madison/gravnet_models_dihiggs_scale_5.0_events_1500_rot_0.39_noise_0.05/runs/zqqyydiw
-MEANS: [ 12.187225 -17.390442 292.72372   -7.845159]
-STDS:  [7.381826e+02 7.623583e+02 2.836444e+03 9.866622e-01]
-Trainable parameters: 59036
-cuda
-epoch:   0%|                                               | 0/18 [00:00<?, ?it/s]
-loader:   0%|                                              | 0/37 [00:00<?, ?it/s][A
-loader:   3%|▉                                  | 1/37 [05:35<3:21:21, 335.58s/it][A
-loader:   5%|█▉                                 | 2/37 [10:56<3:10:50, 327.15s/it][A
-loader:   8%|██▊                                | 3/37 [17:02<3:15:13, 344.51s/it][A
-loader:  11%|███▊                               | 4/37 [22:25<3:04:55, 336.23s/it][A
-loader:  14%|████▋                              | 5/37 [28:43<3:07:25, 351.43s/it][A
-loader:  16%|█████▋                             | 6/37 [34:06<2:56:24, 341.45s/it][A
-loader:  19%|██████▌                            | 7/37 [38:08<2:34:33, 309.12s/it][A
-loader:  22%|███████▌                           | 8/37 [42:54<2:25:54, 301.87s/it][A
-loader:  24%|████████▌                          | 9/37 [48:42<2:27:30, 316.07s/it][A
-loader:  27%|█████████▏                        | 10/37 [53:20<2:16:56, 304.32s/it][A
-loader:  30%|██████████                        | 11/37 [57:17<2:02:55, 283.69s/it][A
-loader:  32%|██████████▍                     | 12/37 [1:01:12<1:52:05, 269.03s/it][A
-loader:  35%|███████████▏                    | 13/37 [1:06:22<1:52:32, 281.37s/it][A
-loader:  38%|████████████                    | 14/37 [1:11:33<1:51:19, 290.39s/it][A
-loader:  41%|████████████▉                   | 15/37 [1:17:12<1:51:48, 304.95s/it][A
-loader:  43%|█████████████▊                  | 16/37 [1:22:48<1:50:00, 314.30s/it][A
-loader:  46%|██████████████▋                 | 17/37 [1:28:34<1:47:55, 323.77s/it][A
-loader:  49%|███████████████▌                | 18/37 [1:33:14<1:38:24, 310.79s/it][A
-loader:  51%|████████████████▍               | 19/37 [1:38:57<1:36:05, 320.28s/it][A
-loader:  54%|█████████████████▎              | 20/37 [1:43:30<1:26:46, 306.24s/it][A
-loader:  57%|██████████████████▏             | 21/37 [1:47:42<1:17:19, 289.97s/it][A
-loader:  59%|███████████████████             | 22/37 [1:52:15<1:11:13, 284.93s/it][A
-loader:  62%|███████████████████▉            | 23/37 [1:57:21<1:07:57, 291.26s/it][A
-loader:  65%|████████████████████▊           | 24/37 [2:01:37<1:00:48, 280.67s/it][A
-loader:  68%|██████████████████████▉           | 25/37 [2:05:30<53:14, 266.21s/it][A
-loader:  70%|███████████████████████▉          | 26/37 [2:10:37<51:04, 278.61s/it][A
-loader:  73%|████████████████████████▊         | 27/37 [2:15:12<46:13, 277.37s/it][A
-loader:  76%|█████████████████████████▋        | 28/37 [2:21:05<45:00, 300.06s/it][A
-loader:  78%|██████████████████████████▋       | 29/37 [2:25:38<38:55, 291.90s/it][A
-loader:  81%|███████████████████████████▌      | 30/37 [2:31:24<35:56, 308.08s/it][A
-loader:  84%|████████████████████████████▍     | 31/37 [2:36:36<30:56, 309.49s/it][A
-loader:  86%|█████████████████████████████▍    | 32/37 [2:42:21<26:40, 320.17s/it][A
-loader:  89%|██████████████████████████████▎   | 33/37 [2:47:25<21:01, 315.32s/it][A
-loader:  92%|███████████████████████████████▏  | 34/37 [2:54:02<16:59, 339.77s/it][A
-loader:  95%|████████████████████████████████▏ | 35/37 [2:59:14<11:02, 331.28s/it][A
-loader:  97%|█████████████████████████████████ | 36/37 [3:04:51<05:32, 332.98s/it][A
-loader: 100%|██████████████████████████████████| 37/37 [3:08:24<00:00, 297.06s/it][Aloader: 100%|██████████████████████████████████| 37/37 [3:11:03<00:00, 309.82s/it]
-[2026-06-18T10:05:09.958] error: Detected 1 oom_kill event in StepId=54558762.0. Some of the step tasks have been OOM Killed.
-srun: error: nid002193: task 0: Out Of Memory
-srun: Terminating StepId=54558762.0

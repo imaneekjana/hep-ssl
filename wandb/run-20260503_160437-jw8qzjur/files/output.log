@@ -1,7 +1,0 @@
-loader: 100%|█████████████████████████████████████████████████████████████████| 42/42 [47:18<00:00, 67.58s/it]
-epoch:   3%|█▉                                                            | 1/32 [54:07<27:57:54, 3247.57s/it][34m[1mwandb[0m: [33mWARNING[0m Fatal error while uploading data. Some run data will not be synced, but it will still be written to disk. Use `wandb sync` at the end of the run to try uploading.
-loss_train
-	loss_train       	 (min:    1.446, max:    1.446, cur:    1.446)
-loss_val
-	loss_val         	 (min:    3.671, max:    3.671, cur:    3.671)
-loader:   2%|█▌                                                                | 1/42 [01:09<47:36, 69.68s/it]

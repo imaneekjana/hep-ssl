@@ -1,9 +1,0 @@
-{"time":"2026-05-18T22:17:14.115623036-07:00","level":"INFO","msg":"stream: starting","core version":"0.25.0"}
-{"time":"2026-05-18T22:17:14.433666356-07:00","level":"INFO","msg":"stream: created new stream","id":"drt8on4r"}
-{"time":"2026-05-18T22:17:14.433987628-07:00","level":"INFO","msg":"handler: started","stream_id":"drt8on4r"}
-{"time":"2026-05-18T22:17:14.436580815-07:00","level":"INFO","msg":"stream: started","id":"drt8on4r"}
-{"time":"2026-05-18T22:17:14.436617195-07:00","level":"INFO","msg":"writer: started","stream_id":"drt8on4r"}
-{"time":"2026-05-18T22:17:14.436621674-07:00","level":"INFO","msg":"sender: started","stream_id":"drt8on4r"}
-{"time":"2026-05-19T01:50:34.149435823-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/aneekjana-university-of-wisconsin-madison/gravnet_models_dihiggs_rot_0.00_noise_0.05/drt8on4r/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
-{"time":"2026-05-19T01:54:10.224879757-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/aneekjana-university-of-wisconsin-madison/gravnet_models_dihiggs_rot_0.00_noise_0.05/drt8on4r/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
-{"time":"2026-05-19T01:55:07.616360656-07:00","level":"INFO","msg":"api: retrying HTTP error","status":429,"url":"https://api.wandb.ai/files/aneekjana-university-of-wisconsin-madison/gravnet_models_dihiggs_rot_0.00_noise_0.05/drt8on4r/file_stream","body":"{\"error\":\"rate limit exceeded: per_run limit on filestream requests\"}"}

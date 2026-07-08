@@ -1,32 +1,0 @@
-Loading conda
-Loaded conda
-Activating colliderml-env
-Activated colliderml-env
-Changed directory
-Trying to run the script
-/global/cfs/cdirs/m4474/aneek/particlemind_aneek/src/models/contrastive_learning.py:117: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
-  Scaler = GradScaler()
-wandb: [wandb.login()] Using explicit session credentials for https://api.wandb.ai.
-wandb: Appending key for api.wandb.ai to your netrc file: /global/homes/a/aneekj02/.netrc
-wandb: Currently logged in as: aneekjana (aneekjana-university-of-wisconsin-madison) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: setting up run als7xcjq
-wandb: Tracking run with wandb version 0.25.0
-wandb: Run data is saved locally in /global/cfs/cdirs/m4474/aneek/particlemind_aneek/wandb/run-20260403_080809-als7xcjq
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run helpful-smoke-4
-wandb: ⭐️ View project at https://wandb.ai/aneekjana-university-of-wisconsin-madison/Test-run-CaloHitsGNN-ColliderML-mixed-ttbar-dihiggs-terminal
-wandb: 🚀 View run at https://wandb.ai/aneekjana-university-of-wisconsin-madison/Test-run-CaloHitsGNN-ColliderML-mixed-ttbar-dihiggs-terminal/runs/als7xcjq
-Trainable parameters: 75040
-Vamos!!
-cuda
-Lesss gooo
-epoch:   0%|                                                                          | 0/20 [00:00<?, ?it/s]
-loader:   0%|                                                                        | 0/168 [00:00<?, ?it/s][A/global/homes/a/aneekj02/.conda/envs/colliderml-env/lib/python3.11/site-packages/torch_geometric/utils/_scatter.py:91: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
-  warnings.warn(
-
-loader:   1%|▍                                                               | 1/168 [00:19<54:43, 19.66s/it][A
-loader:   1%|▊                                                               | 2/168 [00:40<56:15, 20.34s/it][A
-loader:   2%|█▏                                                              | 3/168 [01:00<55:40, 20.25s/it][A
-loader:   2%|█▌                                                              | 4/168 [01:20<55:09, 20.18s/it][A[2026-04-03T15:09:40.031] error: *** STEP 50942730.0 ON nid003580 CANCELLED AT 2026-04-03T15:09:40 DUE TO TIME LIMIT ***
-[2026-04-03T15:09:40.031] error: *** JOB 50942730 ON nid003580 CANCELLED AT 2026-04-03T15:09:40 DUE TO TIME LIMIT ***
-srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
