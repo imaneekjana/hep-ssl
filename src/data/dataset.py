@@ -20,47 +20,94 @@ import torch
 from torch.utils.data import IterableDataset
 
 from .augmentation import *
+from .coarsening import voxelize_hits
+from .graph_builder import EventGraphBuilder
 
 
 
+"""
+Extracting info from ColliderML dataset
+"""
 
-'''
-Creating graph for each event out of hits
-
-'''
-
-class EventGraphBuilder:
-    def __init__(self, radius=3, max_neighbors=32):
-        self.r = radius
-        self.neighbors = max_neighbors
-
-    def __call__(self, hits):
+class ColliderMLHits(IterableDataset):
+    def __init__(
+        self, calo_hits, split, shuffle_files=False, train_fraction=0.8, log=False):
         """
-        hits: numpy array or tensor [N, d+1], d spatial coordinates + 1 energy
+        Initialize the dataset.
+
+        Args:
+            calo_hits : calo_hit data for events.
+            shuffle_files (bool): Whether to shuffle the order of parquet files.
         """
-
-        if not torch.is_tensor(hits):
-            hits = torch.tensor(hits, dtype=torch.float)
-
-        pos = hits[:, :-1]      # spatial coordinates
-        features = hits        # (x, y, z, log_E)
+        
+        self.calo_hits = calo_hits
+        self.shuffle_files = shuffle_files
+        self.log = log
+        
         
 
-        #edge_index = knn_graph(pos, k=self.k, loop=False)
+        self.split = split
+        if self.split is not None:
+            split_index = int(len(self.calo_hits) * train_fraction)
+            if self.split == "train":
+                self.calo_hits = self.calo_hits[:split_index]
+            elif self.split == "val":
+                self.calo_hits = self.calo_hits[split_index:]
 
-        pos = hits[:, :-1]
-        N = pos.shape[0]
+        if self.shuffle_files:
+            self.shuffle_shards()
 
-        # Compute pairwise squared distances
-        diff = pos.unsqueeze(1) - pos.unsqueeze(0)  
-        dist2 = (diff ** 2).sum(-1)
+    def __len__(self):
+        """
+        Return the number of events in the dataset.
+        """
+        return len(self.calo_hits) 
 
-        # Select edges within radius (exclude self)
-        row, col = torch.where((dist2 <= self.r ** 2) & (dist2 > 0))
-        edge_index = torch.stack([row, col], dim=0)
+    def shuffle_shards(self):
+        """
+        Shuffle the events in calo_hits
+        """
+        random.shuffle(self.calo_hits)
 
-        return Data(x=features, edge_index=edge_index)
+    def __iter__(self):
+        logger = logging.getLogger(__name__)
+        self.sample_counter = 0  # Reset sample counter for each iteration or each epoch
+        #worker_info = torch.utils.data.get_worker_info()
+        
 
+        
+        data = self.calo_hits
+        
+        for event_i in range(len(self.calo_hits)):
+
+            data_i = data[event_i]
+
+            x   = data_i['x'].to_numpy()[0]
+            y   = data_i['y'].to_numpy()[0]
+            z   = data_i['z'].to_numpy()[0]
+            e   = data_i['total_energy'].to_numpy()[0]
+
+            # Log-transform energy
+            e_log = np.log(e + 1e-6)
+
+            if self.log==True:
+                calo_hit_features = np.column_stack((x, y, z, e_log)).astype(np.float32)
+            else:
+                calo_hit_features = np.column_stack((x, y, z, e)).astype(np.float32)
+                
+
+            
+
+           
+
+            #f_i = len(data_i['x'].to_numpy()[0]) if len(data_i['x'].to_numpy()[0])<8000 else 8000
+
+            yield {
+
+                "calo_hit_features": calo_hit_features
+
+            }
+         
 
 
 
@@ -182,7 +229,7 @@ def projected_hits(hits, grid_size=32, typ='image'):
 
     """
     hits: ndarray of shape (N,4)
-          columns = [x, y, z, logE]
+          columns = [x, y, z, E]
 
     returns:
           dict object with keys 'eta-phi', 'x-y', 'z-rho', 'z-phi'
@@ -191,7 +238,7 @@ def projected_hits(hits, grid_size=32, typ='image'):
     x = hits[:, 0]
     y = hits[:, 1]
     z = hits[:, 2]
-    logE = hits[:, 3]
+    E = hits[:, 3]
 
     rho = np.sqrt(x**2 + y**2)
 
@@ -205,13 +252,13 @@ def projected_hits(hits, grid_size=32, typ='image'):
 
     type_dict = {}
 
-    type_dict['eta-phi'] = bin_points_to_grid(eta, phi, logE, min(eta), max(eta), min(phi), max(phi), grid_size, grid_size, 0.0, typ)
+    type_dict['eta-phi'] = bin_points_to_grid(eta, phi, E, min(eta), max(eta), min(phi), max(phi), grid_size, grid_size, 0.0, typ)
 
-    type_dict['x-y'] = bin_points_to_grid(x, y, logE, min(x), max(x), min(y), max(y), grid_size, grid_size, 0.0, typ)
+    type_dict['x-y'] = bin_points_to_grid(x, y, E, min(x), max(x), min(y), max(y), grid_size, grid_size, 0.0, typ)
 
-    type_dict['z-rho'] = bin_points_to_grid(z, rho, logE, min(z), max(z), min(rho), max(rho), grid_size, grid_size, 0.0, typ)
+    type_dict['z-rho'] = bin_points_to_grid(z, rho, E, min(z), max(z), min(rho), max(rho), grid_size, grid_size, 0.0, typ)
 
-    type_dict['z-phi'] = bin_points_to_grid(z, phi, logE, min(z), max(z), min(phi), max(phi), grid_size, grid_size, 0.0, typ)
+    type_dict['z-phi'] = bin_points_to_grid(z, phi, E, min(z), max(z), min(phi), max(phi), grid_size, grid_size, 0.0, typ)
 
 
     return type_dict
@@ -224,7 +271,7 @@ def projected_hits(hits, grid_size=32, typ='image'):
 
 
 
-##------------------------------------------------------------------------------
+##=============================== Contrastive Learning Dataset preparations ====================#########
 
 
 class ContrastiveLearningDataset(IterableDataset):
@@ -235,7 +282,7 @@ class ContrastiveLearningDataset(IterableDataset):
         original, view1, view2
     """
 
-    def __init__(self, base_dataset, mean, std, transform=None, cylindrical=False):
+    def __init__(self, base_dataset, mean=None, std=None, transform=None, voxel_size=None, cylindrical=False):
 
         """
         base_dataset is an iterable dataset with each item being a dictionary with the key "calo_hit_features".
@@ -249,10 +296,40 @@ class ContrastiveLearningDataset(IterableDataset):
         self.mean = mean
         self.std = std
         self.cylindrical = cylindrical
+        self.voxel_size = voxel_size
+        self.feature_axis = 1
 
     def __len__(self):
 
         return len(self.base_dataset)
+
+    def compute_mean_std(self, max_samples=50):
+        
+        array = []
+
+        for i, x_dict in enumerate(self):
+            
+            if i >= max_samples:
+                break
+
+            xi = x_dict["calo_hit_features_0"]
+
+            xi = np.moveaxis(np.asarray(xi), self.feature_axis, 0) 
+            xi = xi.reshape(xi.shape[0], -1) 
+
+            array.append(xi)
+
+        X = np.concatenate(array, axis=1) 
+
+        mean = X.mean(axis=1) 
+        std = X.std(axis=1)
+
+        self.mean = mean
+        self.std = std
+
+        return mean, std
+
+        
 
     def __iter__(self):
         
@@ -272,22 +349,42 @@ class ContrastiveLearningDataset(IterableDataset):
 
             out_dict = {}
 
+            if self.voxel_size is not None:
 
-            if self.cylindrical == False:
+                view1.hits = voxelize_hits(view1.hits, voxel_size = self.voxel_size, origin=None, return_coarse_hits=True)['coarse_hits']
+                view2.hits = voxelize_hits(view2.hits, voxel_size = self.voxel_size, origin=None, return_coarse_hits=True)['coarse_hits']
+                event.hits = voxelize_hits(event.hits, voxel_size = self.voxel_size, origin=None, return_coarse_hits=True)['coarse_hits']
 
-                out_dict["calo_hit_features_1"] = (view1.hits-self.mean)/(self.std + 1e-8)
-                out_dict["calo_hit_features_2"] = (view2.hits-self.mean)/(self.std + 1e-8)
-                out_dict["calo_hit_features"] = (event.hits-self.mean)/(self.std + 1e-8)
+
+            if self.mean is None and self.std is None:
+
+                if self.cylindrical == False:
+                    
+
+                    out_dict["calo_hit_features_1"] = view1.hits
+                    out_dict["calo_hit_features_2"] = view2.hits
+                    out_dict["calo_hit_features_0"] = event.hits
+                else:
+
+                    out_dict["calo_hit_features_1"] = to_cylindrical(view1.hits)
+                    out_dict["calo_hit_features_2"] = to_cylindrical(view2.hits)
+                    out_dict["calo_hit_features_0"] = to_cylindrical(event.hits)
 
             else:
+                if self.cylindrical == False:
 
-                out_dict["calo_hit_features_1"] = (to_cylindrical(view1.hits)-self.mean)/(self.std + 1e-8)
-                out_dict["calo_hit_features_2"] = (to_cylindrical(view2.hits)-self.mean)/(self.std + 1e-8)
-                out_dict["calo_hit_features"] = (to_cylindrical(event.hits)-self.mean)/(self.std + 1e-8)
+                    out_dict["calo_hit_features_1"] = (view1.hits-self.mean)/(self.std + 1e-8)
+                    out_dict["calo_hit_features_2"] = (view2.hits-self.mean)/(self.std + 1e-8)
+                    out_dict["calo_hit_features_0"] = (event.hits-self.mean)/(self.std + 1e-8)
+                else:
+
+                    out_dict["calo_hit_features_1"] = (to_cylindrical(view1.hits)-self.mean)/(self.std + 1e-8)
+                    out_dict["calo_hit_features_2"] = (to_cylindrical(view2.hits)-self.mean)/(self.std + 1e-8)
+                    out_dict["calo_hit_features_0"] = (to_cylindrical(event.hits)-self.mean)/(self.std + 1e-8)
+
 
                 
-
-            
+    
 
             '''
             out_dict["calo_hit_features_1"] = view1.hits
@@ -296,6 +393,21 @@ class ContrastiveLearningDataset(IterableDataset):
             '''
 
             yield out_dict
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -332,12 +444,59 @@ class ContrastiveLearningDatasetPlanar(IterableDataset):
         self.projs = projs
         self.grid_size = grid_size
         self.typ = typ
+
+        if self.typ == 'image':
+            self.feature_axis = 0
+        elif self.typ == 'hits':
+            self.feature_axis = 1
+                    
         
         
 
     def __len__(self):
 
         return len(self.base_dataset)
+
+    def compute_mean_std(self, max_samples=50):
+        
+        arrays = [[] for _ in range(len(self.projs))]
+
+        for i, x_dict in enumerate(self):
+            
+            if i >= max_samples:
+                break
+
+            x = x_dict["calo_hit_features_0"]
+
+            x_ = [np.moveaxis(np.asarray(xi), self.feature_axis, 0) for xi in x]
+            x_ = [xi.reshape(xi.shape[0], -1) for xi in x_]
+
+            for i, arr in enumerate(arrays):
+
+                arr.append(x_[i])
+
+
+        X_ = [np.concatenate(arr, axis=1) for arr in arrays]
+
+        mean = [X.mean(axis=1) for X in X_]
+        std = [X.std(axis=1) for X in X_]
+
+        self.mean = mean
+        self.std = std
+
+        return mean, std
+
+
+    def normalize(self, x, mean_, std_):
+        shape = [1] * x.ndim
+        shape[self.feature_axis] = len(mean_)
+
+        mean_ = mean_.reshape(shape)
+        std_ = std_.reshape(shape)
+
+        return (x - mean_) / (std_ + 1e-8)
+
+    
 
     def __iter__(self):
         
@@ -367,7 +526,9 @@ class ContrastiveLearningDatasetPlanar(IterableDataset):
 
                 out_dict["calo_hit_features_2"] = [projected_hits2[key] for key in self.projs]
 
-                out_dict["calo_hit_features"] = [projected_hits0[key] for key in self.projs]
+                out_dict["calo_hit_features_0"] = [projected_hits0[key] for key in self.projs]
+
+                
 
             else:
 
@@ -379,11 +540,22 @@ class ContrastiveLearningDatasetPlanar(IterableDataset):
                 projected_hits2= projected_hits(view2.hits, self.grid_size, self.typ)
                 projected_hits0= projected_hits(event.hits, self.grid_size, self.typ)
 
+
+                '''
+
                 out_dict["calo_hit_features_1"] = [(projected_hits1[self.projs[i]]-self.mean[i])/self.std[i] for i in len(self.projs)]
 
                 out_dict["calo_hit_features_2"] = [(projected_hits2[self.projs[i]]-self.mean[i])/self.std[i] for i in len(self.projs)]
 
                 out_dict["calo_hit_features_0"] = [(projected_hits1[self.projs[i]]-self.mean[i])/self.std[i] for i in len(self.projs)]
+
+                '''
+
+                out_dict["calo_hit_features_1"] = [self.normalize(x=projected_hits1[self.projs[i]], mean_=self.mean[i], std_=self.std[i]) for i in range(len(self.projs))]
+
+                out_dict["calo_hit_features_2"] = [self.normalize(x=projected_hits2[self.projs[i]], mean_=self.mean[i], std_=self.std[i]) for i in range(len(self.projs))]
+
+                out_dict["calo_hit_features_0"] = [self.normalize(x=projected_hits0[self.projs[i]], mean_=self.mean[i], std_=self.std[i]) for i in range(len(self.projs))]
 
                 
 
@@ -408,7 +580,7 @@ class ContrastiveLearningGraphDataset(IterableDataset):
          view1_graph, view2_graph
     """
 
-    def __init__(self, base_dataset, builder=EventGraphBuilder()):
+    def __init__(self, base_dataset, builder=EventGraphBuilder(method='radius', radius=0.0, from_assignment=False, max_neighbors=14, knn_neighbor=0), cluster_voxel_size=None):
 
         """
         base_dataset must be an iterable with dictionaries having the keys, "calo_hit_features_1" and "calo_hit_features_2".
@@ -419,6 +591,7 @@ class ContrastiveLearningGraphDataset(IterableDataset):
         super().__init__()
         self.base_dataset = base_dataset
         self.builder = builder
+        self.cluster_voxel_size=cluster_voxel_size
 
     def __len__(self):
 
@@ -430,8 +603,22 @@ class ContrastiveLearningGraphDataset(IterableDataset):
             view1 = event_dict["calo_hit_features_1"]
             view2 = event_dict["calo_hit_features_2"]
 
-            view1_graph = self.builder(view1)
-            view2_graph = self.builder(view2)
+            if self.cluster_voxel_size == None:
+
+                view1_graph = self.builder(view1, assignment=None)
+                view2_graph = self.builder(view2, assignment=None)
+
+            else:
+
+                assignment1 = voxelize_hits(hits=view1, voxel_size=self.cluster_voxel_size, return_coarse_hits=False)['assignment']
+                assignment2 = voxelize_hits(hits=view2, voxel_size=self.cluster_voxel_size, return_coarse_hits=False)['assignment']
+
+                view1_graph = self.builder(view1, assignment=assignment1)
+                
+                view2_graph = self.builder(view2, assignment=assignment2)
+
+            
+            
 
             yield view1_graph, view2_graph
             
@@ -481,88 +668,60 @@ class ContrastiveLearningGraphDatasetPlanar(IterableDataset):
 
                 yield view1_graphs, view2_graphs
 
-            
-            
 
 
 
+class ContrastiveLearningImageDatasetPlanar(IterableDataset):
+    """
+    Wraps an iterable dataset of calorimeter events.
 
-class ColliderMLHits(IterableDataset):
-    def __init__(
-        self, calo_hits, split, shuffle_files=False, train_fraction=0.8, log=False):
+    Yields:
+         view1_image, view2_image
+    """
+
+    def __init__(self, base_dataset, only_energy=True):
+
         """
-        Initialize the dataset.
+        base_dataset must be an iterable with dictionaries having the keys, "calo_hit_features_1" and "calo_hit_features_2".
 
-        Args:
-            calo_hits : calo_hit data for events.
-            shuffle_files (bool): Whether to shuffle the order of parquet files.
+        base_dataset can be an output of ContrastiveLearningDataset
+
         """
+        super().__init__()
+        self.base_dataset = base_dataset
+        self.only_energy = only_energy
         
-        self.calo_hits = calo_hits
-        self.shuffle_files = shuffle_files
-        self.log = log
-        
-        
-
-        self.split = split
-        if self.split is not None:
-            split_index = int(len(self.calo_hits) * train_fraction)
-            if self.split == "train":
-                self.calo_hits = self.calo_hits[:split_index]
-            elif self.split == "val":
-                self.calo_hits = self.calo_hits[split_index:]
-
-        if self.shuffle_files:
-            self.shuffle_shards()
 
     def __len__(self):
-        """
-        Return the number of events in the dataset.
-        """
-        return len(self.calo_hits) 
 
-    def shuffle_shards(self):
-        """
-        Shuffle the events in calo_hits
-        """
-        random.shuffle(self.calo_hits)
+        return len(self.base_dataset)
 
     def __iter__(self):
-        logger = logging.getLogger(__name__)
-        self.sample_counter = 0  # Reset sample counter for each iteration or each epoch
-        #worker_info = torch.utils.data.get_worker_info()
-        
-
-        
-        data = self.calo_hits
-        
-        for event_i in range(len(self.calo_hits)):
-
-            data_i = data[event_i]
-
-            x   = data_i['x'].to_numpy()[0]
-            y   = data_i['y'].to_numpy()[0]
-            z   = data_i['z'].to_numpy()[0]
-            e   = data_i['total_energy'].to_numpy()[0]
-
-            # Log-transform energy
-            e_log = np.log(e + 1e-6)
-
-            if self.log==True:
-                calo_hit_features = np.column_stack((x, y, z, e_log)).astype(np.float32)
-            else:
-                calo_hit_features = np.column_stack((x, y, z, e)).astype(np.float32)
-                
-
+        for event_dict in self.base_dataset:
             
 
+            view1 = event_dict["calo_hit_features_1"]
+            view2 = event_dict["calo_hit_features_2"]
+
            
+            if len(view1) == 1:
 
-            #f_i = len(data_i['x'].to_numpy()[0]) if len(data_i['x'].to_numpy()[0])<8000 else 8000
+                if self.only_energy==True:
+                    
+                    yield view1[0][[-1]], view2[0][[-1]]
 
-            yield {
+                else:
+                    yield view1[0], view2[0]
+                 
+                
+            else:
 
-                "calo_hit_features": calo_hit_features
+                yield view1, view2
 
-            }
-         
+
+            
+            
+
+
+
+

@@ -1,0 +1,4 @@
+results/
+wandb/
+.sh
+saved_models_colliderml_latest

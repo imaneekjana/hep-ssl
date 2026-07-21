@@ -142,7 +142,7 @@ class EnergyWhiteNoise(Transform):
     """
     Adds Gaussian white noise to calorimeter hit energies.
 
-    E -> E + N(0, sigma)
+    wt -> wt + N(0, sigma) or wt -> wt * exp(N(0, sigma))
 
     Parameters
     ----------
@@ -150,11 +150,14 @@ class EnergyWhiteNoise(Transform):
         Standard deviation of Gaussian noise.
     clip_min : float or None
         If set, energies are clipped below this value (e.g., 0.0).
+    log : bool
+        If True, the log of last feature gets the Gaussian noise; If False, the last feature directly gets the Guassian noise.
     """
 
-    def __init__(self, sigma=0.1, clip_min=0.0):
+    def __init__(self, sigma=0.1, clip_min=0.0, log=False):
         self.sigma = sigma
         self.clip_min = clip_min
+        self.log = log
 
     def __call__(self, event: CaloEvent):
         event_c = event.copy()
@@ -167,10 +170,17 @@ class EnergyWhiteNoise(Transform):
             size=event_c.hits.shape[0])
         
 
-        log_en = event_c.hits[:, 3]
+        wt = event_c.hits[:, -1]
 
-        event_c.hits[:, 3] = log_en + noise
+        if self.log:
 
+            event_c.hits[:,-1] = wt*np.exp(noise)
+
+        else:
+
+            event_c.hits[:,-1] = wt + noise
+
+        
 
         return event_c
 

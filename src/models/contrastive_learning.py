@@ -24,6 +24,7 @@ from torch.cuda.amp import GradScaler, autocast
 from livelossplot import PlotLosses
 
 
+
 """
 
 Contrastive Learning training protocol
@@ -199,3 +200,179 @@ class Contrastive_Learning(object):
         if wandb_ == True:
             wandb.save(save_path)
             wandb.finish()
+
+
+
+
+####========================= My Contrastive Learning Pipelines ===============================#########
+
+
+class My_Contrastive_Learning_01(object):
+
+    """
+    This is based on (InfoNCE loss takes event level embeddings) + (OT loss takes cluster level embeddings) 
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.args = kwargs['args']
+        self.model = kwargs['model'].to(self.args.device)
+        self.optimizer = kwargs['optimizer']
+        self.scheduler = kwargs['scheduler']
+
+        '''
+        for loss functions, see src/models/loss.function.py
+        '''
+        
+        self.info_nce_loss = kwargs['info_nce_loss'] # InfoNCE loss takes event level embeddings
+        self.ot_loss = kwargs['ot_loss'] # OT loss takes cluster level embeddings and batch 
+
+        
+        self.loss_weights = kwargs['loss_weights'] # An array of length 2
+        
+
+    def calculate_loss(self, emb1, emb2):
+
+        z1, z2 = emb1["event_embeddings"], emb2["event_embeddings"]
+
+        loss_info_nce = self.info_nce_loss(z1, z2)
+
+        if self.ot_loss is None:
+
+            return loss_info_nce
+
+        else:
+
+            w1, w2 = emb1["cluster_embeddings"], emb2["cluster_embeddings"]
+
+            batch1, batch2 = emb1["cluster_batch"], emb2["cluster_batch"]
+
+            loss_ot = self.ot_loss(w1, w2, batch1, batch2)
+
+            return self.loss_weights[0]*loss_info_nce + self.loss_weights[1]*loss_ot
+            
+
+
+    def forward(self, view):
+
+        embedding = self.model(view)
+
+        return embedding
+        
+    def test(self, loader,desc=''):
+        
+        modelh = self.model
+        
+        loss_ = 0
+        
+        with torch.no_grad():
+        
+            for view1, view2 in loader:
+                
+                view1 = view1.to(self.args.device)
+                view2 = view2.to(self.args.device)
+
+                emb1 = self.forward(view1)
+                emb2 = self.forward(view2)
+
+                loss = self.calculate_loss(emb1, emb2)
+
+                loss_ += loss.item()
+
+                
+    
+        
+        return loss_/len(loader)
+    
+    
+    
+
+    def train(self, train_loader, val_loader, off=0, skip=5, save_model = False, folder = '', wandb_ = False, **key_name):
+
+        #Scaler = GradScaler(enabled=self.args.fp16_precision)
+
+        Scaler = GradScaler()
+
+        liveloss = PlotLosses()
+
+        if wandb_ == True:
+
+            import wandb
+
+            wandb_key = key_name.get("key")
+            
+            if wandb_key is None:
+               raise ValueError("wandb_=True but no wandb_key provided")
+        
+            wandb.login(key=wandb_key)
+        
+            wandb.init(project=key_name.get("name"), config=vars(self.args))
+
+        
+        n_iter = 0
+        
+        self.model.train()
+
+        for epoch_counter in tqdm(range(self.args.epochs),desc='epoch'):
+            loss_train = 0
+            
+            for view1, view2 in tqdm(train_loader, desc='loader'):
+                
+                view1 = view1.to(self.args.device)
+                view2 = view2.to(self.args.device)
+
+                emb1 = self.forward(view1)
+                emb2 = self.forward(view2)
+
+                loss = self.calculate_loss(emb1, emb2)
+                
+                loss_train += loss.item()
+
+                self.optimizer.zero_grad()
+
+                Scaler.scale(loss).backward()
+
+                Scaler.step(self.optimizer)
+                Scaler.update()
+                
+                n_iter += 1
+            
+            #loss_train = self.test(train_loader).item()
+            loss_train = loss_train/len(train_loader)
+            loss_val = self.test(val_loader,desc='validation')
+            
+            # LiveLossPlot logging
+            liveloss.update({
+                'loss_train': loss_train,
+                'loss_val': loss_val
+             })
+            liveloss.send()
+
+            if wandb_ == True:
+                wandb.log({"loss_train": loss_train, "loss_val": loss_val})
+            
+
+            if save_model ==True:
+
+                os.makedirs(folder, exist_ok=True)
+                
+                if epoch_counter%skip==skip-1:
+                    save_path = folder + f"model_epoch_{off+epoch_counter+1}.pth"
+                    torch.save(self.model.state_dict(), save_path)
+                    print(f"Model saved to {save_path}")
+                    #wandb.save(save_path)
+
+                    
+        if save_model ==True:
+            save_path = folder+f"model_final.pth"
+            torch.save(self.model.state_dict(), save_path)
+            print(f"Model saved to {save_path}")
+               
+
+        
+
+        if wandb_ == True:
+            wandb.save(save_path)
+            wandb.finish()
+
+

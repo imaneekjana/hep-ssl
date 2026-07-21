@@ -112,6 +112,9 @@ class CNNEncoder(nn.Module):
             nn.Linear(2*latent_dim, proj_dim),
         )
 
+        self.projection = projection
+        
+
         self.normalize = normalize
 
     def forward(self, x):
@@ -120,7 +123,7 @@ class CNNEncoder(nn.Module):
         x = torch.flatten(x, 1)
         x = self.head(x)
 
-        if projection==True:
+        if self.projection==True:
             z = self.projection_head(x)
 
         if self.normalize:
@@ -197,7 +200,7 @@ class ViTEncoder(nn.Module):
         dropout=0.1,
         latent_dim=64,
         proj_dim=32,
-        projection=True
+        projection=True,
         use_cls_token=True,
         normalize=False,
     ):
@@ -247,6 +250,8 @@ class ViTEncoder(nn.Module):
             nn.Linear(2*latent_dim, proj_dim),
         )
 
+        self.projection = projection
+
         self.normalize = normalize
 
     def forward(self, x):
@@ -268,11 +273,11 @@ class ViTEncoder(nn.Module):
         else:
             features = x.mean(dim=1)
 
-        embedding = self.head(features)
+        z = self.head(features)
 
 
-        if projection==True:
-            z = self.projection_head(embedding)
+        if self.projection==True:
+            z = self.projection_head(z)
 
     
         if self.normalize:
