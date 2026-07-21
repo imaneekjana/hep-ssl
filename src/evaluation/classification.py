@@ -231,7 +231,7 @@ print(result.metrics)
 print(result.confusion_matrix)
 """
 
-from __future__ import annotations
+
 
 from dataclasses import dataclass
 from pathlib import Path

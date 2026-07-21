@@ -17,8 +17,8 @@ from torch import Tensor, nn
 
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
-from torch_geometric.nn import GCNConv, GraphConv, GravNetConv, global_mean_pool
-
+from torch_geometric.nn import GCNConv, GraphConv, GravNetConv, global_mean_pool, global_max_pool, global_add_pool
+from torch_geometric.utils import softmax
 
 
 ######=========================== Helpers for pooling =============================##################
@@ -37,6 +37,7 @@ def pool_nodes_by_assignment(
         "sum",
         "mean",
         "energy_weighted",
+        "max",
     ] = "mean",
     energies: Optional[Tensor] = None,
 ):
@@ -75,6 +76,22 @@ def pool_nodes_by_assignment(
     cluster_embeddings = node_embeddings.new_zeros(
         (num_clusters, embedding_dim)
     )
+
+    if energies is not None:
+
+        energies = energies.to(
+            device=node_embeddings.device,
+            dtype=node_embeddings.dtype,
+        )
+
+        cluster_energy = energies.new_zeros(num_clusters)
+        
+        cluster_energy.index_add_(
+            0,
+            pooled_index,
+            energies,
+        )
+    
 
     if reduction == "energy_weighted":
         if energies is None:
@@ -117,6 +134,21 @@ def pool_nodes_by_assignment(
                 cluster_embeddings
                 / counts.to(node_embeddings.dtype).unsqueeze(-1)
             )
+        elif reduction == "max":
+            cluster_embeddings = torch.empty(
+                num_clusters,
+                node_embeddings.shape[-1],
+                device=node_embeddings.device,
+                dtype=node_embeddings.dtype,
+            )
+        
+            cluster_embeddings.index_reduce_(
+                dim=0,
+                index=pooled_index,
+                source=node_embeddings,
+                reduce="amax",
+                include_self=False,
+            )
 
         elif reduction != "sum":
             raise ValueError(
@@ -128,6 +160,7 @@ def pool_nodes_by_assignment(
         "cluster_batch": cluster_batch,
         "local_cluster_id": local_cluster_id,
         "cluster_counts": counts,
+        "cluster_energy": cluster_energy,
     }
 
 
@@ -144,20 +177,29 @@ class My_Model_01(nn.Module):
         cluster_dim: int = 64,
         latent_dim: int = 64,
         proj_dim: int = 32,
-        num_gnn_layers: int = 3,
+        num_gnn_layers: int = 2,
         model_type: Literal["GraphConv", "GCNConv", "GravNetConv"] = "GravNetConv",
         model_args: dict = {'k': 5, 'space_dim': 8, 'propagate_dim': 8},
-        cluster_pooling: str = "mean",
+        reduction_type: str = "mean",
     ):
         super().__init__()
 
-        self.cluster_pooling = cluster_pooling
+        self.reduction_type = reduction_type
 
         self.model_type = model_type
 
+        self.input_mlp = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.LayerNorm(hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.LayerNorm(hidden_dim),
+            nn.ReLU(),
+        )
+
+
         dimensions = (
-            [input_dim]
-            + [hidden_dim] * (num_gnn_layers - 1)
+             [hidden_dim] * (num_gnn_layers)
             + [cluster_dim]
         )
 
@@ -197,6 +239,8 @@ class My_Model_01(nn.Module):
                     for i in range(num_gnn_layers)
                 ]
             )
+        else:
+            raise ValueError(f'allowed model types: "GraphConv", "GCNConv", "GravNetConv", but received: {model_type}')
         
             
 
@@ -211,20 +255,23 @@ class My_Model_01(nn.Module):
 
         self.cluster_mlp = nn.Sequential(
             nn.Linear(cluster_dim, 2*cluster_dim),
+            nn.LayerNorm(2*cluster_dim),
             nn.ReLU(),
             nn.Linear(2*cluster_dim, cluster_dim),
         )
 
         self.event_mlp = nn.Sequential(
-            nn.Linear(cluster_dim, 2*cluster_dim),
+            nn.Linear(3*cluster_dim, 2*cluster_dim),
+            nn.LayerNorm(2*cluster_dim),
             nn.ReLU(),
             nn.Linear(2*cluster_dim, latent_dim),
         )
 
         self.projection_head = nn.Sequential(
-            nn.Linear(latent_dim, latent_dim),
+            nn.Linear(latent_dim, 2*latent_dim),
+            nn.LayerNorm(2*latent_dim),
             nn.ReLU(),
-            nn.Linear(latent_dim, proj_dim),
+            nn.Linear(2*latent_dim, proj_dim),
         )
 
     def forward(
@@ -233,8 +280,13 @@ class My_Model_01(nn.Module):
     ):
 
         x, edge_index, batch, assignment = data.x, data.edge_index, data.batch, data.assignment
+
+        wt = x[:,-1]
+        wt = softmax(wt, batch)
         
         h = x
+
+        h = self.input_mlp(h)
 
         if self.model_type=="GravNetConv":
 
@@ -264,8 +316,8 @@ class My_Model_01(nn.Module):
             node_embeddings=fine_node_embeddings,
             assignment=assignment,
             batch=batch,
-            reduction=self.cluster_pooling,
-            energies=x[:, -1],
+            reduction=self.reduction_type,
+            energies=wt,
         )
 
         cluster_embeddings = self.cluster_mlp(
@@ -273,12 +325,26 @@ class My_Model_01(nn.Module):
         )
 
         cluster_batch = pooled["cluster_batch"]
+        cluster_weight = pooled["cluster_energy"]
 
         # One embedding per event.
-        event_embeddings = global_mean_pool(
+        event_embeddings_mean = global_mean_pool(
             cluster_embeddings,
             cluster_batch,
         )
+
+        event_embeddings_max = global_max_pool(
+            cluster_embeddings,
+            cluster_batch,
+        )
+        
+        event_embeddings_w = global_add_pool(
+            cluster_embeddings * cluster_weight.unsqueeze(-1) ,
+            cluster_batch,
+        )
+
+        event_embeddings = torch.cat([event_embeddings_mean, event_embeddings_max, event_embeddings_w], dim=-1)
+
 
         event_embeddings = self.event_mlp(event_embeddings)
 

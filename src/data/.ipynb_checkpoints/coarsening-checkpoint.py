@@ -56,6 +56,9 @@ def voxelize_hits(
         For consistent detector-wide voxel boundaries across events,
         pass a fixed origin instead of leaving this as None.
 
+    return_coarse_hits:
+        If True, returns the coarse hits.
+
     return_assignment:
         If True, also return a tensor of shape [N]. Entry i gives the
         coarse-voxel index assigned to original hit i.
@@ -249,6 +252,9 @@ def voxelize_hits(
         output['counts'] = counts
 
     return output
+
+
+
 
 
 
