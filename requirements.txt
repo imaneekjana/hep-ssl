@@ -1,0 +1,10 @@
+colliderml
+torch
+uproot
+scikit-learn
+livelossplot
+numpy
+matplotlib
+awkward
+h5py
+torch-geometric
