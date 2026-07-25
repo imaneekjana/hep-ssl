@@ -13,12 +13,11 @@ import torch
 
 from torch_geometric.data import Data
 from torch_geometric.nn import knn_graph
-
 from torch_geometric.nn import radius_graph
-
-
 import torch
 from torch.utils.data import IterableDataset
+
+from colliderml.physics import assign_primary_ancestor, CALO_DETECTOR_CODES
 
 from .augmentation import *
 from .coarsening import voxelize_hits
@@ -87,8 +86,29 @@ class ColliderMLHits(IterableDataset):
             y   = data_i['y'].to_numpy()[0]
             z   = data_i['z'].to_numpy()[0]
             e   = data_i['total_energy'].to_numpy()[0]
+            
+            # preparing ECAL and HCAL masks
+            
+            detector_id = data_i['detector'].to_numpy()[0]
+            
+            _ecal_ids = [
+                CALO_DETECTOR_CODES["ecal_neg_endcap"],
+                CALO_DETECTOR_CODES["ecal_barrel"],
+                CALO_DETECTOR_CODES["ecal_pos_endcap"],
+            ]
+            _hcal_ids = [
+                CALO_DETECTOR_CODES["hcal_neg_endcap"],
+                CALO_DETECTOR_CODES["hcal_barrel"],
+                CALO_DETECTOR_CODES["hcal_pos_endcap"],
+            ]
+            mask_ecal = np.isin(detector_id, _ecal_ids)
+            mask_hcal = np.isin(detector_id, _hcal_ids)
+            
+            
+            
 
-            # Log-transform energy
+            # Log-transform energy if flagged
+            
             e_log = np.log(e + 1e-6)
 
             if self.log==True:
@@ -105,7 +125,9 @@ class ColliderMLHits(IterableDataset):
 
             yield {
 
-                "calo_hit_features": calo_hit_features
+                "calo_hit_features": calo_hit_features,
+                "ecal_mask": mask_ecal,
+                "hcal_mask": mask_hcal,
 
             }
          
