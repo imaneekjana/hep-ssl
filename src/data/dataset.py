@@ -379,11 +379,11 @@ class ContrastiveLearningDatasetPlanar(IterableDataset):
                 projected_hits2= projected_hits(view2.hits, self.grid_size, self.typ)
                 projected_hits0= projected_hits(event.hits, self.grid_size, self.typ)
 
-                out_dict["calo_hit_features_1"] = [(projected_hits1[self.projs[i]]-self.mean[i])/self.std[i] for i in len(self.projs)]
+                out_dict["calo_hit_features_1"] = [(projected_hits1[self.projs[i]]-self.mean[i])/self.std[i] for i in range(len(self.projs))]
 
-                out_dict["calo_hit_features_2"] = [(projected_hits2[self.projs[i]]-self.mean[i])/self.std[i] for i in len(self.projs)]
+                out_dict["calo_hit_features_2"] = [(projected_hits2[self.projs[i]]-self.mean[i])/self.std[i] for i in range(len(self.projs))]
 
-                out_dict["calo_hit_features_0"] = [(projected_hits1[self.projs[i]]-self.mean[i])/self.std[i] for i in len(self.projs)]
+                out_dict["calo_hit_features_0"] = [(projected_hits1[self.projs[i]]-self.mean[i])/self.std[i] for i in range(len(self.projs))]
 
                 
 
@@ -489,7 +489,7 @@ class ContrastiveLearningGraphDatasetPlanar(IterableDataset):
 
 class ColliderMLHits(IterableDataset):
     def __init__(
-        self, calo_hits, split, shuffle_files=False, train_fraction=0.8, log=False):
+        self, calo_hits, split=None, shuffle_files=False, train_fraction=0.8, log=False, seed=42):
         """
         Initialize the dataset.
 
@@ -497,13 +497,14 @@ class ColliderMLHits(IterableDataset):
             calo_hits : calo_hit data for events.
             shuffle_files (bool): Whether to shuffle the order of parquet files.
         """
+        super().__init__()
         
         self.calo_hits = calo_hits
         self.shuffle_files = shuffle_files
         self.log = log
+        self.seed = seed
+        self.epoch = 0
         
-        
-
         self.split = split
         if self.split is not None:
             split_index = int(len(self.calo_hits) * train_fraction)
@@ -511,9 +512,6 @@ class ColliderMLHits(IterableDataset):
                 self.calo_hits = self.calo_hits[:split_index]
             elif self.split == "val":
                 self.calo_hits = self.calo_hits[split_index:]
-
-        if self.shuffle_files:
-            self.shuffle_shards()
 
     def __len__(self):
         """
@@ -531,14 +529,21 @@ class ColliderMLHits(IterableDataset):
         logger = logging.getLogger(__name__)
         self.sample_counter = 0  # Reset sample counter for each iteration or each epoch
         #worker_info = torch.utils.data.get_worker_info()
-        
 
+        if self.shuffle_files:
+            data = self.calo_hits.sample(
+                fraction = 1.0,
+                with_replacement = False,
+                shuffle = True,
+                seed = self.seed + self.epoch
+            )
+            self.epoch += 1
+        else:
+            data = self.calo_hits
         
-        data = self.calo_hits
-        
-        for event_i in range(len(self.calo_hits)):
+        for event_i in range(len(data)):
 
-            data_i = data[event_i]
+            data_i = data.slice[event_i, 1]
 
             x   = data_i['x'].to_numpy()[0]
             y   = data_i['y'].to_numpy()[0]
@@ -548,7 +553,7 @@ class ColliderMLHits(IterableDataset):
             # Log-transform energy
             e_log = np.log(e + 1e-6)
 
-            if self.log==True:
+            if self.log:
                 calo_hit_features = np.column_stack((x, y, z, e_log)).astype(np.float32)
             else:
                 calo_hit_features = np.column_stack((x, y, z, e)).astype(np.float32)
@@ -565,4 +570,3 @@ class ColliderMLHits(IterableDataset):
                 "calo_hit_features": calo_hit_features
 
             }
-         
