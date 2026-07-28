@@ -383,7 +383,7 @@ class ContrastiveLearningDatasetPlanar(IterableDataset):
 
                 out_dict["calo_hit_features_2"] = [(projected_hits2[self.projs[i]]-self.mean[i])/self.std[i] for i in range(len(self.projs))]
 
-                out_dict["calo_hit_features_0"] = [(projected_hits1[self.projs[i]]-self.mean[i])/self.std[i] for i in range(len(self.projs))]
+                out_dict["calo_hit_features"] = [(projected_hits0[self.projs[i]]-self.mean[i])/self.std[i] for i in range(len(self.projs))]
 
                 
 
@@ -543,7 +543,7 @@ class ColliderMLHits(IterableDataset):
         
         for event_i in range(len(data)):
 
-            data_i = data.slice[event_i, 1]
+            data_i = data.slice(event_i, 1)
 
             x   = data_i['x'].to_numpy()[0]
             y   = data_i['y'].to_numpy()[0]
