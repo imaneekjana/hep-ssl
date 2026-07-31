@@ -18,7 +18,7 @@ import h5py
 
 import numpy as np
 import torch
-from torch.utils.data import IterableDataset, Dataset, DataLoader, random_split
+from torch.utils.data import IterableDataset, Dataset, random_split
 import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.nn import EdgeConv, global_mean_pool
@@ -309,7 +309,7 @@ dataset_test = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetP
 
 
 train_loader = DataLoader(dataset_train, batch_size=args.batch_size, drop_last=True, num_workers=0)
-val_loader   = DataLoader(dataset_val,   batch_size=args.batch_size, drop_last=True, num_workers=0)
+val_loader   = DataLoader(dataset_val,   batch_size=args.batch_size, drop_last=False, num_workers=0)
 test_loader = DataLoader(dataset_test, batch_size=args.batch_size, drop_last=False, num_workers=0)
 
 
@@ -345,7 +345,7 @@ model = GravNetEncoder(in_features=3, hidden_dim=16, latent_dim=64, proj_dim=32,
 
 
 def count_trainable_parameters(mymodel):
-    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+    return sum(p.numel() for p in mymodel.parameters() if p.requires_grad)
 
 print("Trainable parameters:", count_trainable_parameters(model))
 
@@ -357,64 +357,103 @@ Specify the folder
 """
 
 
-folder = '/global/cfs/cdirs/m4474/aneek/particlemind_aneek/saved_models_colliderml_latest/gravnet_models_{}_rot_{:.2f}_noise_{:.2f}/'.format(args.split, args.rotation, args.energy_noise)
-    
-os.makedirs(folder, exist_ok=True)
-    
-np.save(folder+'stats.npy',{'means': MEANS, 'stds': STDS, 'events': 544})
+if args.output_dir is not None:
+    output_root = Path(args.output_dir).expanduser().resolve()
 
+elif os.environ.get("COLLIDERML_OUT_DIR"):
+    output_root = Path(os.environ["COLLIDERML_OUT_DIR"]).expanduser().resolve()
 
+else:
+    output_root = PROJECT_ROOT / "outputs"
 
-# Save the args
+run_name = (
+    f"gravnet_models_{args.split}"
+    f"_rot_{args.rotation:.2f}"
+    f"_noise_{args.energy_noise:.2f}"
+)
+
+folder = output_root / run_name
+checkpoint_dir = folder /"checkpoints"
+
+folder.mkdir(parents = True, exist_ok = True)
+checkpoint_dir.mkdir(parents=True, exist_ok=True)
+print(f"Training output directory: {folder}")
+
+np.save(folder / "stats.npy",
+        {"means": MEANS,
+         "stds": STDS,
+         "events": len(calo_hits),
+         "train_events": len(dataset_train_base),
+         "val_events": len(dataset_val_base),
+         "test_events": len(dataset_test_base)})
+
 def serializable_args(args):
-    return {k: str(v) if not isinstance(v, (int, float, str, bool, type(None))) else v
-            for k, v in vars(args).items()}
+    basic_types = (int, float, str, bool, type(None))
+    return {
+        key: value if isinstance(value, basic_types) else str(value)
+        for key, value in vars(args).items()
+    }
 
+with open(folder / "args.json", "w", encoding="utf-8") as args_file:
+    json.dump(serializable_args(args), args_file, indent=4)
 
+"""
+Prepare the model and optimizer
 
-json.dump(serializable_args(args), open(folder+'args.json', "w"), indent=4)
+"""
 
+model = model.to(args.device)
 
-# Load previous weights if needed
+print(f"Training device: {args.device}")
 
-if args.off>0 :
+optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
-    prev_weights = torch.load(folder+f'model_epoch_{args.off}.pth', map_location='cpu')   # add this)
-
-    model.load_state_dict(prev_weights)
-
-
-
-
-# Move to GPU if available
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = model.to(device)
-
-print(device)
-
-
-
-
-optimizer = torch.optim.Adam(model.parameters(), args.lr, weight_decay=args.weight_decay)
-
-scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=len(train_loader), eta_min=0, last_epoch=-1)
-
-#  It’s a no-op if the 'gpu_index' argument is a negative integer or None.
-
-
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=0)
 
 """
 Train the model
+
 """
+simclr = Contrastive_Learning(model=model, optimizer=optimizer, scheduler=scheduler, args=args)
+start_epoch = 0
+best_val_loss = float("inf")
 
-with torch.cuda.device(args.gpu_index):
-    
-    simclr = Contrastive_Learning(model=model, optimizer=optimizer, scheduler=scheduler, args=args)
+if args.resume is not None:
+    resume_path = Path(args.resume).expanduser().resolve()
+
+    if not resume_path.is_file():
+        raise FileNotFoundError(f"Checkpoint does not exist: {resume_path}")
+
+    start_epoch, best_val_loss = (simclr.load_checkpoint(path=resume_path, load_optimizer=True))
+
+best_val_loss = simclr.train(train_loader=train_loader, val_loader=val_loader, checkpoint_dir=str(checkpoint_dir), output_dir=str(folder), start_epoch=start_epoch, best_val_loss=best_val_loss)
 
 
-      
-    simclr.train(train_loader, val_loader, off=args.off, skip=1, save_model=False, folder = folder, wandb_=False, key='', name='gravnet_models_{}_rot_{:.2f}_noise_{:.2f}'.format(args.split, args.rotation, args.energy_noise))
 
-             
+best_checkpoint_path = (checkpoint_dir / "best.pt")
 
+if not best_checkpoint_path.is_file():
+    raise FileNotFoundError(
+        "Training finished without producing best.pt: "
+        f"{best_checkpoint_path}"
+    )
 
+simclr.load_checkpoint(path=best_checkpoint_path, load_optimizer=False)
+
+test_loss = simclr.test(loader=test_loader, desc="test", seed=args.seed + 671)
+
+print(
+    f"Best validation loss: "
+    f"{best_val_loss:.6f}"
+)
+
+print(
+    f"Final test loss: "
+    f"{test_loss:.6f}"
+)
+
+with open(folder / "test_metrics.json", "w", encoding="utf-8") as metrics_file:
+    json.dump({
+        "best_validation_loss":best_val_loss,
+        "test_loss": test_loss
+    }, metrics_file, indent=4)

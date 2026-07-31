@@ -42,7 +42,7 @@ class Contrastive_Learning(object):
         self.scheduler = kwargs['scheduler']
         self.criterion = torch.nn.CrossEntropyLoss().to(self.args.device)
 
-        self.scaler = GradScaler("cuda", enabled=(self.args.fp16_precision and self.arge.device.type == "cuda"))
+        self.scaler = GradScaler("cuda", enabled=(self.args.fp16_precision and self.args.device.type == "cuda"))
         self.history = {"epoch": [], "train_loss": [], "val_loss": []}
         
 
@@ -162,11 +162,11 @@ class Contrastive_Learning(object):
 
         plt.plot(self.history["epoch"], self.history["val_loss"], label="Validation Loss")
 
-        plt.xalbel("Epoch")
+        plt.xlabel("Epoch")
         plt.ylabel("Loss")
         plt.legend()
         plt.tight_layout()
-        plt.savefig(figure_path, dip=150)
+        plt.savefig(figure_path, dpi=150)
         plt.close()
 
     def save_checkpoint(self, path, epoch, train_loss, val_loss, best_val_loss):

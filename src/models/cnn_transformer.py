@@ -197,7 +197,7 @@ class ViTEncoder(nn.Module):
         dropout=0.1,
         latent_dim=64,
         proj_dim=32,
-        projection=True
+        projection=True,
         use_cls_token=True,
         normalize=False,
     ):
