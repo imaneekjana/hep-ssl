@@ -30,9 +30,8 @@ from livelossplot import PlotLosses
 from torch_geometric.loader import DataLoader
 import torch_cluster
 
-
-
-sys.path.append('/global/cfs/cdirs/m4474/aneek/particlemind_aneek')
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.data.augmentation import *
 from src.data.dataset import ColliderMLHits, ContrastiveLearningDatasetPlanar, ContrastiveLearningGraphDatasetPlanar, EventGraphBuilder
@@ -68,20 +67,24 @@ parser.add_argument('-a', '--arch', metavar='ARCH', default='gnn',
 parser.add_argument('--trainevents', default=1500, type=int,
                     help='number of events used for training ')
 
-parser.add_argument('--split', default='dihiggs_scale_5.0_events_1500', help='dataset type')
+parser.add_argument('--split', default='ttbar_ggf_total3000', help='Name for the training output directory')
 
-parser.add_argument('--rotation', default=np.pi/8, help='scale for random global rotation')
+parser.add_argument('--rotation', default=np.pi/8, type=float, help='scale for random global rotation')
 
-parser.add_argument('--energy-noise', default=0.05, help='scale for (log)-energy noise')
+parser.add_argument('--energy-noise', default=0.05, type=float, help='scale for (log)-energy noise')
 
-parser.add_argument('--off', default=0, type=int, help='loading weights from previously trained model')
-
-
+parser.add_argument('--resume', default=None, type=str, help='Path to a checkpoint file used to resume training')
 
 
 
-parser.add_argument('-j', '--workers', default=12, type=int, metavar='N',
+
+
+parser.add_argument('-j', '--workers', default=0, type=int, metavar='N',
                     help='number of data loading workers (default: 32)')
+
+parser.add_argument("--data-dir", default=None, type=str, help="Directory used by ColliderML to story or read dataset files")
+
+parser.add_argument("--output-dir", default=None, type=str, help="Parent directory for checkpoints and training outputs")
 
 parser.add_argument('--epochs', default=18, type=int, metavar='N',
                     help='number of total epochs to run')
@@ -125,8 +128,6 @@ parser.add_argument('--temperature', default=0.07, type=float,
 parser.add_argument('--n-views', default=2, type=int, metavar='N',
                     help='Number of views for contrastive learning training.')
 
-parser.add_argument('--gpu-index', default=0, type=int, help='Gpu index.')
-
 
 args, unknown = parser.parse_known_args()
 
@@ -140,7 +141,6 @@ if not args.disable_cuda and torch.cuda.is_available():
     cudnn.benchmark = True    
 else:
     args.device = torch.device('cpu')
-    args.gpu_index = -1
 
 
     
@@ -167,6 +167,18 @@ Loading ColliderML data
 """
 
 from colliderml.core import load_tables, collect_tables
+import polars as pl
+
+if args.data_dir is not None:
+    data_dir = Path(args.data_dir).expanduser().resolve()
+elif os.environ.get("COLLIDERML_DATA_DIR"):
+    data_dir = Path(os.environ["COLLIDERML_DATA_DIR"]).expanduser().resolve()
+else:
+    data_dir = PROJECT_ROOT / "colliderml-data"
+
+data_dir.mkdir(parents=True, exist_ok=True)
+print(f"ColliderML data directory: {data_dir}")
+
 
 
 ## ttbar data
@@ -178,7 +190,7 @@ cfg1 = {
     "split": "train",
     "lazy": False,
     "max_events": args.trainevents,
-    "data_dir":"/pscratch/sd/a/aneekj02/colliderml-data"
+    "data_dir": str(data_dir)
 }
 tables1 = load_tables(cfg1)
 frames1 = collect_tables(tables1)
@@ -195,7 +207,7 @@ cfg2 = {
     "split": "train",
     "lazy": False,
     "max_events": args.trainevents,
-    "data_dir":"/pscratch/sd/a/aneekj02/colliderml-data"
+    "data_dir": str(data_dir)
 }
 tables2 = load_tables(cfg2)
 frames2 = collect_tables(tables2)
@@ -211,24 +223,22 @@ cfg3 = {
     "split": "train",
     "lazy": False,
     "max_events": args.trainevents,
-    "data_dir":"/pscratch/sd/a/aneekj02/colliderml-data"
+    "data_dir": str(data_dir)
 }
 tables3 = load_tables(cfg3)
 frames3 = collect_tables(tables3)
 
 calo_hits3 = frames3["calo_hits"]
 
-import polars as pl
-
 # Concatenate
 #combined = pl.concat([calo_hits1, calo_hits2, calo_hits3])
-#combined = pl.concat([calo_hits1, calo_hits3])
+combined = pl.concat([calo_hits1, calo_hits3])
 #combined = pl.concat([calo_hits2, calo_hits3])
 
-combined = calo_hits2 #Only dihiggs
+#combined = calo_hits2 #Only dihiggs
 
 # Shuffle rows
-combined = combined.sample(fraction=1.0, with_replacement=False, seed=SEED)
+combined = combined.sample(fraction=1.0, with_replacement=False, shuffle=True, seed=SEED)
 
 #print(combined.shape)
 #print(combined.head())
@@ -252,11 +262,28 @@ augment = Compose([
 
 
 
+n_total = len(calo_hits)
+n_train = int(0.8 * n_total)
+n_val = int(0.1 * n_total)
 
-dataset_train = ColliderMLHits(calo_hits, split="train", shuffle_files=False, train_fraction=0.8, log=False)
-dataset_val = ColliderMLHits(calo_hits, split="val", shuffle_files=False, train_fraction=0.8, log=False)
+train_hits = calo_hits[:n_train]
+val_hits = calo_hits[n_train:n_train + n_val]
+test_hits = calo_hits[n_train + n_val:]
+dataset_train_base = ColliderMLHits(train_hits, split=None, shuffle_files=True, log=False, seed=SEED)
+dataset_val_base = ColliderMLHits(val_hits, split=None, shuffle_files=False, log=False, seed=SEED + 100)
+dataset_test_base = ColliderMLHits(test_hits, split=None, shuffle_files=False, log=False, seed=SEED + 200)
+
+print(
+    f"Dataset split: "
+    f"train={len(dataset_train_base)}, "
+    f"val={len(dataset_val_base)}, "
+    f"test={len(dataset_test_base)}"
+)
+
 
 r = 0 # r does not matter for GravNetEncoder, but for GraphConvEncoder
+#r = 1
+#r = 3
 
 
 
@@ -273,14 +300,17 @@ typ: can either be 'image' or 'hits'
 
 
 
-dataset_train = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_train, MEANS, STDS,  augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
+dataset_train = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_train_base, MEANS, STDS,  augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
 
-dataset_val = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_val, MEANS, STDS, augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
+dataset_val = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_val_base, MEANS, STDS, augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
+
+dataset_test = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_test_base, MEANS, STDS, augment, projs=["eta-phi"], grid_size=32, typ="hits"), builder=EventGraphBuilder(radius=r))
 
 
 
-train_loader = DataLoader(dataset_train, batch_size=args.batch_size, drop_last=True)
-val_loader   = DataLoader(dataset_val,   batch_size=args.batch_size, drop_last=True)
+train_loader = DataLoader(dataset_train, batch_size=args.batch_size, drop_last=True, num_workers=0)
+val_loader   = DataLoader(dataset_val,   batch_size=args.batch_size, drop_last=True, num_workers=0)
+test_loader = DataLoader(dataset_test, batch_size=args.batch_size, drop_last=False, num_workers=0)
 
 
 
