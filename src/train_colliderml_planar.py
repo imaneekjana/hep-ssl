@@ -128,8 +128,39 @@ parser.add_argument('--temperature', default=0.07, type=float,
 parser.add_argument('--n-views', default=2, type=int, metavar='N',
                     help='Number of views for contrastive learning training.')
 
+parser.add_argument('--experiment-name', default='baseline', type=str, help="Unique name for this experiment")
 
-args, unknown = parser.parse_known_args()
+parser.add_argument('--xyz-noise', default=5.0, type=float, help="Std for Gaussian noise added to xyz")
+
+parser.add_argument('--shift-std', default=0.0, type=float, help="XY translation standard deviation; 0 disables shifting")
+
+parser.add_argument("--crop-fraction", default=0.0, type=float, help="Spatial crop fraction; 0 disables cropping")
+
+parser.add_argument("--rotation-mode", choices=["uniform", "gaussian"], default="uniform", help="Distribution used to sample the rotation angle")
+
+parser.add_argument("--hidden-dim", default=16, type=int)
+
+parser.add_argument("--latent-dim", default=64, type=int)
+
+parser.add_argument("--proj-dim", default=32, type=int)
+
+parser.add_argument("--gravnet-k", default=8, type=int)
+
+parser.add_argument("--space-dim", default=4, type=int)
+
+parser.add_argument("--propagate-dim", default=16, type=int)
+
+parser.add_argument("--train-augmentation-order", default="rotate+energy_noise+xyz_noise", type=str, help=(
+    "Ordered augmentation pipeline. "
+    "Join transform names with '+' "
+    "Available transforms: rotate, energy_noise, xyz_noise, shift, crop. "
+    "Use 'none' to disable all augmentations."
+))
+
+args = parser.parse_args()
+print("Experiment configuration:")
+for key, value in sorted(vars(args).items()):
+    print(f"  {key}: {value}")
 
 ## save the args---done Later
 
@@ -254,13 +285,57 @@ Preparing dataset
 """
 
 
-augment = Compose([
-    RandomRotateXY(angle_range=(-args.rotation, args.rotation), gaussian = False),
-    EnergyWhiteNoise(args.energy_noise),
-    NoiseXYZ(5.0)
+def build_train_augmentation(args):
+    transform_factories = {
+        "rotate": lambda: RandomRotateXY(
+            angle_range = (-args.rotation, args.rotation), gaussian=(args.rotation_mode == "gaussian")
+        ),
+        "energy_noise": lambda: EnergyWhiteNoise(sigma=args.energy_noise),
+        "xyz_noise": lambda: NoiseXYZ(sigma=args.xyz_noise),
+        "shift": lambda: RandomShift(shift_std=(args.shift_std, args.shift_std, 0.0)),
+        "crop": lambda: RandomSpatialCrop(crop_fraction=args.crop_fraction)
+    }
+
+    order_spec = args.train_augmentation_order.strip().lower()
+
+    if order_spec in {"", "none"}:
+        transform_names = []
+    else:
+        transform_names = [name.strip() for name in order_spec.split("+") if name.strip()]
+
+    unknown_names = [name for name in transform_names if name not in transform_factories]
+
+    if unknown_names:
+        valid_names = ", ".join(transform_factories.keys())
+        raise ValueError(
+            f"Unknown augmentation names: {unknown_names}. "
+            f"Valid names are: {valid_names}"
+        )
+
+    if len(transform_names) != len(set(transform_names)):
+        raise ValueError(
+            "Duplicate transforms are not allowed in "
+            f"--train-augmentation-order: {transform_names}"
+        )
+
+    transforms = [transform_factories[name]() for name in transform_names]
+
+    print("Training augmentation pipeline: " + (" -> ".join(transform_names) if transform_names else "none"))
+
+    return Compose(transforms)
+
+train_augment = build_train_augmentation(args)
+
+eval_augment = Compose([
+    RandomRotateXY(angle_range=(-np.pi / 8, np.pi / 8), gaussian = False),
+    EnergyWhiteNoise(sigma=0.05),
+    NoiseXYZ(sigma=5.0)
 ])
 
-
+print(
+    "Evaluation augmentation pipeline: "
+    "rotate -> energy_noise -> xyz_noise"
+)
 
 n_total = len(calo_hits)
 n_train = int(0.8 * n_total)
@@ -300,11 +375,11 @@ typ: can either be 'image' or 'hits'
 
 
 
-dataset_train = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_train_base, MEANS, STDS,  augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
+dataset_train = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_train_base, MEANS, STDS,  train_augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
 
-dataset_val = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_val_base, MEANS, STDS, augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
+dataset_val = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_val_base, MEANS, STDS, eval_augment, projs=['eta-phi'], grid_size=32, typ='hits'), builder=EventGraphBuilder(radius=r))
 
-dataset_test = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_test_base, MEANS, STDS, augment, projs=["eta-phi"], grid_size=32, typ="hits"), builder=EventGraphBuilder(radius=r))
+dataset_test = ContrastiveLearningGraphDatasetPlanar(ContrastiveLearningDatasetPlanar(dataset_test_base, MEANS, STDS, eval_augment, projs=["eta-phi"], grid_size=32, typ="hits"), builder=EventGraphBuilder(radius=r))
 
 
 
@@ -339,7 +414,7 @@ Specify the model
 
 #model = PointNetEncoder()
 
-model = GravNetEncoder(in_features=3, hidden_dim=16, latent_dim=64, proj_dim=32, k=8, space_dim=4, propagate_dim=16) # adjust the in_features properly, 2+1=3 for planar projections of hits
+model = GravNetEncoder(in_features=3, hidden_dim=args.hidden_dim, latent_dim=args.latent_dim, proj_dim=args.proj_dim, k=args.gravnet_k, space_dim=args.space_dim, propagate_dim=args.propagate_dim) # adjust the in_features properly, 2+1=3 for planar projections of hits
 
 
 
@@ -366,14 +441,17 @@ elif os.environ.get("COLLIDERML_OUT_DIR"):
 else:
     output_root = PROJECT_ROOT / "outputs"
 
-run_name = (
-    f"gravnet_models_{args.split}"
-    f"_rot_{args.rotation:.2f}"
-    f"_noise_{args.energy_noise:.2f}"
-)
+run_name = args.experiment_name
 
 folder = output_root / run_name
 checkpoint_dir = folder /"checkpoints"
+
+if folder.exists() and args.resume is None:
+    raise FileExistsError(
+        f"Experiment output directory already exists: {folder}. "
+        "Use a new --experiment-name, remove the old directory, "
+        "or provide --resume to continue an existing run."
+    )
 
 folder.mkdir(parents = True, exist_ok = True)
 checkpoint_dir.mkdir(parents=True, exist_ok=True)

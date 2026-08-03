@@ -1,0 +1,107 @@
+==================================================
+Experiment: rotation_pi4
+Running on: gpu5000.chtc.wisc.edu
+Working directory: /var/lib/condor/execute/slot2/dir_2972003/scratch
+CUDA_VISIBLE_DEVICES: GPU-2941f50b-b6f6-a3bf-9e63-6adfbc028325
+Rotation mode: uniform
+Rotation: 0.7853981634
+Energy noise: 0.05
+XYZ noise: 5.0
+Shift std: 0.0
+Crop fraction: 0.0
+Augmentation order: rotate+energy_noise+xyz_noise
+Learning rate: 0.0003
+Weight decay: 0.0001
+Batch size: 32
+Temperature: 0.07
+Seed: 42
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Checking GPU...
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA H200
+Starting formal training...
+Experiment configuration:
+  arch: gnn
+  batch_size: 32
+  crop_fraction: 0.0
+  data_dir: /var/lib/condor/execute/slot2/dir_2972003/scratch/colliderml-data
+  dataset_name: colliderml
+  disable_cuda: False
+  energy_noise: 0.05
+  epochs: 18
+  experiment_name: rotation_pi4
+  feat_dim: 4
+  fp16_precision: False
+  gravnet_k: 8
+  hidden_dim: 16
+  latent_dim: 64
+  log_every_n_steps: 100
+  lr: 0.0003
+  n_views: 2
+  out_dim: 32
+  output_dir: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs
+  proj_dim: 32
+  propagate_dim: 16
+  resume: None
+  rotation: 0.7853981634
+  rotation_mode: uniform
+  seed: 42
+  shift_std: 0.0
+  space_dim: 4
+  split: ttbar_ggf_total3000
+  temperature: 0.07
+  train_augmentation_order: rotate+energy_noise+xyz_noise
+  trainevents: 1500
+  weight_decay: 0.0001
+  workers: 0
+  xyz_noise: 5.0
+ColliderML data directory: /var/lib/condor/execute/slot2/dir_2972003/scratch/colliderml-data
+Training augmentation pipeline: rotate -> energy_noise -> xyz_noise
+Evaluation augmentation pipeline: rotate -> energy_noise -> xyz_noise
+Dataset split: train=2400, val=300, test=300
+Data preprocessing working fine.
+Trainable parameters: 59020
+Training output directory: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4
+Training device: cuda
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 1/18 | train_loss=2.415965 | val_loss=1.577139 | best_val_loss=1.577139 | lr=0.00030000
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 2/18 | train_loss=1.644884 | val_loss=1.304990 | best_val_loss=1.304990 | lr=0.00029772
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 3/18 | train_loss=1.380205 | val_loss=1.109753 | best_val_loss=1.109753 | lr=0.00029095
+Epoch 4/18 | train_loss=1.222374 | val_loss=1.133749 | best_val_loss=1.109753 | lr=0.00027990
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 5/18 | train_loss=1.116268 | val_loss=0.919489 | best_val_loss=0.919489 | lr=0.00026491
+Epoch 6/18 | train_loss=1.002539 | val_loss=0.962380 | best_val_loss=0.919489 | lr=0.00024642
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 7/18 | train_loss=0.986953 | val_loss=0.837223 | best_val_loss=0.837223 | lr=0.00022500
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 8/18 | train_loss=0.897599 | val_loss=0.739394 | best_val_loss=0.739394 | lr=0.00020130
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 9/18 | train_loss=0.850082 | val_loss=0.699436 | best_val_loss=0.699436 | lr=0.00017605
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 10/18 | train_loss=0.846165 | val_loss=0.663858 | best_val_loss=0.663858 | lr=0.00015000
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 11/18 | train_loss=0.792845 | val_loss=0.651388 | best_val_loss=0.651388 | lr=0.00012395
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 12/18 | train_loss=0.752283 | val_loss=0.650336 | best_val_loss=0.650336 | lr=0.00009870
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 13/18 | train_loss=0.768544 | val_loss=0.614413 | best_val_loss=0.614413 | lr=0.00007500
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 14/18 | train_loss=0.718394 | val_loss=0.571642 | best_val_loss=0.571642 | lr=0.00005358
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 15/18 | train_loss=0.704886 | val_loss=0.558902 | best_val_loss=0.558902 | lr=0.00003509
+Epoch 16/18 | train_loss=0.677114 | val_loss=0.564487 | best_val_loss=0.558902 | lr=0.00002010
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 17/18 | train_loss=0.673022 | val_loss=0.554062 | best_val_loss=0.554062 | lr=0.00000905
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Epoch 18/18 | train_loss=0.692139 | val_loss=0.548968 | best_val_loss=0.548968 | lr=0.00000228
+Loaded checkpoint: /var/lib/condor/execute/slot2/dir_2972003/scratch/outputs/rotation_pi4/checkpoints/best.pt
+Resume from epoch: 18
+Best validation loss: 0.548968
+Final test loss: 0.512538
+Experiment rotation_pi4 completed successfully.

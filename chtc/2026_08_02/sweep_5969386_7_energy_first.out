@@ -1,0 +1,107 @@
+==================================================
+Experiment: energy_first
+Running on: gpu5001.chtc.wisc.edu
+Working directory: /var/lib/condor/execute/slot2/dir_706562/scratch
+CUDA_VISIBLE_DEVICES: GPU-3f76b988-200e-d250-7cbc-2a4bd611de03
+Rotation mode: uniform
+Rotation: 0.3926990817
+Energy noise: 0.05
+XYZ noise: 5.0
+Shift std: 0.0
+Crop fraction: 0.0
+Augmentation order: energy_noise+rotate+xyz_noise
+Learning rate: 0.0003
+Weight decay: 0.0001
+Batch size: 32
+Temperature: 0.07
+Seed: 42
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Checking GPU...
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA H200
+Starting formal training...
+Experiment configuration:
+  arch: gnn
+  batch_size: 32
+  crop_fraction: 0.0
+  data_dir: /var/lib/condor/execute/slot2/dir_706562/scratch/colliderml-data
+  dataset_name: colliderml
+  disable_cuda: False
+  energy_noise: 0.05
+  epochs: 18
+  experiment_name: energy_first
+  feat_dim: 4
+  fp16_precision: False
+  gravnet_k: 8
+  hidden_dim: 16
+  latent_dim: 64
+  log_every_n_steps: 100
+  lr: 0.0003
+  n_views: 2
+  out_dim: 32
+  output_dir: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs
+  proj_dim: 32
+  propagate_dim: 16
+  resume: None
+  rotation: 0.3926990817
+  rotation_mode: uniform
+  seed: 42
+  shift_std: 0.0
+  space_dim: 4
+  split: ttbar_ggf_total3000
+  temperature: 0.07
+  train_augmentation_order: energy_noise+rotate+xyz_noise
+  trainevents: 1500
+  weight_decay: 0.0001
+  workers: 0
+  xyz_noise: 5.0
+ColliderML data directory: /var/lib/condor/execute/slot2/dir_706562/scratch/colliderml-data
+Training augmentation pipeline: energy_noise -> rotate -> xyz_noise
+Evaluation augmentation pipeline: rotate -> energy_noise -> xyz_noise
+Dataset split: train=2400, val=300, test=300
+Data preprocessing working fine.
+Trainable parameters: 59020
+Training output directory: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first
+Training device: cuda
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 1/18 | train_loss=2.284963 | val_loss=1.585028 | best_val_loss=1.585028 | lr=0.00030000
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 2/18 | train_loss=1.537916 | val_loss=1.252977 | best_val_loss=1.252977 | lr=0.00029772
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 3/18 | train_loss=1.187847 | val_loss=1.020182 | best_val_loss=1.020182 | lr=0.00029095
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 4/18 | train_loss=1.088131 | val_loss=0.867550 | best_val_loss=0.867550 | lr=0.00027990
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 5/18 | train_loss=0.962233 | val_loss=0.802691 | best_val_loss=0.802691 | lr=0.00026491
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 6/18 | train_loss=0.898513 | val_loss=0.737812 | best_val_loss=0.737812 | lr=0.00024642
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 7/18 | train_loss=0.825071 | val_loss=0.645373 | best_val_loss=0.645373 | lr=0.00022500
+Epoch 8/18 | train_loss=0.798525 | val_loss=0.688621 | best_val_loss=0.645373 | lr=0.00020130
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 9/18 | train_loss=0.751847 | val_loss=0.599638 | best_val_loss=0.599638 | lr=0.00017605
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 10/18 | train_loss=0.679562 | val_loss=0.528687 | best_val_loss=0.528687 | lr=0.00015000
+Epoch 11/18 | train_loss=0.615112 | val_loss=0.550679 | best_val_loss=0.528687 | lr=0.00012395
+Epoch 12/18 | train_loss=0.646998 | val_loss=0.571887 | best_val_loss=0.528687 | lr=0.00009870
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 13/18 | train_loss=0.606537 | val_loss=0.498894 | best_val_loss=0.498894 | lr=0.00007500
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 14/18 | train_loss=0.570555 | val_loss=0.483824 | best_val_loss=0.483824 | lr=0.00005358
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 15/18 | train_loss=0.558501 | val_loss=0.480629 | best_val_loss=0.480629 | lr=0.00003509
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 16/18 | train_loss=0.556484 | val_loss=0.471353 | best_val_loss=0.471353 | lr=0.00002010
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 17/18 | train_loss=0.519393 | val_loss=0.460089 | best_val_loss=0.460089 | lr=0.00000905
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Epoch 18/18 | train_loss=0.536658 | val_loss=0.457019 | best_val_loss=0.457019 | lr=0.00000228
+Loaded checkpoint: /var/lib/condor/execute/slot2/dir_706562/scratch/outputs/energy_first/checkpoints/best.pt
+Resume from epoch: 18
+Best validation loss: 0.457019
+Final test loss: 0.460731
+Experiment energy_first completed successfully.

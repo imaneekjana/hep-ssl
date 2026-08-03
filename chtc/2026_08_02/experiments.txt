@@ -1,0 +1,10 @@
+baseline,uniform,0.3926990817,0.05,5.0,0.0,0.0,rotate+energy_noise+xyz_noise,0.0003,0.0001,32,0.07,42
+no_rotation,uniform,0.0,0.05,5.0,0.0,0.0,energy_noise+xyz_noise,0.0003,0.0001,32,0.07,42
+rotation_pi4,uniform,0.7853981634,0.05,5.0,0.0,0.0,rotate+energy_noise+xyz_noise,0.0003,0.0001,32,0.07,42
+no_energy_noise,uniform,0.3926990817,0.0,5.0,0.0,0.0,rotate+xyz_noise,0.0003,0.0001,32,0.07,42
+energy_noise_010,uniform,0.3926990817,0.10,5.0,0.0,0.0,rotate+energy_noise+xyz_noise,0.0003,0.0001,32,0.07,42
+no_xyz_noise,uniform,0.3926990817,0.05,0.0,0.0,0.0,rotate+energy_noise,0.0003,0.0001,32,0.07,42
+xyz_noise_2,uniform,0.3926990817,0.05,2.0,0.0,0.0,rotate+energy_noise+xyz_noise,0.0003,0.0001,32,0.07,42
+energy_first,uniform,0.3926990817,0.05,5.0,0.0,0.0,energy_noise+rotate+xyz_noise,0.0003,0.0001,32,0.07,42
+rotate_then_shift,uniform,0.3926990817,0.05,5.0,2.0,0.0,rotate+shift+energy_noise+xyz_noise,0.0003,0.0001,32,0.07,42
+shift_then_rotate,uniform,0.3926990817,0.05,5.0,2.0,0.0,shift+rotate+energy_noise+xyz_noise,0.0003,0.0001,32,0.07,42
