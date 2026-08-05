@@ -1,0 +1,31 @@
+universe = vanilla
+
+executable = run_linear_probe.sh
+
+log = linear_probe_$(Cluster)_$(Process).log
+output = linear_probe_$(Cluster)_$(Process).out
+error = linear_probe_$(Cluster)_$(Process).err
+
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+container_image = file:///staging/k/kli398/hep_ssl.sif
+
+transfer_input_files = \
+    hep_ssl-code.tar.gz, \
+    result_baseline.tar.gz, \
+    osdf:///chtc/staging/k/kli398/colliderml-data-v1.tar.gz
+
+transfer_output_files = result_linear_probe_baseline.tar.gz
+
+requirements = (HasCHTCStaging == true)
+
++WantGPULab = true
++GPUJobLength = "short"
+
+request_gpus = 1
+request_cpus = 2
+request_memory = 64GB
+request_disk = 30GB
+
+queue 1
