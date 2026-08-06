@@ -1,0 +1,9 @@
+no_rotation
+rotation_pi4
+no_energy_noise
+energy_noise_010
+no_xyz_noise
+xyz_noise_2
+energy_first
+rotate_then_shift
+shift_then_rotate
