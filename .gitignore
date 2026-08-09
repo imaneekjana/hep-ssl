@@ -1,0 +1,47 @@
+# macOS metadata
+.DS_Store
+**/.DS_Store
+
+# Python and Jupyter caches
+**/__pycache__/
+**/*.pyc
+**/.ipynb_checkpoints/
+
+# Local experiment tracking
+notebooks/wandb/
+
+# HTCondor logs
+chtc/**/*.err
+chtc/**/*.log
+chtc/**/*.out
+
+# Code archives: source code itself is already tracked
+chtc/**/hep_ssl-code.tar.gz
+
+# Old pretraining log archive
+chtc/**/pretraining_logs_*.tar.gz
+
+# V2 result archives are duplicates of pretraining_output_v2/
+chtc/2026_08_08/result_*.tar.gz
+
+# Linear-probe archives are duplicates of classifier_output/
+chtc/notebook/classifier/classifier_output_all.tar.gz
+chtc/notebook/classifier/result_baseline.tar.gz
+chtc/notebook/classifier/result_linear_probe_*.tar.gz
+
+# Keep best.pt, but ignore final-epoch duplicate
+**/checkpoints/last.pt
+
+# CHTC wrapper bookkeeping
+**/wrapper_exit_code.txt
+
+# External data and containers
+*.sif
+colliderml-data*/
+colliderml-data*.tar.gz
+
+# Temporary inventory
+chtc_inventory_report.txt
+
+# Not using a separate curated results directory for now
+results/

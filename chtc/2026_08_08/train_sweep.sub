@@ -1,0 +1,32 @@
+universe = vanilla
+
+batch_name = gravnet_physics_augmentation_sweep
+
+container_image = osdf:///chtc/staging/k/kli398/hep_ssl.sif
+
+executable = run_experiment.sh
+
+arguments = $(exp_name) $(aug_order) $(soft_max_fraction) $(soft_cell_fraction) $(share_max_fraction) $(learning_rate) $(weight_decay) $(batch_size) $(temperature) $(seed)
+
+transfer_input_files = hep_ssl-code.tar.gz, osdf:///chtc/staging/k/kli398/colliderml-data-v1.tar.gz
+
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+transfer_output_files = result_$(exp_name).tar.gz
+
+log = sweep_$(Cluster)_$(Process)_$(exp_name).log
+output = sweep_$(Cluster)_$(Process)_$(exp_name).out
+error = sweep_$(Cluster)_$(Process)_$(exp_name).err
+
+requirements = (HasCHTCStaging == true)
+
++WantGPULab = true
++GPUJobLength = "medium"
+
+request_gpus = 1
+request_cpus = 2
+request_memory = 48GB
+request_disk = 30GB
+
+queue exp_name, aug_order, soft_max_fraction, soft_cell_fraction, share_max_fraction, learning_rate, weight_decay, batch_size, temperature, seed from experiments.txt

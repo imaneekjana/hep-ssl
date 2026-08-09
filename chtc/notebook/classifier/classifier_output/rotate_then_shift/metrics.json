@@ -1,0 +1,12 @@
+{
+    "best_epoch": 100,
+    "best_val_loss": 0.37348175048828125,
+    "val_accuracy": 0.8600000143051147,
+    "test_loss": 0.34527093172073364,
+    "test_accuracy": 0.8266666531562805,
+    "test_roc_auc": 0.9279628886212589,
+    "labels": {
+        "ttbar": 0,
+        "ggf": 1
+    }
+}

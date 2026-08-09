@@ -1,0 +1,20 @@
+universe = vanilla
+
+container_image = osdf:///chtc/staging/k/kli398/hep_ssl.sif
+
+executable = download_data.sh
+
+log = download_data_$(Cluster).log
+output = download_data_$(Cluster).out
+error = download_data_$(Cluster).err
+
+transfer_output_files = colliderml-data-v1.tar.gz
+transfer_output_remaps = "colliderml-data-v1.tar.gz = osdf:///chtc/staging/k/kli398/colliderml-data-v1.tar.gz"
+
+requirements = (HasCHTCStaging == true)
+
+request_cpus = 2
+request_memory = 16GB
+request_disk = 60GB
+
+queue

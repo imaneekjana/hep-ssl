@@ -1,0 +1,41 @@
+Bootstrap: docker
+From: pytorch/pytorch:2.4.1-cuda12.1-cudnn9-runtime
+
+%post
+    python -m pip install --no-cache-dir --upgrade pip setuptools wheel
+
+    python -m pip install --no-cache-dir \
+        torchvision==0.19.1 \
+        --index-url https://download.pytorch.org/whl/cu121
+
+    python -m pip install --no-cache-dir \
+        torch-geometric==2.6.1
+
+    python -m pip install --no-cache-dir \
+        torch-cluster==1.6.3 \
+        -f https://data.pyg.org/whl/torch-2.4.0+cu121.html
+
+    python -m pip install --no-cache-dir \
+        colliderml \
+        numpy \
+        polars \
+        pyarrow \
+        datasets \
+        huggingface_hub \
+        uproot \
+        awkward \
+        h5py \
+        scikit-learn \
+        matplotlib \
+        tqdm \
+        livelossplot \
+        tensorboard
+
+%environment
+    export PYTHONUNBUFFERED=1
+    export MPLBACKEND=Agg
+
+%labels
+    Project hep-ssl
+    PyTorch 2.4.1
+    CUDA 12.1

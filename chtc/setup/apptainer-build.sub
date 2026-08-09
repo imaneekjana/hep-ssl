@@ -1,0 +1,15 @@
+universe = vanilla
+
+executable = /usr/bin/hostname
+log = apptainer-build.log
+
+transfer_input_files = image.def
+
+requirements = (HasCHTCStaging == true)
++IsBuildJob = true
+
+request_cpus = 8
+request_memory = 16GB
+request_disk = 30GB
+
+queue

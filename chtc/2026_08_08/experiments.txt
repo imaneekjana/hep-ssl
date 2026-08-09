@@ -1,0 +1,8 @@
+identity,none,0.01,0.001,0.02,0.0003,0.0001,32,0.07,42
+phi_cyclic,phi_cyclic,0.01,0.001,0.02,0.0003,0.0001,32,0.07,42
+beam_reflection,beam_reflection,0.01,0.001,0.02,0.0003,0.0001,32,0.07,42
+collider_symmetry,beam_reflection+phi_cyclic,0.01,0.001,0.02,0.0003,0.0001,32,0.07,42
+soft_mask,soft_mask,0.01,0.001,0.02,0.0003,0.0001,32,0.07,42
+local_cell_sharing,local_cell_sharing,0.01,0.001,0.02,0.0003,0.0001,32,0.07,42
+energyflow_robust,soft_mask+local_cell_sharing,0.01,0.001,0.02,0.0003,0.0001,32,0.07,42
+physics_full,beam_reflection+phi_cyclic+soft_mask+local_cell_sharing,0.01,0.001,0.02,0.0003,0.0001,32,0.07,42
