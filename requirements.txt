@@ -8,3 +8,5 @@ matplotlib
 awkward
 h5py
 torch-geometric
+jax
+jaxlib
