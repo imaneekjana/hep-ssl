@@ -1,0 +1,81 @@
+==================================================
+Classifier experiment: ggf_dihiggs_random
+Encoder mode: random frozen encoder
+Reference experiment: ggf_dihiggs_none
+Random encoder seed: 42
+Running on: gpu4004
+Working directory: /var/lib/condor/execute/slot2/dir_1848813/scratch
+CUDA_VISIBLE_DEVICES: GPU-48e4e4f6-9346-9c73-1b47-31b5f3618752
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Extracting reference experiment...
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA H200
+Reference directory: ggf_dihiggs_none
+Data directory: /var/lib/condor/execute/slot2/dir_1848813/scratch/colliderml-data
+Output directory: classifier_output/ggf_dihiggs_random
+Using a frozen randomly initialized GravNet encoder with seed 42.
+Reference experiment: ggf_dihiggs_none
+Encoder mode: frozen random initialization
+Random encoder seed: 42
+Classification task: ggf vs dihiggs
+Events per class: 2500
+Device: cuda
+Feature mean: [ 2.89209100e-03  1.83292195e-05 -5.08254808e+00]
+Feature std:  [2.15738391 1.81218214 1.83506434]
+Loaded 2500 events from channel ggf.
+Loaded 2500 events from channel dihiggs.
+ggf embeddings: (2500, 64)
+dihiggs embeddings: (2500, 64)
+
+============================================================
+Running classifier: logistic_regression
+============================================================
+Classifier:        logistic_regression
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.6520
+Balanced accuracy: 0.6520
+F1 score:          0.6492
+ROC AUC:           0.7169
+Confusion matrix:
+[[330 170]
+ [178 322]]
+
+============================================================
+Running classifier: knn
+============================================================
+Classifier:        knn
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.5830
+Balanced accuracy: 0.5830
+F1 score:          0.5884
+ROC AUC:           0.6236
+Confusion matrix:
+[[285 215]
+ [202 298]]
+
+============================================================
+Running classifier: gradient_boosting
+============================================================
+Classifier:        gradient_boosting
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.6220
+Balanced accuracy: 0.6220
+F1 score:          0.6301
+ROC AUC:           0.6857
+Confusion matrix:
+[[300 200]
+ [178 322]]
+
+All classifiers completed.
+Results saved to: /var/lib/condor/execute/slot2/dir_1848813/scratch/classifier_output/ggf_dihiggs_random
+Creating result archive...
+Created: result_classifier_ggf_dihiggs_random.tar.gz
+-rw-r--r-- 1 kli398 kli398 4.0M Aug 15 11:21 result_classifier_ggf_dihiggs_random.tar.gz
+Random classifier experiment completed successfully.

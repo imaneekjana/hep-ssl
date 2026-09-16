@@ -1,0 +1,35 @@
+{
+  "experiment": "ttbar_dihiggs_none",
+  "channel_a": "ttbar",
+  "channel_b": "dihiggs",
+  "events_per_channel": 2500,
+  "embedding_dimension": 64,
+  "train_fraction": 0.8,
+  "classifier_random_state": 42,
+  "classifiers": {
+    "logistic_regression": {
+      "accuracy": 0.721,
+      "balanced_accuracy": 0.721,
+      "precision": 0.7241379310344828,
+      "recall": 0.714,
+      "f1": 0.7190332326283988,
+      "roc_auc": 0.783984
+    },
+    "knn": {
+      "accuracy": 0.675,
+      "balanced_accuracy": 0.675,
+      "precision": 0.6692456479690522,
+      "recall": 0.692,
+      "f1": 0.6804326450344149,
+      "roc_auc": 0.74824
+    },
+    "gradient_boosting": {
+      "accuracy": 0.705,
+      "balanced_accuracy": 0.7050000000000001,
+      "precision": 0.7167019027484144,
+      "recall": 0.678,
+      "f1": 0.696813977389517,
+      "roc_auc": 0.771312
+    }
+  }
+}

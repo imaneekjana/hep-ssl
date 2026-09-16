@@ -1,0 +1,59 @@
+000 (6028200.031.000) 2026-08-13 14:54:32 Job submitted from host: <128.105.68.113:9618?addrs=128.105.68.113-9618+[2607-f388-2200-100-eaeb-d3ff-fea7-d05e]-9618&alias=ap2002.chtc.wisc.edu&noUDP&sock=schedd_7808_378f>
+    [ JobBatchName = "gravnet_pairwise_augmentation_sweep_20260812" ]
+...
+040 (6028200.031.000) 2026-08-13 16:34:59 Started transferring input files
+	Transferring to host: <128.105.76.51:9618?addrs=128.105.76.51-9618+[2607-f388-2200-100-925a-8ff-fe34-15b6]-9618&alias=zliu-chtcgpu5000.chtc.wisc.edu&noUDP&sock=slot3_2_716887_7e79_43393>
+...
+040 (6028200.031.000) 2026-08-13 16:35:29 Finished transferring input files
+...
+001 (6028200.031.000) 2026-08-13 16:35:29 Job executing on host: <128.105.76.51:9618?addrs=128.105.76.51-9618+[2607-f388-2200-100-925a-8ff-fe34-15b6]-9618&alias=zliu-chtcgpu5000.chtc.wisc.edu&noUDP&sock=startd_11367_651f>
+	SlotName: slot3_2@zliu-chtcgpu5000.chtc.wisc.edu
+	AvailableGPUs = { GPUs_GPU_ad6fd700 }
+	CondorScratchDir = "/var/lib/condor/execute/slot3/dir_1014394/scratch"
+	Cpus = 2
+	Disk = 31457280
+	GPUs = 1
+	GPUs_GPU_ad6fd700 = [ Id = "GPU-ad6fd700"; Capability = 8.9; DeviceName = "NVIDIA L40S"; DeviceUuid = "ad6fd700-031e-f4f7-18cc-4d9383583651"; ECCEnabled = true; NvidiaDriver = "590.48.01"; DriverVersion = 13.1; DevicePciBusId = "0000:61:00.0"; GlobalMemoryMb = 45460; MaxSupportedVersion = 13010 ]
+	IoHeavy = 0
+	Memory = 65536
+...
+006 (6028200.031.000) 2026-08-13 16:35:37 Image size of job updated: 38744
+	38  -  MemoryUsage of job (MB)
+	38744  -  ResidentSetSize of job (KB)
+...
+006 (6028200.031.000) 2026-08-13 16:40:37 Image size of job updated: 32549072
+	30215  -  MemoryUsage of job (MB)
+	30939172  -  ResidentSetSize of job (KB)
+...
+006 (6028200.031.000) 2026-08-13 16:45:38 Image size of job updated: 32549072
+	30235  -  MemoryUsage of job (MB)
+	30960396  -  ResidentSetSize of job (KB)
+...
+006 (6028200.031.000) 2026-08-13 17:10:41 Image size of job updated: 32987296
+	30235  -  MemoryUsage of job (MB)
+	30960396  -  ResidentSetSize of job (KB)
+...
+040 (6028200.031.000) 2026-08-13 18:28:27 Started transferring output files
+...
+040 (6028200.031.000) 2026-08-13 18:28:27 Finished transferring output files
+...
+005 (6028200.031.000) 2026-08-13 18:28:30 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 02:05:54, Sys 0 00:01:04  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 02:05:54, Sys 0 00:01:04  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1592143  -  Run Bytes Sent By Job
+	9725079282  -  Run Bytes Received By Job
+	1592143  -  Total Bytes Sent By Job
+	9725079282  -  Total Bytes Received By Job
+	Partitionable Resources :       Usage  Request Allocated Assigned
+	   Cpus                 :        1.12        2         2 
+	   Disk (KB)            : 16321756    31457280  31457280 
+	   GPUs                 :        0.00        1         1 "GPU-ad6fd700"
+	   GpusMemory (MB)      :     1605                       
+	   IoHeavy              :                              0 
+	   Memory (MB)          :    30235       65536     65536 
+	   TimeExecute (s)      :     6778                       
+	   TimeSlotBusy (s)     :     6808                       
+...

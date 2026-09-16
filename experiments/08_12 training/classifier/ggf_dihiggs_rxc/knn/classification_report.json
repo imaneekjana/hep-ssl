@@ -1,0 +1,27 @@
+{
+  "ggf": {
+    "precision": 0.772,
+    "recall": 0.772,
+    "f1-score": 0.772,
+    "support": 500.0
+  },
+  "dihiggs": {
+    "precision": 0.772,
+    "recall": 0.772,
+    "f1-score": 0.772,
+    "support": 500.0
+  },
+  "accuracy": 0.772,
+  "macro avg": {
+    "precision": 0.772,
+    "recall": 0.772,
+    "f1-score": 0.772,
+    "support": 1000.0
+  },
+  "weighted avg": {
+    "precision": 0.772,
+    "recall": 0.772,
+    "f1-score": 0.772,
+    "support": 1000.0
+  }
+}

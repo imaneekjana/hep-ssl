@@ -1,0 +1,98 @@
+000 (6028200.010.000) 2026-08-13 14:54:32 Job submitted from host: <128.105.68.113:9618?addrs=128.105.68.113-9618+[2607-f388-2200-100-eaeb-d3ff-fea7-d05e]-9618&alias=ap2002.chtc.wisc.edu&noUDP&sock=schedd_7808_378f>
+    [ JobBatchName = "gravnet_pairwise_augmentation_sweep_20260812" ]
+...
+040 (6028200.010.000) 2026-08-13 15:12:40 Started transferring input files
+	Transferring to host: <128.105.68.103:9618?addrs=128.105.68.103-9618+[2607-f388-2200-100-1270-fdff-fe74-930]-9618&alias=gpu2011.chtc.wisc.edu&noUDP&sock=slot2_5_181405_fbaa_41979>
+...
+040 (6028200.010.000) 2026-08-13 15:13:08 Finished transferring input files
+...
+001 (6028200.010.000) 2026-08-13 15:13:08 Job executing on host: <128.105.68.103:9618?addrs=128.105.68.103-9618+[2607-f388-2200-100-1270-fdff-fe74-930]-9618&alias=gpu2011.chtc.wisc.edu&noUDP&sock=startd_12054_9eaf>
+	SlotName: slot2_5@gpu2011.chtc.wisc.edu
+	AvailableGPUs = { GPUs_MIG_845e88f9_6952_54b8_8ee6_afb69eadf6f5 }
+	CondorScratchDir = "/var/lib/condor/execute/slot2/dir_3373925/scratch"
+	Cpus = 2
+	Disk = 31457280
+	GPUs = 1
+	GPUs_MIG_845e88f9_6952_54b8_8ee6_afb69eadf6f5 = [ Id = "MIG-845e88f9-6952-54b8-8ee6-afb69eadf6f5"; Capability = 8.0; DeviceName = "NVIDIA A100-SXM4-80GB MIG 3g.40gb"; DeviceUuid = "MIG-845e88f9-6952-54b8-8ee6-afb69eadf6f5"; ECCEnabled = true; NvidiaDriver = "570.195.03"; DriverVersion = 12.8; DevicePciBusId = "0000:01:00.0"; GlobalMemoryMb = 40100; MaxSupportedVersion = 12080 ]
+	IoHeavy = 0
+	Memory = 65536
+...
+006 (6028200.010.000) 2026-08-13 15:13:16 Image size of job updated: 23332
+	23  -  MemoryUsage of job (MB)
+	23332  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 15:18:16 Image size of job updated: 29233980
+	28537  -  MemoryUsage of job (MB)
+	29221660  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 15:28:17 Image size of job updated: 29240804
+	28549  -  MemoryUsage of job (MB)
+	29233976  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 15:33:18 Image size of job updated: 29244028
+	28550  -  MemoryUsage of job (MB)
+	29234496  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 15:48:20 Image size of job updated: 31754412
+	28555  -  MemoryUsage of job (MB)
+	29240016  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 15:58:21 Image size of job updated: 31754412
+	28557  -  MemoryUsage of job (MB)
+	29241988  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 16:03:21 Image size of job updated: 31754412
+	28558  -  MemoryUsage of job (MB)
+	29242828  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 16:13:23 Image size of job updated: 31754412
+	28562  -  MemoryUsage of job (MB)
+	29246716  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 16:18:23 Image size of job updated: 31754412
+	28564  -  MemoryUsage of job (MB)
+	29249508  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 16:33:25 Image size of job updated: 31754412
+	28566  -  MemoryUsage of job (MB)
+	29251332  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 16:38:25 Image size of job updated: 31754412
+	28567  -  MemoryUsage of job (MB)
+	29251600  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 16:48:26 Image size of job updated: 31754412
+	28567  -  MemoryUsage of job (MB)
+	29251812  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 17:03:27 Image size of job updated: 31754412
+	28568  -  MemoryUsage of job (MB)
+	29252672  -  ResidentSetSize of job (KB)
+...
+006 (6028200.010.000) 2026-08-13 17:23:29 Image size of job updated: 31754412
+	28574  -  MemoryUsage of job (MB)
+	29258820  -  ResidentSetSize of job (KB)
+...
+040 (6028200.010.000) 2026-08-13 17:30:29 Started transferring output files
+...
+040 (6028200.010.000) 2026-08-13 17:30:29 Finished transferring output files
+...
+005 (6028200.010.000) 2026-08-13 17:30:32 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 02:32:53, Sys 0 00:04:49  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 02:32:53, Sys 0 00:04:49  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1593579  -  Run Bytes Sent By Job
+	9725079282  -  Run Bytes Received By Job
+	1593579  -  Total Bytes Sent By Job
+	9725079282  -  Total Bytes Received By Job
+	Partitionable Resources :       Usage  Request Allocated Assigned
+	   Cpus                 :        1.11        2         2 
+	   Disk (KB)            : 16321321    31457280  31457280 
+	   GPUs                 :                    1         1 "MIG-845e88f9-6952-54b8-8ee6-afb69eadf6f5"
+	   IoHeavy              :                              0 
+	   Memory (MB)          :    28574       65536     65536 
+	   TimeExecute (s)      :     8241                       
+	   TimeSlotBusy (s)     :     8269                       
+...

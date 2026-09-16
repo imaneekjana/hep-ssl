@@ -158,18 +158,19 @@ class EnergyWhiteNoise(Transform):
 
     def __call__(self, event: CaloEvent):
         event_c = event.copy()
+        energy = event_c.hits[:, 3]
 
-        event_c.hits = event.hits.copy()
-
-        noise = self.sigma*np.random.normal(
+        noise = np.random.normal(
             loc=0.0,
-            scale=1.0,
-            size=event_c.hits.shape[0])
+            scale=self.sigma,
+            size=energy.shape)
+
+        noisy_energy = energy + noise
         
+        if self.clip_min is not None:
+            noisy_energy = np.clip(noisy_energy, a_min=self.clip_min, a_max=None)
 
-        log_en = event_c.hits[:, 3]
-
-        event_c.hits[:, 3] = log_en + noise
+        event_c.hits[:, 3] = noisy_energy
 
 
         return event_c

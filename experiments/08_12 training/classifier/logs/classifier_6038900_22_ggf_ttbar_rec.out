@@ -1,0 +1,76 @@
+==================================================
+Classifier experiment: ggf_ttbar_rec
+Encoder mode: pretrained
+Running on: gpu4005
+Working directory: /var/lib/condor/execute/slot2/dir_1646279/scratch
+CUDA_VISIBLE_DEVICES: GPU-67fe531f-98a3-ee4e-1cc5-1b79d692c370
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Extracting pretrained experiment...
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA L40S
+Reference directory: ggf_ttbar_rec
+Data directory: /var/lib/condor/execute/slot2/dir_1646279/scratch/colliderml-data
+Output directory: classifier_output/ggf_ttbar_rec
+Pretraining experiment: ggf_ttbar_rec
+Classification task: ggf vs ttbar
+Events per class: 2500
+Device: cuda
+Feature mean: [-6.63960509e-04 -1.29860120e-04 -5.18871099e+00]
+Feature std:  [2.15387035 1.81274047 1.89477007]
+Loaded 2500 events from channel ggf.
+Loaded 2500 events from channel ttbar.
+ggf embeddings: (2500, 64)
+ttbar embeddings: (2500, 64)
+
+============================================================
+Running classifier: logistic_regression
+============================================================
+Classifier:        logistic_regression
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.9050
+Balanced accuracy: 0.9050
+F1 score:          0.9068
+ROC AUC:           0.9511
+Confusion matrix:
+[[443  57]
+ [ 38 462]]
+
+============================================================
+Running classifier: knn
+============================================================
+Classifier:        knn
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.8700
+Balanced accuracy: 0.8700
+F1 score:          0.8634
+ROC AUC:           0.9468
+Confusion matrix:
+[[459  41]
+ [ 89 411]]
+
+============================================================
+Running classifier: gradient_boosting
+============================================================
+Classifier:        gradient_boosting
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.8910
+Balanced accuracy: 0.8910
+F1 score:          0.8922
+ROC AUC:           0.9503
+Confusion matrix:
+[[440  60]
+ [ 49 451]]
+
+All classifiers completed.
+Results saved to: /var/lib/condor/execute/slot2/dir_1646279/scratch/classifier_output/ggf_ttbar_rec
+Creating result archive...
+Created: result_classifier_ggf_ttbar_rec.tar.gz
+-rw-r--r-- 1 kli398 kli398 4.0M Aug 15 11:11 result_classifier_ggf_ttbar_rec.tar.gz
+Pretrained classifier experiment completed successfully.

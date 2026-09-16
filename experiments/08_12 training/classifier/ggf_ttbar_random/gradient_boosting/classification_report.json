@@ -1,0 +1,27 @@
+{
+  "ggf": {
+    "precision": 0.778,
+    "recall": 0.778,
+    "f1-score": 0.778,
+    "support": 500.0
+  },
+  "ttbar": {
+    "precision": 0.778,
+    "recall": 0.778,
+    "f1-score": 0.778,
+    "support": 500.0
+  },
+  "accuracy": 0.778,
+  "macro avg": {
+    "precision": 0.778,
+    "recall": 0.778,
+    "f1-score": 0.778,
+    "support": 1000.0
+  },
+  "weighted avg": {
+    "precision": 0.778,
+    "recall": 0.778,
+    "f1-score": 0.778,
+    "support": 1000.0
+  }
+}

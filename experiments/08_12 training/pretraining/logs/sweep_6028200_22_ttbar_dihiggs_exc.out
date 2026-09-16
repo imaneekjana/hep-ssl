@@ -1,0 +1,114 @@
+==================================================
+Experiment: ttbar_dihiggs_exc
+Processes: ttbar vs dihiggs
+Events per channel: 2500
+Running on: gpu2006
+Working directory: /var/lib/condor/execute/slot2/dir_1401258/scratch
+CUDA_VISIBLE_DEVICES: GPU-f6d7e689-7e30-c6f1-32f6-a14ef5d01b87
+Rotation mode: uniform
+Rotation: 0.0
+Energy noise: 0.0001 GeV
+XYZ noise: 5.0 mm
+Shift std: 0.0 mm
+Crop fraction: 0.5
+Augmentation order: energy_noise+xyz_noise+crop
+Learning rate: 0.0003
+Weight decay: 0.0001
+Batch size: 32
+Temperature: 0.07
+Seed: 42
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Training script: src/train_colliderml_planar_pairwise.py
+ColliderML data directory: /var/lib/condor/execute/slot2/dir_1401258/scratch/colliderml-data
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA A100-SXM4-80GB
+Starting pretraining...
+Experiment configuration:
+  arch: gnn
+  batch_size: 32
+  channel_a: ttbar
+  channel_b: dihiggs
+  crop_fraction: 0.5
+  data_dir: /var/lib/condor/execute/slot2/dir_1401258/scratch/colliderml-data
+  dataset_name: colliderml
+  disable_cuda: False
+  energy_noise: 0.0001
+  epochs: 18
+  events_per_channel: 2500
+  experiment_name: ttbar_dihiggs_exc
+  feat_dim: 4
+  fp16_precision: False
+  gravnet_k: 8
+  hidden_dim: 16
+  latent_dim: 64
+  log_every_n_steps: 100
+  lr: 0.0003
+  n_views: 2
+  out_dim: 32
+  output_dir: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs
+  proj_dim: 32
+  propagate_dim: 16
+  resume: None
+  rotation: 0.0
+  rotation_mode: uniform
+  seed: 42
+  shift_std: 0.0
+  space_dim: 4
+  split: ttbar_vs_dihiggs_total5000
+  temperature: 0.07
+  train_augmentation_order: energy_noise+xyz_noise+crop
+  weight_decay: 0.0001
+  workers: 0
+  xyz_noise: 5.0
+ColliderML data directory: /var/lib/condor/execute/slot2/dir_1401258/scratch/colliderml-data
+Loaded 2500 events from channel ttbar.
+Loaded 2500 events from channel dihiggs.
+Training augmentation pipeline: energy_noise -> xyz_noise -> crop
+Evaluation augmentation pipeline: energy_noise -> xyz_noise -> crop
+Evaluation augmentation pipeline: rotate -> energy_noise -> xyz_noise
+Dataset split: train=3000, val=1000, test=1000
+Data preprocessing working fine.
+Trainable parameters: 59020
+Training output directory: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc
+Training device: cuda
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 1/18 | train_loss=1.328732 | val_loss=0.608420 | best_val_loss=0.608420 | lr=0.00030000
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 2/18 | train_loss=0.514256 | val_loss=0.340302 | best_val_loss=0.340302 | lr=0.00029772
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 3/18 | train_loss=0.245668 | val_loss=0.210958 | best_val_loss=0.210958 | lr=0.00029095
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 4/18 | train_loss=0.150755 | val_loss=0.133535 | best_val_loss=0.133535 | lr=0.00027990
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 5/18 | train_loss=0.139840 | val_loss=0.121266 | best_val_loss=0.121266 | lr=0.00026491
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 6/18 | train_loss=0.103168 | val_loss=0.094278 | best_val_loss=0.094278 | lr=0.00024642
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 7/18 | train_loss=0.087871 | val_loss=0.085250 | best_val_loss=0.085250 | lr=0.00022500
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 8/18 | train_loss=0.075884 | val_loss=0.063998 | best_val_loss=0.063998 | lr=0.00020130
+Epoch 9/18 | train_loss=0.063351 | val_loss=0.065003 | best_val_loss=0.063998 | lr=0.00017605
+Epoch 10/18 | train_loss=0.056747 | val_loss=0.068421 | best_val_loss=0.063998 | lr=0.00015000
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 11/18 | train_loss=0.052871 | val_loss=0.060231 | best_val_loss=0.060231 | lr=0.00012395
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 12/18 | train_loss=0.044220 | val_loss=0.055336 | best_val_loss=0.055336 | lr=0.00009870
+Epoch 13/18 | train_loss=0.039590 | val_loss=0.056121 | best_val_loss=0.055336 | lr=0.00007500
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 14/18 | train_loss=0.035907 | val_loss=0.052626 | best_val_loss=0.052626 | lr=0.00005358
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 15/18 | train_loss=0.033464 | val_loss=0.049697 | best_val_loss=0.049697 | lr=0.00003509
+Epoch 16/18 | train_loss=0.033564 | val_loss=0.050425 | best_val_loss=0.049697 | lr=0.00002010
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 17/18 | train_loss=0.037555 | val_loss=0.047654 | best_val_loss=0.047654 | lr=0.00000905
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Epoch 18/18 | train_loss=0.035843 | val_loss=0.047438 | best_val_loss=0.047438 | lr=0.00000228
+Loaded checkpoint: /var/lib/condor/execute/slot2/dir_1401258/scratch/outputs/ttbar_dihiggs_exc/checkpoints/best.pt
+Resume from epoch: 18
+Best validation loss: 0.047438
+Final test loss: 0.029329
+Experiment ttbar_dihiggs_exc completed successfully.

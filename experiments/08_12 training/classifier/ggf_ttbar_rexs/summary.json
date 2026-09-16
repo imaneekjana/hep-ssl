@@ -1,0 +1,35 @@
+{
+  "experiment": "ggf_ttbar_rexs",
+  "channel_a": "ggf",
+  "channel_b": "ttbar",
+  "events_per_channel": 2500,
+  "embedding_dimension": 64,
+  "train_fraction": 0.8,
+  "classifier_random_state": 42,
+  "classifiers": {
+    "logistic_regression": {
+      "accuracy": 0.893,
+      "balanced_accuracy": 0.893,
+      "precision": 0.875717017208413,
+      "recall": 0.916,
+      "f1": 0.895405669599218,
+      "roc_auc": 0.9509480000000001
+    },
+    "knn": {
+      "accuracy": 0.896,
+      "balanced_accuracy": 0.896,
+      "precision": 0.8944223107569721,
+      "recall": 0.898,
+      "f1": 0.8962075848303394,
+      "roc_auc": 0.9528660000000001
+    },
+    "gradient_boosting": {
+      "accuracy": 0.893,
+      "balanced_accuracy": 0.893,
+      "precision": 0.8800773694390716,
+      "recall": 0.91,
+      "f1": 0.8947885939036382,
+      "roc_auc": 0.9530200000000001
+    }
+  }
+}

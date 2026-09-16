@@ -1,0 +1,115 @@
+==================================================
+Experiment: ggf_ttbar_rxc
+Processes: ggf vs ttbar
+Events per channel: 2500
+Running on: gpu2006
+Working directory: /var/lib/condor/execute/slot2/dir_1391845/scratch
+CUDA_VISIBLE_DEVICES: GPU-a0068c3b-d8df-951c-6d71-ab791a34e2d6
+Rotation mode: uniform
+Rotation: 0.3926990817
+Energy noise: 0.0 GeV
+XYZ noise: 5.0 mm
+Shift std: 0.0 mm
+Crop fraction: 0.5
+Augmentation order: rotate+xyz_noise+crop
+Learning rate: 0.0003
+Weight decay: 0.0001
+Batch size: 32
+Temperature: 0.07
+Seed: 42
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Training script: src/train_colliderml_planar_pairwise.py
+ColliderML data directory: /var/lib/condor/execute/slot2/dir_1391845/scratch/colliderml-data
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA A100-SXM4-80GB
+Starting pretraining...
+Experiment configuration:
+  arch: gnn
+  batch_size: 32
+  channel_a: ggf
+  channel_b: ttbar
+  crop_fraction: 0.5
+  data_dir: /var/lib/condor/execute/slot2/dir_1391845/scratch/colliderml-data
+  dataset_name: colliderml
+  disable_cuda: False
+  energy_noise: 0.0
+  epochs: 18
+  events_per_channel: 2500
+  experiment_name: ggf_ttbar_rxc
+  feat_dim: 4
+  fp16_precision: False
+  gravnet_k: 8
+  hidden_dim: 16
+  latent_dim: 64
+  log_every_n_steps: 100
+  lr: 0.0003
+  n_views: 2
+  out_dim: 32
+  output_dir: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs
+  proj_dim: 32
+  propagate_dim: 16
+  resume: None
+  rotation: 0.3926990817
+  rotation_mode: uniform
+  seed: 42
+  shift_std: 0.0
+  space_dim: 4
+  split: ggf_vs_ttbar_total5000
+  temperature: 0.07
+  train_augmentation_order: rotate+xyz_noise+crop
+  weight_decay: 0.0001
+  workers: 0
+  xyz_noise: 5.0
+ColliderML data directory: /var/lib/condor/execute/slot2/dir_1391845/scratch/colliderml-data
+Loaded 2500 events from channel ggf.
+Loaded 2500 events from channel ttbar.
+Training augmentation pipeline: rotate -> xyz_noise -> crop
+Evaluation augmentation pipeline: rotate -> xyz_noise -> crop
+Evaluation augmentation pipeline: rotate -> energy_noise -> xyz_noise
+Dataset split: train=3000, val=1000, test=1000
+Data preprocessing working fine.
+Trainable parameters: 59020
+Training output directory: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc
+Training device: cuda
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 1/18 | train_loss=1.850567 | val_loss=1.104285 | best_val_loss=1.104285 | lr=0.00030000
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 2/18 | train_loss=0.900910 | val_loss=0.721187 | best_val_loss=0.721187 | lr=0.00029772
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 3/18 | train_loss=0.622250 | val_loss=0.532502 | best_val_loss=0.532502 | lr=0.00029095
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 4/18 | train_loss=0.501386 | val_loss=0.481785 | best_val_loss=0.481785 | lr=0.00027990
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 5/18 | train_loss=0.378535 | val_loss=0.334177 | best_val_loss=0.334177 | lr=0.00026491
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 6/18 | train_loss=0.321378 | val_loss=0.304809 | best_val_loss=0.304809 | lr=0.00024642
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 7/18 | train_loss=0.270986 | val_loss=0.274400 | best_val_loss=0.274400 | lr=0.00022500
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 8/18 | train_loss=0.228071 | val_loss=0.201914 | best_val_loss=0.201914 | lr=0.00020130
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 9/18 | train_loss=0.201632 | val_loss=0.162173 | best_val_loss=0.162173 | lr=0.00017605
+Epoch 10/18 | train_loss=0.166052 | val_loss=0.162825 | best_val_loss=0.162173 | lr=0.00015000
+Epoch 11/18 | train_loss=0.147857 | val_loss=0.178091 | best_val_loss=0.162173 | lr=0.00012395
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 12/18 | train_loss=0.144632 | val_loss=0.141380 | best_val_loss=0.141380 | lr=0.00009870
+Epoch 13/18 | train_loss=0.130066 | val_loss=0.144546 | best_val_loss=0.141380 | lr=0.00007500
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 14/18 | train_loss=0.125885 | val_loss=0.124724 | best_val_loss=0.124724 | lr=0.00005358
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 15/18 | train_loss=0.113256 | val_loss=0.109307 | best_val_loss=0.109307 | lr=0.00003509
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 16/18 | train_loss=0.111142 | val_loss=0.108613 | best_val_loss=0.108613 | lr=0.00002010
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 17/18 | train_loss=0.106049 | val_loss=0.107635 | best_val_loss=0.107635 | lr=0.00000905
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Epoch 18/18 | train_loss=0.102142 | val_loss=0.106079 | best_val_loss=0.106079 | lr=0.00000228
+Loaded checkpoint: /var/lib/condor/execute/slot2/dir_1391845/scratch/outputs/ggf_ttbar_rxc/checkpoints/best.pt
+Resume from epoch: 18
+Best validation loss: 0.106079
+Final test loss: 0.116445
+Experiment ggf_ttbar_rxc completed successfully.

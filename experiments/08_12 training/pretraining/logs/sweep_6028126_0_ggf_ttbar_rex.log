@@ -1,0 +1,91 @@
+000 (6028126.000.000) 2026-08-13 14:18:32 Job submitted from host: <128.105.68.113:9618?addrs=128.105.68.113-9618+[2607-f388-2200-100-eaeb-d3ff-fea7-d05e]-9618&alias=ap2002.chtc.wisc.edu&noUDP&sock=schedd_7808_378f>
+    [ JobBatchName = "gravnet_pairwise_augmentation_sweep_20260812" ]
+...
+040 (6028126.000.000) 2026-08-13 14:18:56 Started transferring input files
+	Transferring to host: <128.105.68.101:9618?addrs=128.105.68.101-9618+[2607-f388-2200-100-1270-fdff-fe73-97d6]-9618&alias=gpu2009.chtc.wisc.edu&noUDP&sock=slot2_2_1217555_6481_34994>
+...
+040 (6028126.000.000) 2026-08-13 14:19:39 Finished transferring input files
+...
+001 (6028126.000.000) 2026-08-13 14:19:39 Job executing on host: <128.105.68.101:9618?addrs=128.105.68.101-9618+[2607-f388-2200-100-1270-fdff-fe73-97d6]-9618&alias=gpu2009.chtc.wisc.edu&noUDP&sock=startd_12432_e57c>
+	SlotName: slot2_2@gpu2009.chtc.wisc.edu
+	AvailableGPUs = { GPUs_GPU_07c303b2 }
+	CondorScratchDir = "/var/lib/condor/execute/slot2/dir_1628965/scratch"
+	Cpus = 2
+	Disk = 31457280
+	GPUs = 1
+	GPUs_GPU_07c303b2 = [ Id = "GPU-07c303b2"; Capability = 8.0; DeviceName = "NVIDIA A100-SXM4-80GB"; DeviceUuid = "07c303b2-26b2-4bc7-fbf1-94800154bb1a"; ECCEnabled = true; NvidiaDriver = "570.195.03"; DriverVersion = 12.8; DevicePciBusId = "0000:41:00.0"; GlobalMemoryMb = 81154; MaxSupportedVersion = 12080 ]
+	IoHeavy = 0
+	Memory = 65536
+...
+006 (6028126.000.000) 2026-08-13 14:19:48 Image size of job updated: 22328
+	22  -  MemoryUsage of job (MB)
+	22328  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 14:24:49 Image size of job updated: 24986536
+	24394  -  MemoryUsage of job (MB)
+	24978436  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 14:29:49 Image size of job updated: 24991292
+	24405  -  MemoryUsage of job (MB)
+	24990288  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 14:34:50 Image size of job updated: 25975740
+	24409  -  MemoryUsage of job (MB)
+	24993984  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 14:44:51 Image size of job updated: 25975740
+	24409  -  MemoryUsage of job (MB)
+	24994684  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 14:49:52 Image size of job updated: 25975740
+	24410  -  MemoryUsage of job (MB)
+	24995052  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 14:54:52 Image size of job updated: 25975740
+	24413  -  MemoryUsage of job (MB)
+	24998356  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 15:09:54 Image size of job updated: 25975740
+	24416  -  MemoryUsage of job (MB)
+	25001584  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 15:14:54 Image size of job updated: 27115644
+	24418  -  MemoryUsage of job (MB)
+	25003436  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 15:19:54 Image size of job updated: 27115644
+	24420  -  MemoryUsage of job (MB)
+	25005688  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 15:24:55 Image size of job updated: 27115644
+	24421  -  MemoryUsage of job (MB)
+	25006196  -  ResidentSetSize of job (KB)
+...
+006 (6028126.000.000) 2026-08-13 15:44:57 Image size of job updated: 27115644
+	24429  -  MemoryUsage of job (MB)
+	25015280  -  ResidentSetSize of job (KB)
+...
+040 (6028126.000.000) 2026-08-13 16:16:38 Started transferring output files
+...
+040 (6028126.000.000) 2026-08-13 16:16:38 Finished transferring output files
+...
+005 (6028126.000.000) 2026-08-13 16:16:41 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 02:11:09, Sys 0 00:03:57  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 02:11:09, Sys 0 00:03:57  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1594509  -  Run Bytes Sent By Job
+	9725079282  -  Run Bytes Received By Job
+	1594509  -  Total Bytes Sent By Job
+	9725079282  -  Total Bytes Received By Job
+	Partitionable Resources :       Usage  Request Allocated Assigned
+	   Cpus                 :        1.13        2         2 
+	   Disk (KB)            : 16321322    31457280  31457280 
+	   GPUs                 :        0.01        1         1 "GPU-07c303b2"
+	   GpusMemory (MB)      :     1761                       
+	   IoHeavy              :                              0 
+	   Memory (MB)          :    24429       65536     65536 
+	   TimeExecute (s)      :     7019                       
+	   TimeSlotBusy (s)     :     7062                       
+...

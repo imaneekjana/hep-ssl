@@ -1,0 +1,76 @@
+==================================================
+Classifier experiment: ttbar_dihiggs_esc
+Encoder mode: pretrained
+Running on: gpu4006.chtc.wisc.edu
+Working directory: /var/lib/condor/execute/slot2/dir_3721675/scratch
+CUDA_VISIBLE_DEVICES: GPU-5f4b1ce3-4b15-b946-0540-e2f21aaa5fe7
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Extracting pretrained experiment...
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA L40S
+Reference directory: ttbar_dihiggs_esc
+Data directory: /var/lib/condor/execute/slot2/dir_3721675/scratch/colliderml-data
+Output directory: classifier_output/ttbar_dihiggs_esc
+Pretraining experiment: ttbar_dihiggs_esc
+Classification task: ttbar vs dihiggs
+Events per class: 2500
+Device: cuda
+Feature mean: [-3.81431378e-03  4.11751662e-04 -5.11095060e+00]
+Feature std:  [2.12335609 1.81343345 1.91920075]
+Loaded 2500 events from channel ttbar.
+Loaded 2500 events from channel dihiggs.
+ttbar embeddings: (2500, 64)
+dihiggs embeddings: (2500, 64)
+
+============================================================
+Running classifier: logistic_regression
+============================================================
+Classifier:        logistic_regression
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.7600
+Balanced accuracy: 0.7600
+F1 score:          0.7541
+ROC AUC:           0.8299
+Confusion matrix:
+[[392 108]
+ [132 368]]
+
+============================================================
+Running classifier: knn
+============================================================
+Classifier:        knn
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.7310
+Balanced accuracy: 0.7310
+F1 score:          0.7436
+ROC AUC:           0.8016
+Confusion matrix:
+[[341 159]
+ [110 390]]
+
+============================================================
+Running classifier: gradient_boosting
+============================================================
+Classifier:        gradient_boosting
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.7590
+Balanced accuracy: 0.7590
+F1 score:          0.7476
+ROC AUC:           0.8256
+Confusion matrix:
+[[402  98]
+ [143 357]]
+
+All classifiers completed.
+Results saved to: /var/lib/condor/execute/slot2/dir_3721675/scratch/classifier_output/ttbar_dihiggs_esc
+Creating result archive...
+Created: result_classifier_ttbar_dihiggs_esc.tar.gz
+-rw-r--r-- 1 kli398 kli398 4.0M Aug 15 11:15 result_classifier_ttbar_dihiggs_esc.tar.gz
+Pretrained classifier experiment completed successfully.

@@ -1,0 +1,38 @@
+{
+  "experiment": "ggf_ttbar_none",
+  "reference_experiment": "ggf_ttbar_none",
+  "encoder_mode": "random",
+  "random_encoder_seed": 42,
+  "channel_a": "ggf",
+  "channel_b": "ttbar",
+  "events_per_channel": 2500,
+  "embedding_dimension": 64,
+  "train_fraction": 0.8,
+  "classifier_random_state": 42,
+  "classifiers": {
+    "logistic_regression": {
+      "accuracy": 0.792,
+      "balanced_accuracy": 0.792,
+      "precision": 0.8041666666666667,
+      "recall": 0.772,
+      "f1": 0.7877551020408163,
+      "roc_auc": 0.8710240000000001
+    },
+    "knn": {
+      "accuracy": 0.714,
+      "balanced_accuracy": 0.714,
+      "precision": 0.7635467980295566,
+      "recall": 0.62,
+      "f1": 0.6843267108167771,
+      "roc_auc": 0.7986199999999999
+    },
+    "gradient_boosting": {
+      "accuracy": 0.778,
+      "balanced_accuracy": 0.778,
+      "precision": 0.778,
+      "recall": 0.778,
+      "f1": 0.778,
+      "roc_auc": 0.8515519999999999
+    }
+  }
+}

@@ -1,0 +1,79 @@
+000 (6028200.002.000) 2026-08-13 14:54:32 Job submitted from host: <128.105.68.113:9618?addrs=128.105.68.113-9618+[2607-f388-2200-100-eaeb-d3ff-fea7-d05e]-9618&alias=ap2002.chtc.wisc.edu&noUDP&sock=schedd_7808_378f>
+    [ JobBatchName = "gravnet_pairwise_augmentation_sweep_20260812" ]
+...
+040 (6028200.002.000) 2026-08-13 14:56:13 Started transferring input files
+	Transferring to host: <128.105.76.51:9618?addrs=128.105.76.51-9618+[2607-f388-2200-100-925a-8ff-fe34-15b6]-9618&alias=zliu-chtcgpu5000.chtc.wisc.edu&noUDP&sock=slot3_1_716887_7e79_43194>
+...
+040 (6028200.002.000) 2026-08-13 14:57:09 Finished transferring input files
+...
+001 (6028200.002.000) 2026-08-13 14:57:09 Job executing on host: <128.105.76.51:9618?addrs=128.105.76.51-9618+[2607-f388-2200-100-925a-8ff-fe34-15b6]-9618&alias=zliu-chtcgpu5000.chtc.wisc.edu&noUDP&sock=startd_11367_651f>
+	SlotName: slot3_1@zliu-chtcgpu5000.chtc.wisc.edu
+	AvailableGPUs = { GPUs_GPU_83640fe1 }
+	CondorScratchDir = "/var/lib/condor/execute/slot3/dir_923907/scratch"
+	Cpus = 2
+	Disk = 31457280
+	GPUs = 1
+	GPUs_GPU_83640fe1 = [ Id = "GPU-83640fe1"; Capability = 8.9; DeviceName = "NVIDIA L40S"; DeviceUuid = "83640fe1-a45a-82c3-bd44-f2d045e9521d"; ECCEnabled = true; NvidiaDriver = "590.48.01"; DriverVersion = 13.1; DevicePciBusId = "0000:41:00.0"; GlobalMemoryMb = 45460; MaxSupportedVersion = 13010 ]
+	IoHeavy = 0
+	Memory = 65536
+...
+006 (6028200.002.000) 2026-08-13 14:57:18 Image size of job updated: 38620
+	38  -  MemoryUsage of job (MB)
+	38620  -  ResidentSetSize of job (KB)
+...
+006 (6028200.002.000) 2026-08-13 15:02:18 Image size of job updated: 26662388
+	26036  -  MemoryUsage of job (MB)
+	26659848  -  ResidentSetSize of job (KB)
+...
+006 (6028200.002.000) 2026-08-13 15:07:18 Image size of job updated: 26665496
+	26036  -  MemoryUsage of job (MB)
+	26660752  -  ResidentSetSize of job (KB)
+...
+006 (6028200.002.000) 2026-08-13 15:12:19 Image size of job updated: 26670140
+	26040  -  MemoryUsage of job (MB)
+	26664912  -  ResidentSetSize of job (KB)
+...
+006 (6028200.002.000) 2026-08-13 15:17:19 Image size of job updated: 26672488
+	26043  -  MemoryUsage of job (MB)
+	26667508  -  ResidentSetSize of job (KB)
+...
+006 (6028200.002.000) 2026-08-13 15:22:20 Image size of job updated: 26673716
+	26043  -  MemoryUsage of job (MB)
+	26667508  -  ResidentSetSize of job (KB)
+...
+006 (6028200.002.000) 2026-08-13 15:27:21 Image size of job updated: 29026328
+	26043  -  MemoryUsage of job (MB)
+	26667508  -  ResidentSetSize of job (KB)
+...
+006 (6028200.002.000) 2026-08-13 15:32:21 Image size of job updated: 29026328
+	26044  -  MemoryUsage of job (MB)
+	26668736  -  ResidentSetSize of job (KB)
+...
+006 (6028200.002.000) 2026-08-13 15:47:22 Image size of job updated: 29027556
+	26044  -  MemoryUsage of job (MB)
+	26668736  -  ResidentSetSize of job (KB)
+...
+040 (6028200.002.000) 2026-08-13 16:30:50 Started transferring output files
+...
+040 (6028200.002.000) 2026-08-13 16:30:50 Finished transferring output files
+...
+005 (6028200.002.000) 2026-08-13 16:30:53 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 01:46:15, Sys 0 00:01:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 01:46:15, Sys 0 00:01:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1594263  -  Run Bytes Sent By Job
+	9725079282  -  Run Bytes Received By Job
+	1594263  -  Total Bytes Sent By Job
+	9725079282  -  Total Bytes Received By Job
+	Partitionable Resources :       Usage  Request Allocated Assigned
+	   Cpus                 :        1.13        2         2 
+	   Disk (KB)            : 16321760    31457280  31457280 
+	   GPUs                 :        0.00        1         1 "GPU-83640fe1"
+	   GpusMemory (MB)      :     1587                       
+	   IoHeavy              :                              0 
+	   Memory (MB)          :    26044       65536     65536 
+	   TimeExecute (s)      :     5621                       
+	   TimeSlotBusy (s)     :     5677                       
+...

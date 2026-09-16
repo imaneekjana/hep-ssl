@@ -1,0 +1,35 @@
+{
+  "experiment": "ggf_dihiggs_rsc",
+  "channel_a": "ggf",
+  "channel_b": "dihiggs",
+  "events_per_channel": 2500,
+  "embedding_dimension": 64,
+  "train_fraction": 0.8,
+  "classifier_random_state": 42,
+  "classifiers": {
+    "logistic_regression": {
+      "accuracy": 0.765,
+      "balanced_accuracy": 0.765,
+      "precision": 0.7592954990215264,
+      "recall": 0.776,
+      "f1": 0.7675568743818002,
+      "roc_auc": 0.837468
+    },
+    "knn": {
+      "accuracy": 0.753,
+      "balanced_accuracy": 0.753,
+      "precision": 0.7514910536779325,
+      "recall": 0.756,
+      "f1": 0.7537387836490529,
+      "roc_auc": 0.8285899999999999
+    },
+    "gradient_boosting": {
+      "accuracy": 0.769,
+      "balanced_accuracy": 0.769,
+      "precision": 0.7611650485436893,
+      "recall": 0.784,
+      "f1": 0.7724137931034483,
+      "roc_auc": 0.844644
+    }
+  }
+}

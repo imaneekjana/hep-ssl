@@ -1,0 +1,95 @@
+000 (6028200.017.000) 2026-08-13 14:54:32 Job submitted from host: <128.105.68.113:9618?addrs=128.105.68.113-9618+[2607-f388-2200-100-eaeb-d3ff-fea7-d05e]-9618&alias=ap2002.chtc.wisc.edu&noUDP&sock=schedd_7808_378f>
+    [ JobBatchName = "gravnet_pairwise_augmentation_sweep_20260812" ]
+...
+040 (6028200.017.000) 2026-08-13 15:29:19 Started transferring input files
+	Transferring to host: <128.105.68.117:9618?addrs=128.105.68.117-9618+[2607-f388-2200-100-7ec2-55ff-fe9a-b4fa]-9618&alias=gpu4000.chtc.wisc.edu&noUDP&sock=slot2_1_1351128_a798_45358>
+...
+040 (6028200.017.000) 2026-08-13 15:29:40 Finished transferring input files
+...
+001 (6028200.017.000) 2026-08-13 15:29:40 Job executing on host: <128.105.68.117:9618?addrs=128.105.68.117-9618+[2607-f388-2200-100-7ec2-55ff-fe9a-b4fa]-9618&alias=gpu4000.chtc.wisc.edu&noUDP&sock=startd_674379_7ae3>
+	SlotName: slot2_1@gpu4000.chtc.wisc.edu
+	AvailableGPUs = { GPUs_GPU_72ec1e89 }
+	CondorScratchDir = "/var/lib/condor/execute/slot2/dir_2976883/scratch"
+	Cpus = 2
+	Disk = 31457280
+	GPUs = 1
+	GPUs_GPU_72ec1e89 = [ Id = "GPU-72ec1e89"; Capability = 8.9; DeviceName = "NVIDIA L40"; DeviceUuid = "72ec1e89-a9fe-478a-f1e6-b8bb1a4b8f5a"; ECCEnabled = true; NvidiaDriver = "570.195.03"; DriverVersion = 12.8; DevicePciBusId = "0000:4F:00.0"; GlobalMemoryMb = 45468; MaxSupportedVersion = 12080 ]
+	IoHeavy = 0
+	Memory = 65536
+...
+006 (6028200.017.000) 2026-08-13 15:29:48 Image size of job updated: 22544
+	23  -  MemoryUsage of job (MB)
+	22544  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 15:34:48 Image size of job updated: 25343276
+	24346  -  MemoryUsage of job (MB)
+	24929340  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 15:39:49 Image size of job updated: 25343276
+	24356  -  MemoryUsage of job (MB)
+	24940492  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 15:44:49 Image size of job updated: 25925608
+	24356  -  MemoryUsage of job (MB)
+	24940492  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 15:49:50 Image size of job updated: 25925608
+	24359  -  MemoryUsage of job (MB)
+	24943020  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 15:54:51 Image size of job updated: 26320080
+	24369  -  MemoryUsage of job (MB)
+	24953388  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 16:24:53 Image size of job updated: 26320080
+	24372  -  MemoryUsage of job (MB)
+	24956432  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 16:29:54 Image size of job updated: 26575184
+	24374  -  MemoryUsage of job (MB)
+	24958276  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 16:49:56 Image size of job updated: 26575184
+	24382  -  MemoryUsage of job (MB)
+	24966676  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 16:54:56 Image size of job updated: 26575184
+	24382  -  MemoryUsage of job (MB)
+	24966896  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 16:59:57 Image size of job updated: 26575184
+	24383  -  MemoryUsage of job (MB)
+	24967836  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 17:04:57 Image size of job updated: 26575184
+	24383  -  MemoryUsage of job (MB)
+	24968064  -  ResidentSetSize of job (KB)
+...
+006 (6028200.017.000) 2026-08-13 17:09:58 Image size of job updated: 26575184
+	24384  -  MemoryUsage of job (MB)
+	24968224  -  ResidentSetSize of job (KB)
+...
+040 (6028200.017.000) 2026-08-13 17:15:48 Started transferring output files
+...
+040 (6028200.017.000) 2026-08-13 17:15:48 Finished transferring output files
+...
+005 (6028200.017.000) 2026-08-13 17:15:50 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 01:58:27, Sys 0 00:02:53  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 01:58:27, Sys 0 00:02:53  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1586785  -  Run Bytes Sent By Job
+	9725079282  -  Run Bytes Received By Job
+	1586785  -  Total Bytes Sent By Job
+	9725079282  -  Total Bytes Received By Job
+	Partitionable Resources :       Usage  Request Allocated Assigned
+	   Cpus                 :        1.11        2         2 
+	   Disk (KB)            : 16321744    31457280  31457280 
+	   GPUs                 :        0.00        1         1 "GPU-72ec1e89"
+	   GpusMemory (MB)      :     1600                       
+	   IoHeavy              :                              0 
+	   Memory (MB)          :    24384       65536     65536 
+	   TimeExecute (s)      :     6368                       
+	   TimeSlotBusy (s)     :     6390                       
+...

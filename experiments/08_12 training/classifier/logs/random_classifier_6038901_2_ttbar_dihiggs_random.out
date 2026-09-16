@@ -1,0 +1,81 @@
+==================================================
+Classifier experiment: ttbar_dihiggs_random
+Encoder mode: random frozen encoder
+Reference experiment: ttbar_dihiggs_none
+Random encoder seed: 42
+Running on: gpu4003
+Working directory: /var/lib/condor/execute/slot2/dir_2580259/scratch
+CUDA_VISIBLE_DEVICES: GPU-8be5a5aa-de2e-2062-a8ec-c29267f4988e
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Extracting reference experiment...
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA H100 80GB HBM3
+Reference directory: ttbar_dihiggs_none
+Data directory: /var/lib/condor/execute/slot2/dir_2580259/scratch/colliderml-data
+Output directory: classifier_output/ttbar_dihiggs_random
+Using a frozen randomly initialized GravNet encoder with seed 42.
+Reference experiment: ttbar_dihiggs_none
+Encoder mode: frozen random initialization
+Random encoder seed: 42
+Classification task: ttbar vs dihiggs
+Events per class: 2500
+Device: cuda
+Feature mean: [-3.69273379e-03  3.10867364e-04 -5.11113616e+00]
+Feature std:  [2.12317985 1.81333814 1.91940453]
+Loaded 2500 events from channel ttbar.
+Loaded 2500 events from channel dihiggs.
+ttbar embeddings: (2500, 64)
+dihiggs embeddings: (2500, 64)
+
+============================================================
+Running classifier: logistic_regression
+============================================================
+Classifier:        logistic_regression
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.7270
+Balanced accuracy: 0.7270
+F1 score:          0.7262
+ROC AUC:           0.8014
+Confusion matrix:
+[[365 135]
+ [138 362]]
+
+============================================================
+Running classifier: knn
+============================================================
+Classifier:        knn
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.6720
+Balanced accuracy: 0.6720
+F1 score:          0.6957
+ROC AUC:           0.7435
+Confusion matrix:
+[[297 203]
+ [125 375]]
+
+============================================================
+Running classifier: gradient_boosting
+============================================================
+Classifier:        gradient_boosting
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.7100
+Balanced accuracy: 0.7100
+F1 score:          0.7071
+ROC AUC:           0.7703
+Confusion matrix:
+[[360 140]
+ [150 350]]
+
+All classifiers completed.
+Results saved to: /var/lib/condor/execute/slot2/dir_2580259/scratch/classifier_output/ttbar_dihiggs_random
+Creating result archive...
+Created: result_classifier_ttbar_dihiggs_random.tar.gz
+-rw-r--r-- 1 kli398 kli398 4.0M Aug 15 11:21 result_classifier_ttbar_dihiggs_random.tar.gz
+Random classifier experiment completed successfully.

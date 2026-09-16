@@ -1,0 +1,67 @@
+000 (6028200.036.000) 2026-08-13 14:54:32 Job submitted from host: <128.105.68.113:9618?addrs=128.105.68.113-9618+[2607-f388-2200-100-eaeb-d3ff-fea7-d05e]-9618&alias=ap2002.chtc.wisc.edu&noUDP&sock=schedd_7808_378f>
+    [ JobBatchName = "gravnet_pairwise_augmentation_sweep_20260812" ]
+...
+040 (6028200.036.000) 2026-08-13 17:03:27 Started transferring input files
+	Transferring to host: <128.105.76.52:9618?addrs=128.105.76.52-9618+[2607-f388-2200-100-b65c-b5ff-fe81-e53e]-9618&alias=dbrundage-chtcgpu5000.chtc.wisc.edu&noUDP&sock=slot3_4_2294095_3602_46121>
+...
+040 (6028200.036.000) 2026-08-13 17:04:00 Finished transferring input files
+...
+001 (6028200.036.000) 2026-08-13 17:04:05 Job executing on host: <128.105.76.52:9618?addrs=128.105.76.52-9618+[2607-f388-2200-100-b65c-b5ff-fe81-e53e]-9618&alias=dbrundage-chtcgpu5000.chtc.wisc.edu&noUDP&sock=startd_15680_c117>
+	SlotName: slot3_4@dbrundage-chtcgpu5000.chtc.wisc.edu
+	AvailableGPUs = { GPUs_GPU_9e89182b }
+	CondorScratchDir = "/var/lib/condor/execute/slot3/dir_1386395/scratch"
+	Cpus = 2
+	Disk = 31457280
+	GPUs = 1
+	GPUs_GPU_9e89182b = [ Id = "GPU-9e89182b"; Capability = 9.0; DeviceName = "NVIDIA H200"; DeviceUuid = "9e89182b-1441-30ac-d288-312c06ffa4ea"; ECCEnabled = true; NvidiaDriver = "590.48.01"; DriverVersion = 13.1; DevicePciBusId = "0000:DB:00.0"; GlobalMemoryMb = 143158; MaxSupportedVersion = 13010 ]
+	IoHeavy = 0
+	Memory = 65536
+...
+006 (6028200.036.000) 2026-08-13 17:04:14 Image size of job updated: 40608
+	40  -  MemoryUsage of job (MB)
+	40608  -  ResidentSetSize of job (KB)
+...
+006 (6028200.036.000) 2026-08-13 17:09:14 Image size of job updated: 26289652
+	25666  -  MemoryUsage of job (MB)
+	26281680  -  ResidentSetSize of job (KB)
+...
+006 (6028200.036.000) 2026-08-13 17:14:14 Image size of job updated: 28568864
+	25675  -  MemoryUsage of job (MB)
+	26290912  -  ResidentSetSize of job (KB)
+...
+006 (6028200.036.000) 2026-08-13 17:39:16 Image size of job updated: 28568864
+	25677  -  MemoryUsage of job (MB)
+	26292472  -  ResidentSetSize of job (KB)
+...
+006 (6028200.036.000) 2026-08-13 17:44:17 Image size of job updated: 28568864
+	25677  -  MemoryUsage of job (MB)
+	26292816  -  ResidentSetSize of job (KB)
+...
+006 (6028200.036.000) 2026-08-13 17:49:18 Image size of job updated: 28568864
+	27439  -  MemoryUsage of job (MB)
+	28096808  -  ResidentSetSize of job (KB)
+...
+040 (6028200.036.000) 2026-08-13 18:57:32 Started transferring output files
+...
+040 (6028200.036.000) 2026-08-13 18:57:32 Finished transferring output files
+...
+005 (6028200.036.000) 2026-08-13 18:57:34 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 02:05:59, Sys 0 00:00:49  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 02:05:59, Sys 0 00:00:49  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1596116  -  Run Bytes Sent By Job
+	9725079282  -  Run Bytes Received By Job
+	1596116  -  Total Bytes Sent By Job
+	9725079282  -  Total Bytes Received By Job
+	Partitionable Resources :       Usage  Request Allocated Assigned
+	   Cpus                 :        1.11        2         2 
+	   Disk (KB)            : 16321764    31457280  31457280 
+	   GPUs                 :        0.00        1         1 "GPU-9e89182b"
+	   GpusMemory (MB)      :     1917                       
+	   IoHeavy              :                              0 
+	   Memory (MB)          :    27439       65536     65536 
+	   TimeExecute (s)      :     6800                       
+	   TimeSlotBusy (s)     :     6845                       
+...

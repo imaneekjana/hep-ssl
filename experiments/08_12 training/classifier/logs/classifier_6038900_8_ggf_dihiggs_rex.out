@@ -1,0 +1,76 @@
+==================================================
+Classifier experiment: ggf_dihiggs_rex
+Encoder mode: pretrained
+Running on: gpu4006.chtc.wisc.edu
+Working directory: /var/lib/condor/execute/slot2/dir_3668214/scratch
+CUDA_VISIBLE_DEVICES: GPU-57c43136-d70c-9a03-d3fb-1c65267e93cd
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Extracting pretrained experiment...
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA L40S
+Reference directory: ggf_dihiggs_rex
+Data directory: /var/lib/condor/execute/slot2/dir_3668214/scratch/colliderml-data
+Output directory: classifier_output/ggf_dihiggs_rex
+Pretraining experiment: ggf_dihiggs_rex
+Classification task: ggf vs dihiggs
+Events per class: 2500
+Device: cuda
+Feature mean: [ 2.82639009e-03  1.77830461e-04 -5.08235498e+00]
+Feature std:  [2.15754689 1.81227128 1.83492531]
+Loaded 2500 events from channel ggf.
+Loaded 2500 events from channel dihiggs.
+ggf embeddings: (2500, 64)
+dihiggs embeddings: (2500, 64)
+
+============================================================
+Running classifier: logistic_regression
+============================================================
+Classifier:        logistic_regression
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.7340
+Balanced accuracy: 0.7340
+F1 score:          0.7340
+ROC AUC:           0.8122
+Confusion matrix:
+[[367 133]
+ [133 367]]
+
+============================================================
+Running classifier: knn
+============================================================
+Classifier:        knn
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.7270
+Balanced accuracy: 0.7270
+F1 score:          0.7337
+ROC AUC:           0.7818
+Confusion matrix:
+[[351 149]
+ [124 376]]
+
+============================================================
+Running classifier: gradient_boosting
+============================================================
+Classifier:        gradient_boosting
+Training samples:  4000
+Testing samples:   1000
+Accuracy:          0.7400
+Balanced accuracy: 0.7400
+F1 score:          0.7456
+ROC AUC:           0.8092
+Confusion matrix:
+[[359 141]
+ [119 381]]
+
+All classifiers completed.
+Results saved to: /var/lib/condor/execute/slot2/dir_3668214/scratch/classifier_output/ggf_dihiggs_rex
+Creating result archive...
+Created: result_classifier_ggf_dihiggs_rex.tar.gz
+-rw-r--r-- 1 kli398 kli398 4.0M Aug 15 11:04 result_classifier_ggf_dihiggs_rex.tar.gz
+Pretrained classifier experiment completed successfully.

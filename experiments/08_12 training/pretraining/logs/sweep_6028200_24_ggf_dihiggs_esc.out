@@ -1,0 +1,113 @@
+==================================================
+Experiment: ggf_dihiggs_esc
+Processes: ggf vs dihiggs
+Events per channel: 2500
+Running on: gpu2010
+Working directory: /var/lib/condor/execute/slot2/dir_80511/scratch
+CUDA_VISIBLE_DEVICES: GPU-bc79ed29-9159-3de8-bb7a-dc596d8999e6
+Rotation mode: uniform
+Rotation: 0.0
+Energy noise: 0.0001 GeV
+XYZ noise: 0.0 mm
+Shift std: 2.0 mm
+Crop fraction: 0.5
+Augmentation order: energy_noise+shift+crop
+Learning rate: 0.0003
+Weight decay: 0.0001
+Batch size: 32
+Temperature: 0.07
+Seed: 42
+==================================================
+Extracting source code...
+Extracting ColliderML data...
+Training script: src/train_colliderml_planar_pairwise.py
+ColliderML data directory: /var/lib/condor/execute/slot2/dir_80511/scratch/colliderml-data
+PyTorch: 2.4.1+cu121
+CUDA build: 12.1
+CUDA available: True
+GPU: NVIDIA A100-SXM4-80GB
+Starting pretraining...
+Experiment configuration:
+  arch: gnn
+  batch_size: 32
+  channel_a: ggf
+  channel_b: dihiggs
+  crop_fraction: 0.5
+  data_dir: /var/lib/condor/execute/slot2/dir_80511/scratch/colliderml-data
+  dataset_name: colliderml
+  disable_cuda: False
+  energy_noise: 0.0001
+  epochs: 18
+  events_per_channel: 2500
+  experiment_name: ggf_dihiggs_esc
+  feat_dim: 4
+  fp16_precision: False
+  gravnet_k: 8
+  hidden_dim: 16
+  latent_dim: 64
+  log_every_n_steps: 100
+  lr: 0.0003
+  n_views: 2
+  out_dim: 32
+  output_dir: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs
+  proj_dim: 32
+  propagate_dim: 16
+  resume: None
+  rotation: 0.0
+  rotation_mode: uniform
+  seed: 42
+  shift_std: 2.0
+  space_dim: 4
+  split: ggf_vs_dihiggs_total5000
+  temperature: 0.07
+  train_augmentation_order: energy_noise+shift+crop
+  weight_decay: 0.0001
+  workers: 0
+  xyz_noise: 0.0
+ColliderML data directory: /var/lib/condor/execute/slot2/dir_80511/scratch/colliderml-data
+Loaded 2500 events from channel ggf.
+Loaded 2500 events from channel dihiggs.
+Training augmentation pipeline: energy_noise -> shift -> crop
+Evaluation augmentation pipeline: energy_noise -> shift -> crop
+Evaluation augmentation pipeline: rotate -> energy_noise -> xyz_noise
+Dataset split: train=3000, val=1000, test=1000
+Data preprocessing working fine.
+Trainable parameters: 59020
+Training output directory: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc
+Training device: cuda
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 1/18 | train_loss=1.324416 | val_loss=0.486288 | best_val_loss=0.486288 | lr=0.00030000
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 2/18 | train_loss=0.449373 | val_loss=0.391406 | best_val_loss=0.391406 | lr=0.00029772
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 3/18 | train_loss=0.252251 | val_loss=0.202884 | best_val_loss=0.202884 | lr=0.00029095
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 4/18 | train_loss=0.177529 | val_loss=0.167121 | best_val_loss=0.167121 | lr=0.00027990
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 5/18 | train_loss=0.142277 | val_loss=0.134157 | best_val_loss=0.134157 | lr=0.00026491
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 6/18 | train_loss=0.112574 | val_loss=0.093582 | best_val_loss=0.093582 | lr=0.00024642
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 7/18 | train_loss=0.100565 | val_loss=0.089707 | best_val_loss=0.089707 | lr=0.00022500
+Epoch 8/18 | train_loss=0.083569 | val_loss=0.094515 | best_val_loss=0.089707 | lr=0.00020130
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 9/18 | train_loss=0.069293 | val_loss=0.065889 | best_val_loss=0.065889 | lr=0.00017605
+Epoch 10/18 | train_loss=0.061873 | val_loss=0.068791 | best_val_loss=0.065889 | lr=0.00015000
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 11/18 | train_loss=0.053719 | val_loss=0.057458 | best_val_loss=0.057458 | lr=0.00012395
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 12/18 | train_loss=0.051987 | val_loss=0.053670 | best_val_loss=0.053670 | lr=0.00009870
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 13/18 | train_loss=0.044017 | val_loss=0.053502 | best_val_loss=0.053502 | lr=0.00007500
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 14/18 | train_loss=0.041080 | val_loss=0.046928 | best_val_loss=0.046928 | lr=0.00005358
+Epoch 15/18 | train_loss=0.039254 | val_loss=0.049625 | best_val_loss=0.046928 | lr=0.00003509
+Saved new best checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Epoch 16/18 | train_loss=0.043099 | val_loss=0.043882 | best_val_loss=0.043882 | lr=0.00002010
+Epoch 17/18 | train_loss=0.035351 | val_loss=0.044465 | best_val_loss=0.043882 | lr=0.00000905
+Epoch 18/18 | train_loss=0.042954 | val_loss=0.044622 | best_val_loss=0.043882 | lr=0.00000228
+Loaded checkpoint: /var/lib/condor/execute/slot2/dir_80511/scratch/outputs/ggf_dihiggs_esc/checkpoints/best.pt
+Resume from epoch: 16
+Best validation loss: 0.043882
+Final test loss: 0.037710
+Experiment ggf_dihiggs_esc completed successfully.

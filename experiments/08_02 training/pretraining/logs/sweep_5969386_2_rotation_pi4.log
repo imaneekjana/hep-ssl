@@ -1,0 +1,55 @@
+000 (5969386.002.000) 2026-08-03 11:21:58 Job submitted from host: <128.105.68.113:9618?addrs=128.105.68.113-9618+[2607-f388-2200-100-eaeb-d3ff-fea7-d05e]-9618&alias=ap2002.chtc.wisc.edu&noUDP&sock=schedd_7808_378f>
+    [ JobBatchName = "gravnet_augmentation_sweep" ]
+...
+040 (5969386.002.000) 2026-08-03 11:28:22 Started transferring input files
+	Transferring to host: <128.105.76.53:9618?addrs=128.105.76.53-9618+[2607-f388-2200-100-b65c-b5ff-fe81-e536]-9618&alias=gpu5000.chtc.wisc.edu&noUDP&sock=slot2_3_1690213_b655_13800>
+...
+040 (5969386.002.000) 2026-08-03 11:28:46 Finished transferring input files
+...
+001 (5969386.002.000) 2026-08-03 11:28:46 Job executing on host: <128.105.76.53:9618?addrs=128.105.76.53-9618+[2607-f388-2200-100-b65c-b5ff-fe81-e536]-9618&alias=gpu5000.chtc.wisc.edu&noUDP&sock=startd_14985_0ac5>
+	SlotName: slot2_3@gpu5000.chtc.wisc.edu
+	AvailableGPUs = { GPUs_GPU_2941f50b }
+	CondorScratchDir = "/var/lib/condor/execute/slot2/dir_2972003/scratch"
+	Cpus = 2
+	Disk = 31457280
+	GPUs = 1
+	GPUs_GPU_2941f50b = [ Id = "GPU-2941f50b"; Capability = 9.0; DeviceName = "NVIDIA H200"; DeviceUuid = "2941f50b-b6f6-a3bf-9e63-6adfbc028325"; ECCEnabled = true; NvidiaDriver = "590.48.01"; DriverVersion = 13.1; DevicePciBusId = "0000:9B:00.0"; GlobalMemoryMb = 143158; MaxSupportedVersion = 13010 ]
+	IoHeavy = 0
+	Memory = 49152
+...
+006 (5969386.002.000) 2026-08-03 11:28:55 Image size of job updated: 43084
+	43  -  MemoryUsage of job (MB)
+	43084  -  ResidentSetSize of job (KB)
+...
+006 (5969386.002.000) 2026-08-03 11:33:56 Image size of job updated: 22989964
+	22451  -  MemoryUsage of job (MB)
+	22989492  -  ResidentSetSize of job (KB)
+...
+006 (5969386.002.000) 2026-08-03 11:38:56 Image size of job updated: 24594640
+	22451  -  MemoryUsage of job (MB)
+	22989492  -  ResidentSetSize of job (KB)
+...
+040 (5969386.002.000) 2026-08-03 12:36:52 Started transferring output files
+...
+040 (5969386.002.000) 2026-08-03 12:36:52 Finished transferring output files
+...
+005 (5969386.002.000) 2026-08-03 12:36:55 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 01:12:49, Sys 0 00:00:32  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 01:12:49, Sys 0 00:00:32  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1542774  -  Run Bytes Sent By Job
+	7634787985  -  Run Bytes Received By Job
+	1542774  -  Total Bytes Sent By Job
+	7634787985  -  Total Bytes Received By Job
+	Partitionable Resources :       Usage  Request Allocated Assigned
+	   Cpus                 :        1.07        2         2 
+	   Disk (KB)            : 12019900    31457280  31457280 
+	   GPUs                 :        0.00        1         1 "GPU-2941f50b"
+	   GpusMemory (MB)      :     1689                       
+	   IoHeavy              :                              0 
+	   Memory (MB)          :    22451       49152     49152 
+	   TimeExecute (s)      :     4083                       
+	   TimeSlotBusy (s)     :     4110                       
+...

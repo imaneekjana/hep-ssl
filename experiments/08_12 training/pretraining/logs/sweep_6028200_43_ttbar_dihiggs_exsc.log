@@ -1,0 +1,86 @@
+000 (6028200.043.000) 2026-08-13 14:54:32 Job submitted from host: <128.105.68.113:9618?addrs=128.105.68.113-9618+[2607-f388-2200-100-eaeb-d3ff-fea7-d05e]-9618&alias=ap2002.chtc.wisc.edu&noUDP&sock=schedd_7808_378f>
+    [ JobBatchName = "gravnet_pairwise_augmentation_sweep_20260812" ]
+...
+040 (6028200.043.000) 2026-08-13 17:30:32 Started transferring input files
+	Transferring to host: <128.105.68.103:9618?addrs=128.105.68.103-9618+[2607-f388-2200-100-1270-fdff-fe74-930]-9618&alias=gpu2011.chtc.wisc.edu&noUDP&sock=slot2_5_181405_fbaa_42245>
+...
+040 (6028200.043.000) 2026-08-13 17:31:03 Finished transferring input files
+...
+001 (6028200.043.000) 2026-08-13 17:31:03 Job executing on host: <128.105.68.103:9618?addrs=128.105.68.103-9618+[2607-f388-2200-100-1270-fdff-fe74-930]-9618&alias=gpu2011.chtc.wisc.edu&noUDP&sock=startd_12054_9eaf>
+	SlotName: slot2_5@gpu2011.chtc.wisc.edu
+	AvailableGPUs = { GPUs_MIG_845e88f9_6952_54b8_8ee6_afb69eadf6f5 }
+	CondorScratchDir = "/var/lib/condor/execute/slot2/dir_3508117/scratch"
+	Cpus = 2
+	Disk = 31457280
+	GPUs = 1
+	GPUs_MIG_845e88f9_6952_54b8_8ee6_afb69eadf6f5 = [ Id = "MIG-845e88f9-6952-54b8-8ee6-afb69eadf6f5"; Capability = 8.0; DeviceName = "NVIDIA A100-SXM4-80GB MIG 3g.40gb"; DeviceUuid = "MIG-845e88f9-6952-54b8-8ee6-afb69eadf6f5"; ECCEnabled = true; NvidiaDriver = "570.195.03"; DriverVersion = 12.8; DevicePciBusId = "0000:01:00.0"; GlobalMemoryMb = 40100; MaxSupportedVersion = 12080 ]
+	IoHeavy = 0
+	Memory = 65536
+...
+006 (6028200.043.000) 2026-08-13 17:31:11 Image size of job updated: 22068
+	22  -  MemoryUsage of job (MB)
+	22068  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 17:36:11 Image size of job updated: 29735676
+	28545  -  MemoryUsage of job (MB)
+	29229236  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 17:46:12 Image size of job updated: 29735676
+	28556  -  MemoryUsage of job (MB)
+	29241064  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 17:51:13 Image size of job updated: 29735676
+	28557  -  MemoryUsage of job (MB)
+	29241900  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 18:06:15 Image size of job updated: 29735676
+	28559  -  MemoryUsage of job (MB)
+	29243696  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 18:31:17 Image size of job updated: 29735676
+	28571  -  MemoryUsage of job (MB)
+	29255888  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 18:36:18 Image size of job updated: 29735676
+	28573  -  MemoryUsage of job (MB)
+	29258464  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 18:46:19 Image size of job updated: 29735676
+	28574  -  MemoryUsage of job (MB)
+	29259428  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 19:21:23 Image size of job updated: 31138528
+	28574  -  MemoryUsage of job (MB)
+	29259428  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 19:41:24 Image size of job updated: 31138528
+	28575  -  MemoryUsage of job (MB)
+	29260188  -  ResidentSetSize of job (KB)
+...
+006 (6028200.043.000) 2026-08-13 19:46:25 Image size of job updated: 31138528
+	28575  -  MemoryUsage of job (MB)
+	29260672  -  ResidentSetSize of job (KB)
+...
+040 (6028200.043.000) 2026-08-13 19:53:51 Started transferring output files
+...
+040 (6028200.043.000) 2026-08-13 19:53:51 Finished transferring output files
+...
+005 (6028200.043.000) 2026-08-13 19:53:55 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 02:36:56, Sys 0 00:04:42  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 02:36:56, Sys 0 00:04:42  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1591498  -  Run Bytes Sent By Job
+	9725079282  -  Run Bytes Received By Job
+	1591498  -  Total Bytes Sent By Job
+	9725079282  -  Total Bytes Received By Job
+	Partitionable Resources :       Usage  Request Allocated Assigned
+	   Cpus                 :        1.11        2         2 
+	   Disk (KB)            : 16321319    31457280  31457280 
+	   GPUs                 :                    1         1 "MIG-845e88f9-6952-54b8-8ee6-afb69eadf6f5"
+	   IoHeavy              :                              0 
+	   Memory (MB)          :    28575       65536     65536 
+	   TimeExecute (s)      :     8568                       
+	   TimeSlotBusy (s)     :     8599                       
+...
