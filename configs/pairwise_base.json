@@ -1,0 +1,77 @@
+{
+  "mode": "five_anisotropic_physics",
+  "prepared_dir": null,
+  "data": {
+    "dataset_id": "CERN/ColliderML-Release-1",
+    "dataset_revision": null,
+    "channels": [
+      "ggf",
+      "ttbar"
+    ],
+    "pileup": "pu0",
+    "events_per_channel": 2500,
+    "split_seed": 42,
+    "split_fractions": [
+      0.6,
+      0.2,
+      0.2
+    ]
+  },
+  "grid": {
+    "n_eta": 32,
+    "n_phi": 32,
+    "eta_min": null,
+    "eta_max": null,
+    "cell_cutoff_gev": 0.0,
+    "energy_ref_gev": 1.0,
+    "log_epsilon_gev": 1e-06
+  },
+  "augmentation": {
+    "order": [
+      "energy_noise",
+      "rotate",
+      "crop"
+    ],
+    "rotation": 0.39269908169872414,
+    "rotation_mode": "uniform",
+    "energy_noise": 0.0001,
+    "xyz_noise": 5.0,
+    "shift_std": 0.0,
+    "crop_fraction": 0.5
+  },
+  "targets": {
+    "eta_regions": 8,
+    "phi_orders": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "local_scales": null,
+    "constant_tolerance": 1e-08
+  },
+  "model": {
+    "hidden_dim": 16,
+    "latent_dim": 64,
+    "proj_dim": 32,
+    "k": 8,
+    "space_dim": 4,
+    "propagate_dim": 16
+  },
+  "objective": {
+    "tau": 0.07,
+    "gamma": 1.0
+  },
+  "training": {
+    "epochs": 18,
+    "batch_size": 32,
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "augmentation_seed": 142,
+    "validation_seed": 242,
+    "num_workers": 0,
+    "device": "auto",
+    "amp": false
+  }
+}

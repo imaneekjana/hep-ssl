@@ -2,10 +2,6 @@ import numpy as np
 from sklearn.model_selection import StratifiedKFold, cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import GradientBoostingClassifier
-try:
-    from xgboost import XGBClassifier
-except ImportError:
-    XGBClassifier = None
 
 #### KNN Classification with cross-validation for robust result
 
@@ -156,8 +152,13 @@ def xgboost_classification_accuracy(
     mean_acc : float
     std_acc : float
     """
-    if XGBClassifier is None:
-        raise ImportError("xgboost is required only when xgboost_classification_accuracy() is used.")
+    # This optional backend must not be imported for ordinary evaluation.
+    # In particular, a missing native XGBoost library can raise more than an
+    # ImportError at module import time on otherwise valid PyTorch systems.
+    try:
+        from xgboost import XGBClassifier
+    except ImportError as error:
+        raise ImportError("xgboost is required only when xgboost_classification_accuracy() is used.") from error
 
     if hasattr(emb1, "detach"):
         emb1 = emb1.detach().cpu().numpy()
