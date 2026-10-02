@@ -1,0 +1,14 @@
+{
+  "remote_project": "/home/kli398/hep_ssl_chtc",
+  "raw_archive": "/staging/k/kli398/colliderml-data-pairwise-2500.tar.gz",
+  "container_image": "/staging/k/kli398/hep_ssl.sif",
+  "staging_root": "/staging/k/kli398",
+  "transfer_protocol": "osdf",
+  "access_login": "kli398@ap2002.chtc.wisc.edu",
+  "transfer_login": "kli398@transfer.chtc.wisc.edu",
+  "request_cpus": 2,
+  "request_memory": "64GB",
+  "prepare_disk": "80GB",
+  "train_disk": "60GB",
+  "gpu_job_length": "medium"
+}

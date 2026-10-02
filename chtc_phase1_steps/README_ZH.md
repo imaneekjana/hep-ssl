@@ -1,156 +1,208 @@
-# CHTC 第一阶段部署：Mac → 数据准备 → GPU 第一轮 → 继续训练
+# Augmentation 组合实验：51 组 CHTC 部署
 
-本工具只生成部署文件，不改模型、loss、目标、原始 Dataset 或你已有的实验目录。不应用 patch，不依赖 GitHub 是否已经推送。它使用本机已由 Codex 写入的项目。
+活动入口为 `chtc_phase1_steps/build_deployment.py`。它读取当前工作树的基础配置，生成 51 份完整配置、清单、一份源码包及 CPU/GPU submit 模板；不会连接远端或提交作业。数据准备、视图、模型、AnInfoNCE、五个空间和 trainer 均使用原有实现。
 
-## 1. 哪些文件在哪里修改
+## 实验定义
 
-原始配置：`/Users/clintli/Desktop/hep_ssl/configs/pairwise_base.json`。
-上传脚本把它复制到新的 `deployment/phase1_<时间戳>_<随机后缀>/pairwise_chtc.json`，仅把 `training.device` 设置为 `cuda`，并清除该副本的旧 prepared_dir 路径。原配置不改，epochs/batch/增强/loss 等沿用原文件。
+任务顺序：`ggf_ttbar`、`ggf_dihiggs`、`ttbar_dihiggs`。每个任务 17 组，共 51 组。
 
-`prepared-data.tar.gz` 是程序生成的数据产物，不是需要手写的文件。`prepared.json`、`manifest.json`、`events.npz` 也不手工编辑。
+| 增强数量 | 每任务 | 三任务合计 | 标识后缀 |
+|---|---:|---:|---|
+| 0 | 1 | 3 | none |
+| 3 | 10 | 30 | rex, res, rec, rxs, rxc, rsc, exs, exc, esc, xsc |
+| 4 | 5 | 15 | rexs, rexc, resc, rxsc, exsc |
+| 5 | 1 | 3 | rexsc |
 
-本工具新增三个提交文件：
+例如 `ggf_ttbar_rex`。完整 51 行见每个部署目录的 `manifest.csv` / `manifest.json`；配置在 `configs/`。生成器使用 combinations，不展开顺序排列。
 
-- `01_prepare.sub`：CPU 数据准备；调用已有 `src.prepare_pairwise.prepare`。
-- `02_first_epoch.sub`：GPU 跑正式数据集的第一轮，18轮总调度周期不变。
-- `03_continue.sub`：从第一轮 last.pt 继续到原配置设定的总轮数。
+固定相对顺序为 **rotate → energy_noise → xyz_noise → shift → crop**。
 
-这些文件在上传目录中，不覆盖项目旧的 `chtc/pretraining/train_sweep.sub`。本教程不要混用旧提交文件。
+| 增强 | 字母 | 启用值 | 含义 |
+|---|---|---|---|
+| rotate | r | rotation=0.3926990817，uniform | ±该角度，单位 rad |
+| energy_noise | e | 0.0001 | GeV，现有独立高斯噪声后截断到非负 |
+| xyz_noise | x | 5.0 | mm，逐 hit 坐标扰动 |
+| shift | s | **shift_std=2.0** | mm，现有共同 XY 位移，z 不变 |
+| crop | c | crop_fraction=0.5 | 现有空间框半径定义，不是删除 50% hits/能量 |
 
-## 2. 已有资源与边界
+禁用项不进入 order，强度为 0。none 的 order=[]、全部强度为 0，但仍训练完整五空间模型和相同 objective，两个无增强视图保留同一事件身份。
 
-默认项目：`/Users/clintli/Desktop/hep_ssl`。
-登录节点：`kli398@ap2002.chtc.wisc.edu`。
-传输节点：`kli398@transfer.chtc.wisc.edu`。
-原始数据包：`/staging/k/kli398/colliderml-data-pairwise-2500.tar.gz`。
-容器：`/staging/k/kli398/hep_ssl.sif`。
+| 设置 | 全部 51 组采用值 |
+|---|---|
+| mode / optimizer | five_anisotropic_physics / 当前 Adam |
+| 数据 / grid | 每类 2500，pu0，32×32 |
+| epochs / batch_size | 18 / 32 |
+| lr / weight_decay | 0.0003 / 0.0001（沿用现有参数组规则） |
+| tau / gamma | 0.07 / 1.0 |
+| hidden / latent / proj | 16 / 64 / 32 |
+| k / space / propagate | 8 / 4 / 16 |
+| split_seed / training.seed | 42 / 42 |
+| augmentation_seed / validation_seed | 142 / 242 |
+| device / amp | cuda / false |
 
-脚本会检查这两个远程文件是否存在。它不下载新的数据或自动安装/升级依赖，不假定你的旧缓存就是当前 Hugging Face main。
+未指定的设置保留基础配置值。当前基础配置与本轮的差异是：order 原为 energy_noise→rotate→crop；shift_std 原为 0；device 原为 auto；rotation 原为 math.pi/8 的更多位精度。部署采用上表值；未启用的强度清零，三个任务分别设置 channels。**基础配置本身不改动**。每份生成配置与实际基础配置的差异都写入 `overrides.json`，包括未来基础配置出现的其他冲突。
 
-上传和提交目录位于 `/home/kli398/hep_ssl_chtc/phase1_<时间戳>_<随机后缀>/`。新 prepared 大文件位于独立 `/staging/k/kli398/phase1_<同一标识>/`。训练结果和小日志回到 /home 提交目录。
+## 公平比较和 prepared 成功条件
 
-## 3. 在 Mac 执行
+每个任务只有一份 prepared，其 17 个组合共享完全相同的归档字节、事件、train/val/test manifest、GridSpec、特征/summary/physics-target 统计、定义及 fingerprint。原始准备阶段不施加随机增强，只有视图阶段按运行配置增强；原有 observed/reference 和输入语义保持不变。
 
-下载并解压整个 `chtc_phase1_steps.zip` 到 Downloads（需要保留包内脚本在一起）。
+验证仍使用该运行的增强和固定 validation 随机流；none 验证也是无增强。**不同增强组合的 train/validation contrastive loss 难度不同，不能仅按这些 loss 排名。跨组合应采用相同 held-out clean 评估协议。**本流程不自动提交下游评估。
+
+准备回执包含完整 metadata、归档 SHA256、配置和源码 SHA256。`check-prepared` 要求三个任务的回执、status、设置及校验和匹配，并要求 HTCondor history 显示作业正常完成、退出码 0。正在运行、held、失败、缺文件、synthetic 均不能通过。通过后保存完成记录；后续每次训练仍核对回执和配置。执行节点还会重新检查实际归档 SHA256、prepared 文件及 fingerprint。
+
+默认缺少数据版本时仍使用现有策略：真实 raw 归档的 SHA256 形成 `local-cache-sha256:...`，不冒充上游 revision。三份 prepared 要来自同一数据版本，已知 raw SHA256 也必须一致。匹配文件依赖精确 `CHANNEL_pu0_calo_hits` 目录及 `train...parquet`；实际 schema 要含 event_id/x/y/z/total_energy。路径歧义、缺列或稳定身份错误都会失败，不会切换 synthetic。
+
+## 1. 本地 VS Code：检查、Commit、Push
+
+在 VS Code 打开本地 hep_ssl 项目，进入 **Source Control**：
+
+1. 逐个查看本轮文件 diff，核对下表参数和脚本；`deployment/` 已被忽略，不应暂存生成包/结果。
+2. Stage 本轮源码、测试、文档及旧流程删除项。
+3. 填写提交说明，点击 Commit，再点击 Push 或 Sync Changes。
+4. 等待 VS Code 显示同步完成。本工具没有替你执行 Git 操作。
+
+当前活动流程取代旧 Mac 上传脚本和“第一轮→继续”的默认拆分。旧 `01_upload_from_mac.sh`、`status.py`、`chtc/pretraining/run_experiment.sh`、`train_sweep.sub` 已删除，避免混用。历史产物和 checkpoint 不删除。
+
+## 2. CHTC VS Code：Pull 当前分支
+
+使用 VS Code Remote SSH 打开 CHTC 已有项目 `/home/kli398/hep_ssl_chtc`，在 Source Control 的菜单选择 **Pull**，确认与本地提交一致。先处理远端未提交修改，不能用 reset 覆盖。若该目录尚未是 Git checkout，先通过 VS Code 的 Clone Repository 使用自己的真实仓库 URL；不要把其他历史目录直接覆盖进去。
+
+路径/资源默认集中在仓库 `chtc_phase1_steps/settings.json`：项目 `/home/kli398/hep_ssl_chtc`，raw `/staging/k/kli398/colliderml-data-pairwise-2500.tar.gz`，容器 `/staging/k/kli398/hep_ssl.sif`。可在生成前修改该文件，或用 `--settings 自己的覆盖文件.json`。所有部署默认值会写进 deployment.json。这里未宣称已经远程验证文件存在。
+
+## 3. 在 CHTC 项目终端生成部署
+
+以下命令在 **CHTC access point** 执行，生成只需 Python 3.9+ 标准库，无需在登录节点安装训练依赖。
 
 ```bash
-bash "$HOME/Downloads/chtc_phase1_steps/01_upload_from_mac.sh"
-```
-
-只需要系统可用的 `python3`、`ssh`、`scp`，不用激活训练环境。
-
-脚本自动检查本地新文件、创建配置副本、打包 src/configs/tests/docs，上传并显示实际目录。不上传历史 experiments/notebooks/权重，也不重新上传现有原始数据。
-
-完成后出现 `UPLOAD_COMPLETE`；此时没有自动提交作业。每次运行会创建独立目录，不会重用旧 prepared 文件。
-
-## 4. 登录 CHTC，进入新的提交目录
-
-```bash
-ssh kli398@ap2002.chtc.wisc.edu
-cd "$HOME/$(cat "$HOME/hep_ssl_chtc/LATEST_PHASE1_DEPLOYMENT.txt")"
+cd /home/kli398/hep_ssl_chtc
+DEPLOYMENT=$(python3 chtc_phase1_steps/build_deployment.py --project "$PWD")
+cd "$DEPLOYMENT"
 pwd
-ls
+python3 manage.py locations
 ```
 
-latest 文件只是指向最近一次成功上传目录的便利入口。并行管理旧实验时，使用上传输出中那个具体目录，避免选错。
+记下这个具体部署目录；后续所有 `manage.py`、condor 命令均在这里执行。目录名格式为 `deployment/YYYYMMDD_HHMMSS_augmentation_随机后缀/`。生成配置没有 Mac 路径。
 
-## 5. 提交 CPU 数据准备作业
+`locations` 会打印一条带**实际部署 staging 目录**的命令，形如 `ssh ... 'test -r raw && test -r container && mkdir -p staging目录'`。**由你复制执行打印的完整命令**，在 transfer 主机检查两个输入文件并创建输出目录；脚本本身不会执行 SSH。小源码、配置、日志在 /home，大 raw/prepared 经 staging 传输，不从 /staging 提交。
+
+可先预览三份 CPU 提交清单，完全不提交：
 
 ```bash
-condor_submit 01_prepare.sub
+python3 manage.py prepare --dry-run
+```
+
+会在新的 attempts 子目录写计划和 TSV，打印实际 condor_submit 命令。不要直接提交这个预览：下面用管理入口正式提交，才能记录 job ID。submit 模板的默认 `ready_*.tsv` 故意不存在，防止绕过检查误提交。
+
+若已知原始 cache 目录不符合自动发现约定，用 VS Code 修改部署中的 `input_paths.json`，填入真实 raw 解包目录以内的相对路径；允许同时列出三类路径。不要填占位符或 Mac 路径。各任务只读取自身两类。
+
+## 4. 准备三份数据
+
+```bash
+python3 manage.py prepare
 condor_q
 ```
 
-记录 condor_submit 返回的作业号。运行时查看 `condor_tail 作业号.0`；挂起时 `condor_q -hold 作业号.0`。不要重复提交来催促排队。
+一次提交三个 CPU 作业，真正的数据读取/准备在执行节点容器中完成。记录输出的 job IDs 和 attempts 路径。初始申请 2 CPU、64GB memory、80GB disk；训练为 1 GPU、2 CPU、64GB memory、60GB disk。这是待实测资源，不是已确认的实际峰值。
 
-数据准备在执行节点内：解压既有原始缓存，匹配指定 channel/pileup 的 train calo_hits shards，调用现有 prepare，生成并打包 prepared，再由调度器送到 staging。
-
-自动匹配依赖路径中存在精确目录分量，例如 `ggf_pu0_calo_hits`，以及 `train-...parquet` 文件名。这是支持的缓存约定，不是已经远程核实的目录清单。脚本会检查必需的 Parquet 字段；若没有匹配或存在多个不同目录，不会猜选，而会打印实际目录供核对。
-
-配置默认每类2500，总计5000事件（以实际配置为准）。训练/验证/测试划分、grid和统计都由原有 prepare 生成。数据版本缺失时，程序用实际原始压缩包 SHA256 标记为 `local-cache-sha256:...`；它标识本地数据快照，不冒充上游 Git revision。有已核实 revision 则沿用。
-
-作业结束、输出回传后：
+查看队列、日志（把 JOB_ID 替换成返回的 Cluster.Proc）：
 
 ```bash
-python3 status.py prepare
+condor_tail JOB_ID
+condor_q -hold JOB_ID
+python3 manage.py status
 ```
 
-只有显示 `PREPARE_OK`，再进入下一步。若缺文件，先看队列和 .log，可能还没完成输出传输。不能仅凭 staging 有一个 tar 包判断成功；失败也可能返回诊断占位包。
-
-## 6. 提交第一轮 GPU 作业
+作业完成后：
 
 ```bash
-python3 status.py prepare && condor_submit 02_first_epoch.sub
+python3 manage.py check-prepared
 ```
 
-先打印容器中实际 Python/PyTorch/CUDA/PyG/torch-cluster 版本和 GPU 名称，做很小的实际 CUDA 前向/反向环境检查，再运行真实数据的第一轮。
-
-这里不是把 `epochs` 改成1。调用的是已有 trainer 的 `stop_after_epoch=1`，总调度周期保留18（或你原配置的总轮数）。第一轮的权重不会浪费。
-
-运行中使用 `condor_tail 作业号.0`；完成后：
+须显示三个 `PREPARE_OK`。尚在运行、输出回传未完成、调度器失败或回执不匹配时退出码非零；此时不能提交训练。若需排查，打开对应 `attempts/prepare_.../prepare_PAIR_*.out/.err/.log`、status 和 details。修复路径/schema/资源问题后，对已退出的失败任务可单独重提：
 
 ```bash
-python3 status.py first
+python3 manage.py prepare --pair ggf_ttbar --retry
 ```
 
-应显示 `FIRST_EPOCH_OK`、完成轮数1/18、loss、5组Lambda范围、实际环境。返回包 `first_epoch.tar.gz` 中含原始运行目录、config、history、last.pt 和 best.pt。
+重试采用新的归档名，避免同名失败内容的缓存；不覆盖以前的回执。held/running 作业不会重复提交，先在 HTCondor 确认或处理原作业。修改科学配置或源码后要重新生成部署。
 
-## 7. 继续训练剩余轮数
+## 5. 批量提交完整 51 组
 
 ```bash
-python3 status.py first && condor_submit 03_continue.sub
+python3 manage.py check-prepared
+python3 manage.py train --dry-run
+python3 manage.py train
+condor_q
 ```
 
-从第一轮 last.pt、原配置、optimizer/scheduler/objective/RNG 状态恢复，重用同一 prepared 指纹。不要把18改成17，不要在恢复时更改loss、batch等数学配置。
+`train` 自己也会执行完整准备检查；默认一次使用一个 GPU submit 模板和 51 行 TSV，全部直接跑 18 轮。预览命令不会提交 GPU 作业；检查可以保存已验证的准备完成回执。每次正式提交记录 `submission.json` 和 job ID，输出位于独立 `attempts/train_.../`，含每个 run_id 独有的 log/out/err/status/result。传输主机路径与执行节点 basename 分列在 TSV 中。
 
-第一轮CUDA跨机器续跑使用原有checkpoint机制，但不保证不同GPU型号上逐位一致。本工具没有新增自动抢占重提或抢占恢复逻辑。
+默认 GPUJobLength=medium；按当前 CHTC 文档这类作业最长 24h。应根据实际耗时选择资源；若需更长，在生成前把 settings 中 gpu_job_length 设为 long。不会为满足限时缩减训练 epochs。
 
-`03_continue.sub` 默认 `+GPUJobLength = "medium"`（CHTC当前24小时上限）。参考第一轮耗时；若预计剩余训练接近24小时，在提交前仅把该资源字段改为 `"long"`，不改 epochs。数据准备初始申请64GB内存/80GB磁盘，GPU任务64GB内存/60GB磁盘；这是含压缩输入、解压数据与输出的初始资源申请，尚未实测实际需求。
+## 可选：先选择一个短跑
 
-完成后：
+这不是必经步骤。只给某一个 run_id 设置停止边界，原 epochs=18 和 scheduler 周期保持不变：
 
 ```bash
-python3 status.py continue
-mkdir -p completed
-tar -xzf result_training.tar.gz -C completed
+python3 manage.py train --run-id ggf_ttbar_rex --stop-after-epoch 1
+python3 manage.py status --run-id ggf_ttbar_rex
 ```
 
-应显示 `TRAINING_COMPLETE`、完成轮数18/18。默认结果位于 `completed/five_physics_seed42/`。没有自动运行下游分类评估。
-
-## 8. 下载模型结果（回到 Mac 的另一个 Terminal）
+短跑成功且作业已退出后，使用 status 显示的**真实结果路径**，例如将下面变量设为那个文件：
 
 ```bash
-mkdir -p "$HOME/Downloads/hep_ssl_results"
-REMOTE_REL=$(ssh kli398@ap2002.chtc.wisc.edu 'cat ~/hep_ssl_chtc/LATEST_PHASE1_DEPLOYMENT.txt')
-scp "kli398@ap2002.chtc.wisc.edu:${REMOTE_REL}/result_training.tar.gz" "$HOME/Downloads/hep_ssl_results/"
+RESUME_ARCHIVE=attempts/实际短跑目录/result_ggf_ttbar_rex.tar.gz
+python3 manage.py train --run-id ggf_ttbar_rex --retry --resume-from "$RESUME_ARCHIVE"
+python3 manage.py train --remaining
 ```
 
-没有必要把整个 prepared 大包下载到 Mac 才能训练或取得模型。
+`--remaining` 仅提交从未提交过的组合，因此这里是余下 50 组；它不会偷偷重新提交失败或 pending 的实验。各个失败实验按下一节处理。恢复会检查 checkpoint 的配置、增强、prepared fingerprint、优化器/调度器/RNG 状态；仍以18为总轮数。只加载自己信任的 checkpoint。不同 GPU 之间不承诺逐位一致。
 
-## 9. 出错时看哪一个文件
+## 6. 查看、重跑指定失败实验
 
-- 准备：`prepare_*.err`、`prepare_*.out`、`prepare_status.json`、`prepare_details.json`。
-- 第一轮：`first_*.err`、`first_*.out`、`first_status.json`。
-- 续跑：`continue_*.err`、`continue_*.out`、`continue_status.json`。
+```bash
+python3 manage.py status
+python3 manage.py status --run-id ggf_ttbar_rex
+```
 
-如果容器缺少 polars，准备会在解压大数据之前报错；如果缺 CUDA/PyG 扩展，GPU检查会明确失败，不会退回CPU。此时先修复实际环境，不要改loss凑运行。
+查看输出中指定 attempt 目录下的 status JSON、`.err/.out/.log`。`result_RUN_ID.tar.gz` 内根目录为 `RUN_ID/`，含已有 checkpoint、history、config、job_details 和 wrapper.log；即使执行失败也尽量返回诊断与已有结果，退出码非零。CUDA 不可用明确失败，不回退 CPU，不在容器内下载或升级依赖。
 
-如果原始缓存布局不匹配，查看准备日志中真实 paths，在 `input_paths.json` 写相对 raw/ 的精确每类目录，例如 `{ "ggf": "实际ggf目录", "ttbar": "实际ttbar目录" }`。目录只能含对应channel/pileup的训练calo_hits文件；不要把这些中文占位符直接当路径提交。event_id重复也不会用随机ID/行号来掩盖，需检查真实shard身份。
+修复运行环境/资源问题后，确认原作业已退出，再从头重跑单个实验：
 
-修复数据准备问题后，优先创建新的部署标识、重新准备，避免重复使用已被OSDF缓存的同名失败归档。不要删除原始数据包或旧checkpoint。
+```bash
+python3 manage.py train --run-id ggf_ttbar_rex --retry
+```
 
-## 10. 大文件位置
+若旧归档有有效 last.pt，可用 `--retry --resume-from 真实归档路径` 恢复。每次重试都是新的 attempt 目录，保留原结果。没有自动抢占恢复平台；强制 kill/eviction 不保证能执行退出归档，因此仅能恢复已经回传的 checkpoint。
 
-准备输出默认按完整5000事件的大包安排到个人staging。status会报告实际压缩包字节数。CHTC建议小于1GB的文件留在/home；若prepared小于1GB，可通过transfer主机把它转至提交目录并把两个GPU .sub 的 prepared输入改为本地 `prepared-data.tar.gz`，之后清理不再使用的staging副本。超过30GB则应使用file:///路径并核对资源，不能盲目沿用OSDF模板。
+## 复用已经存在的 prepared
 
-## 验证范围与来源
+**前一轮本工具的部署：**先在旧部署运行 `check-prepared` 成功，回到项目根目录生成新部署并指定旧目录；它复用 archive URL 和完全相同的文件 fingerprint，不重新准备。新旧预处理源码摘要和 data/grid/targets 设置必须匹配。
 
-本包是根据上传的phase1 patch和运行说明新增的部署层；未改动源模型或方法。已完成的本地检查记在 TESTING.md 中，未在用户Mac、SSH账户、真实ColliderML缓存或CHTC调度器上执行，未上传、未提交作业。
+```bash
+cd /home/kli398/hep_ssl_chtc
+PREVIOUS_DEPLOYMENT=/home/kli398/hep_ssl_chtc/deployment/实际旧目录
+DEPLOYMENT=$(python3 chtc_phase1_steps/build_deployment.py --project "$PWD" --reuse-deployment "$PREVIOUS_DEPLOYMENT")
+cd "$DEPLOYMENT"
+python3 manage.py check-prepared
+```
 
-项目入口和epoch边界恢复：用户上传 phase1_running.md、hep_ssl_phase1.patch。
-CHTC外部部署规则核验（2026-09-29）：
-- https://chtc.cs.wisc.edu/uw-research-computing/file-avail-largedata
-- https://chtc.cs.wisc.edu/uw-research-computing/htc-job-file-transfer
-- https://chtc.cs.wisc.edu/uw-research-computing/gpu-jobs
-- https://chtc.cs.wisc.edu/uw-research-computing/htc-monitor-jobs
-- https://chtc.cs.wisc.edu/uw-research-computing/transfer-files-computer
+**旧单实验 prepared 包或其他已有 prepared 包：**在新部署中用 `reuse` 提交一个 CPU 校验作业，仅加载并验证已有 prepared（不调用 prepare、不重新打包、不改变归档字节）。给出真实 URL，不能把 raw cache 当 prepared：
+
+```bash
+python3 manage.py reuse --pair ggf_ttbar --archive osdf:///chtc/staging/k/kli398/实际旧目录/prepared-data.tar.gz
+```
+
+等校验作业成功后，再运行 `prepare`，它跳过成功注册的 pair，只准备其余缺失任务；三个任务均成功后照常 `check-prepared` 和 `train`。已有包的事件数、grid、targets、版本、统计文件内容必须通过当前读取器检查。旧包原始创建源码未知时不会伪造来源；回执明确记录这是当前程序验证的既有产物。校验失败请检查错误，在新的部署中使用正确包或重新准备。
+
+`--reuse-deployment` 不会复制大包，旧 staging 文件在新实验结束前仍需保留。CHTC 指南建议 <1GB 留 /home、1–30GB 用 OSDF、30–100GB 用 file://；本默认面向原有大数据。如果回执实测 prepared 超30GB，先采用 file 协议并核对磁盘/配额再部署。当前管理入口自动管理的是 staging 路径，尚未提供将小于1GB的 prepared 迁移到 /home 的命令；不能直接把 /home 路径传给 `reuse`。若实际数据需要这种存储安排，应先调整部署传输配置后再提交。本地回执检查不读取 staging 大文件；实际字节检查在执行节点进行。
+
+## 验证范围
+
+测试命令和结果见 `TESTING.md`。本地未连接 CHTC、未执行真实提交、未读取真实 ColliderML cache、未在 CHTC 容器或 CUDA 上跑训练。小型 Parquet fixture、synthetic 元数据及模拟 scheduler 状态只用于测试接口/错误分支，不能解释为科研结果。
+
+模板依据官方文件传输、批量 queue 和 GPU 规则；已于 2026-10-01 查阅，实际集群运行仍由用户执行：
+
+- [CHTC staging 与传输](https://chtc.cs.wisc.edu/uw-research-computing/file-avail-largedata)
+- [CHTC GPU 作业](https://chtc.cs.wisc.edu/uw-research-computing/gpu-jobs)
+- [HTCondor condor_submit / queue](https://htcondor.readthedocs.io/en/latest/man-pages/condor_submit.html)
